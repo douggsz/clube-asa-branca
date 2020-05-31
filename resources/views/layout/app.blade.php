@@ -57,7 +57,7 @@
                             </div>
                         </li>
                         <li class="nav-item dropdown no-arrow" role="presentation">
-                            <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" href="{{route('teste')}}">
+                            <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" href="#">
                                     <span class="d-none d-lg-inline mr-2 text-gray-600 small">Teste</span>
                                     <img class="border rounded-circle img-profile" src="{{asset('img/avatars/avatar1.jpeg')}}"></a>
                         </li>
@@ -82,6 +82,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
 <script src="{{ asset('js/theme.js') }}"></script>
 <script src="{{ asset('js/app.js') }}"></script>
+@yield('javascript')
 </body>
 
 </html>

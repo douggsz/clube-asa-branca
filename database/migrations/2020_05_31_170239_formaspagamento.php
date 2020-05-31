@@ -16,10 +16,11 @@ class Formaspagamento extends Migration
         Schema::create('descricao_pagamento', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('pagamento_id');
-            $table->string('forma',20);
-            $table->string('parcela',20);
+            $table->string('forma',20)->nullable('false');
+            $table->string('parcela',20)->nullable('false');
             $table->boolean('pago');
             $table->foreign('pagamento_id')->references('id')->on('pagamentos');
+            $table->SoftDeletes();
             $table->timestamps();
         });
     }

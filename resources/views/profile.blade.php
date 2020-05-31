@@ -1,10 +1,10 @@
 @extends('layout.app')
-@section('titulo', '#')
+@section('titulo', $socio->nome )
 @section('body')
 
     <div id="content">
         <div class="container-fluid">
-            <h3 class="text-dark mb-4">NOME</h3>
+            <h3 class="text-dark mb-4">{{$socio->nome}}</h3>
             <div class="row mb-3">
                 <div class="col-lg-4">
                     <div class="card mb-4">
@@ -14,9 +14,10 @@
                                 <button class="btn btn-primary btn-sm" onclick="alert('')" type="button">Mudar foto</button></div>
                         </div>
                     </div>
+                    <input type="hidden" value="{{ $socio->id }}" id="idSocio">
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="text-primary font-weight-bold m-0" onclick="">Presença</h6>
+                            <h6 class="text-primary font-weight-bold m-0" onclick="presencas()">Presença</h6>
                         </div>
                     </div>
                     <div class="card shadow mb-4">
@@ -34,10 +35,10 @@
                             <h6 class="text-primary font-weight-bold m-0">Telefones</h6>
                         </div>
                         <div class="card-body">
-                            <form>
+                            <form id="formTelefones">
                                 <div class="form-group"><label for="address"><strong>Celular</strong></label><input class="form-control" type="text" placeholder="Numero celular" name="tcelular" id="tcelular"></div>
                                 <div class="form-group"><label for="address"><strong>Fixo</strong></label><input class="form-control" type="text" placeholder="Telefone Fixo" name="tfixo" id="tfixo"></div>
-                                <div class="form-group"><button class="btn btn-primary btn-sm" type="submit">Salvar</button></div>
+                                <div class="form-group"><button class="btn btn-primary btn-sm">Salvar</button></div>
                             </form>
                         </div>
                     </div>
@@ -50,13 +51,13 @@
                                     <p class="text-primary m-0 font-weight-bold">Informações do socio</p>
                                 </div>
                                 <div class="card-body">
-                                    <form>
+                                    <form id="formInformacoes">
                                         <div class="form-row">
                                             <div class="col">
                                                 <div class="form-group"><label><strong>Nome</strong></label><input class="form-control" type="text" placeholder="Nome" name="nome" id="nome" required></div>
                                             </div>
                                             <div class="col">
-                                                <div class="form-group"><label><strong>Apelido</strong></label><input class="form-control" type="email" placeholder="Apelido" name="apelido" id="apelido" required></div>
+                                                <div class="form-group"><label><strong>Apelido</strong></label><input class="form-control" type="email" placeholder="Apelido" name="apelido" id="apelido"></div>
                                             </div>
                                         </div>
                                         <div class="form-row">
@@ -64,23 +65,23 @@
                                                 <div class="form-group"><label><strong>Nº Associado</strong></label><input class="form-control" type="text" placeholder="Nº Associado" name="nassociado" id="nassociado" required></div>
                                             </div>
                                             <div class="col">
-                                                <div class="form-group"><label><strong>Nascimento</strong></label><input class="form-control" type="text" placeholder="Nascimento" name="nascimento" id="nascimento" required></div>
+                                                <div class="form-group"><label><strong>Nascimento</strong></label><input class="form-control" type="text" placeholder="Nascimento" name="nascimento" id="nascimento"></div>
                                             </div>
                                         </div>
                                         <div class="form-row">
                                             <div class="col">
-                                                <div class="form-group"><label><strong>RG</strong></label><input class="form-control" type="text" placeholder="RG" name="rg" id="rg" required></div>
+                                                <div class="form-group"><label><strong>RG</strong></label><input class="form-control" type="text" placeholder="RG" name="rg" id="rg"></div>
                                             </div>
                                         </div>
                                         <div class="form-row">
                                             <div class="col">
-                                                <div class="form-group"><label><strong>CPF</strong></label><input class="form-control" type="text" placeholder="CPF" name="cpf" id="cpf" required></div>
+                                                <div class="form-group"><label><strong>CPF</strong></label><input class="form-control" type="text" placeholder="CPF" name="cpf" id="cpf"></div>
                                             </div>
                                             <div class="col">
-                                                <div class="form-group"><label><strong>Sexo</strong></label><input class="form-control" type="text" placeholder="Sexo" name="sexo" id="sexo" required></div>
+                                                <div class="form-group"><label><strong>Sexo</strong></label><input class="form-control" type="text" placeholder="Sexo" name="sexo" id="sexo"></div>
                                             </div>
                                         </div>
-                                        <div class="form-group"><button class="btn btn-primary btn-sm" type="submit">Salvar</button></div>
+                                        <div class="form-group"><button class="btn btn-primary btn-sm">Salvar</button></div>
                                     </form>
                                 </div>
                             </div>
@@ -89,7 +90,7 @@
                                     <p class="text-primary m-0 font-weight-bold">Contato</p>
                                 </div>
                                 <div class="card-body">
-                                    <form>
+                                    <form id="formContato">
                                         <div class="form-group"><label for="address"><strong>Rua</strong></label><input class="form-control" type="text" placeholder="Rua" name="rua" id="rua"></div>
                                         <div class="form-row">
                                             <div class="col">
@@ -113,7 +114,7 @@
                                                 <div class="form-group"><label for="city"><strong>E-Mail</strong></label><input class="form-control" type="text" placeholder="E-Mail" name="mail" id="mail"></div>
                                             </div>
                                         </div>
-                                        <div class="form-group"><button class="btn btn-primary btn-sm" type="submit">Salvar</button></div>
+                                        <div class="form-group"><button class="btn btn-primary btn-sm">Salvar</button></div>
                                     </form>
                                 </div>
                             </div>
@@ -124,4 +125,14 @@
         </div>
     </div>
 
+@endsection
+
+@section('javascript')
+    <script type="text/javascript">
+
+        public function presencas() {
+            alert('');
+        }
+
+    </script>
 @endsection

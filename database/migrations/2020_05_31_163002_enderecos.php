@@ -16,13 +16,14 @@ class Enderecos extends Migration
         Schema::create('enderecos', function (Blueprint $table) {
             $table->bigInteger('id');
             $table->unsignedBigInteger('socio_id');
-            $table->string('rua', 50);
-            $table->string('numero', 10);
-            $table->string('cidade', 20);
-            $table->string('bairro', 20);
-            $table->string('uf', 20);
-            $table->string('cep', 15);
+            $table->string('rua', 50)->nullable('false');
+            $table->string('numero', 10)->nullable('false');
+            $table->string('cidade', 20)->nullable('false');
+            $table->string('bairro', 20)->nullable('false');
+            $table->string('uf', 20)->nullable('false');
+            $table->string('cep', 15)->nullable('false');
             $table->foreign('socio_id')->references('id')->on('socios');
+            $table->SoftDeletes();
             $table->timestamps();
         });
     }

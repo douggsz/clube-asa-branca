@@ -16,10 +16,11 @@ class Registros extends Migration
         Schema::create('registros', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('socio_id');
-            $table->string('n_cr',20);
-            $table->string('data_expedicao',20);
-            $table->string('data_validade',20);
+            $table->string('n_cr',20)->nullable('false');
+            $table->string('data_expedicao',20)->nullable('false');
+            $table->string('data_validade',20)->nullable('false');
             $table->foreign('socio_id')->references('id')->on('socios');
+            $table->SoftDeletes();
             $table->timestamps();
         });
     }

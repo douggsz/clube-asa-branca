@@ -16,8 +16,9 @@ class Pagamentos extends Migration
         Schema::create('pagamentos', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('socio_id');
-            $table->string('vencimento', 20);
+            $table->string('vencimento', 20)->nullable('false');
             $table->foreign('socio_id')->references('id')->on('socios');
+            $table->SoftDeletes();
             $table->timestamps();
         });
     }

@@ -14,9 +14,15 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', 'PagesController@index');
-Route::get('/socios', function (){
-    return view('inicio'); })->name('inicio');
-Route::get('/socio/{id}', function ($id){
-    $id; //usar com modelo
+Route::get('/socios', 'PagesController@paginaInicial')->name('inicio');
+Route::get('/socios/{id}', function ($id){
+    $socios = new App\Socio();
+    $listasocios = $socios::all();
+    $socio = $listasocios->find($id);
+    if (isset($socio)) {
+        return view('profile', compact('socio'));
+    } else{
+        return view('inicio');
+    }
 });
-Route::view('/teste','profile')->name('teste');
+Route::get('/socios/novo', 'PagesController@novoSocio')->name('novosocio');

@@ -16,9 +16,10 @@ class Contatos extends Migration
         Schema::create('contatos', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('socio_id');
-            $table->string('n_celular', 20);
-            $table->string('n_fixo', 20);
+            $table->string('n_celular', 20)->nullable();
+            $table->string('n_fixo', 20)->nullable();
             $table->foreign('socio_id')->references('id')->on('socios');
+            $table->SoftDeletes();
             $table->timestamps();
         });
     }
