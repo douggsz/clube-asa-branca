@@ -1,5 +1,5 @@
 @extends('layout.app')
-@section('titulo', $titulo)
+@section('titulo', 'Lista de socios')
 @section('body')
     <div class="container-fluid">
         <div class="card shadow">
@@ -20,7 +20,7 @@
 
                         <tr>
                             <td><img class="rounded-circle mr-2" width="30" height="30" src="{{asset('img/avatars/avatar1.jpeg')}}">
-                            <a href="#">Teste</a></td>
+                            <a href="{{route('teste')}}">Teste</a></td>
                             <td>842294629</td>
                         </tr>
 
