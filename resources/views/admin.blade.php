@@ -1,5 +1,5 @@
 @extends('layout.app')
-@section('titulo', $socio->nome )
+@section('titulo','#')
 @section('barraLateral')
     @component('components.barraLateral')
     @endcomponent
@@ -7,25 +7,25 @@
 @section('body')
     <div id="content">
         <div class="container-fluid">
-            <h3 class="text-dark mb-4">{{$socio->nome}}</h3>
+            <h3 class="text-dark mb-4">#</h3>
             <div class="row mb-3">
                 <div class="col-lg-4">
                     <div class="card mb-4">
                         <div class="card-body text-center shadow">
-                            <img class="rounded-circle mb-3 mt-4" src="{{asset('img/dogs/image2.jpeg')}}" width="160" height="160">
+                            <img class="rounded-circle mb-3 mt-4" src="" width="160" height="160">
                             <div class="mb-3">
                                 <button class="btn btn-primary btn-sm" onclick="alert('')" type="button">Mudar foto</button></div>
                         </div>
                     </div>
-                    <input type="hidden" value="{{ $socio->id }}" id="idSocio">
-                    <div class="card shadow mb-4">
+                    <input type="hidden" value="#" id="idSocio">
+                    <button class="card shadow mb-4"><div>
                         <div class="card-header py-3">
-                            <h6 class="text-primary font-weight-bold m-0" onclick="presencas()">Presença</h6>
+                            <h6 class="text-primary font-weight-bold m-0" onclick="presencas()">Presenças</h6>
                         </div>
-                    </div>
+                        </div></button>
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="text-primary font-weight-bold m-0" onclick="">Pagamentos</h6>
+                            <h6 class="text-primary font-weight-bold m-0" onclick="">Anuidades</h6>
                         </div>
                     </div>
                     <div class="card shadow mb-4">

@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'PagesController@index');
+Route::get('/', 'PagesController@paginainicial');
 Route::get('/socios', 'PagesController@paginaInicial')->name('inicio');
 Route::get('/socios/{id}', function ($id){
     $socios = new App\Socio();
@@ -25,4 +25,4 @@ Route::get('/socios/{id}', function ($id){
         return view('inicio');
     }
 });
-Route::get('/socios/novo', 'PagesController@novoSocio')->name('novosocio');
+Route::get('/administrador','PagesController@admin')->name('admin');

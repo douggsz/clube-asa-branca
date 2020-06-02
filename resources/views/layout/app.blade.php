@@ -28,20 +28,9 @@
 </head>
 <body id="page-top">
 <div id="wrapper">
-    <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0">
-        <div class="container-fluid d-flex flex-column p-0">
-            <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0">
-                <div class="sidebar-brand-icon rotate-n-15"><i class="fas fa-laugh-wink"></i></div>
-                <div class="sidebar-brand-text mx-3">
-                    <img src="{{asset('img/icons/favicon-32x32.png')}}"/>
-                    <span>ASA BRANCA</span></div>
-            </a>
-            <hr class="sidebar-divider my-0">
-            <ul class="nav navbar-nav text-light" id="accordionSidebar">
-                <li class="nav-item" role="presentation"><a class="nav-link active" href="{{route('inicio')}}"><i class="fas fa-tachometer-alt"></i><span>Lista de socios</span></a></li>
-            </ul>
-        </div>
-    </nav>
+    @hasSection('barraLateral')
+        @yield('barraLateral')
+    @endif
     <div class="d-flex flex-column" id="content-wrapper">
         <div id="content">
             <nav class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
@@ -57,7 +46,7 @@
                             </div>
                         </li>
                         <li class="nav-item dropdown no-arrow" role="presentation">
-                            <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" href="#">
+                            <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" href="{{route('admin')}}">
                                     <span class="d-none d-lg-inline mr-2 text-gray-600 small">Teste</span>
                                     <img class="border rounded-circle img-profile" src="{{asset('img/avatars/avatar1.jpeg')}}"></a>
                         </li>

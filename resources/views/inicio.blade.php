@@ -1,7 +1,11 @@
 @extends('layout.app')
 @section('titulo', 'Lista de socios')
+@section('barraLateral')
+    @component('components.barraLateral')
+    @endcomponent
+@endsection
 @section('body')
-    <div class="container-fluid">
+    <div class="container-fluid" id="corpo">
         <div class="card shadow">
             <div class="card-header py-3">
                 <p class="text-primary m-0 font-weight-bold">Socios</p>
@@ -23,6 +27,15 @@
                                 <td><img class="rounded-circle mr-2" width="30" height="30" src="{{asset('img/avatars/avatar1.jpeg')}}">
                                     <a href="{{ 'socios/' . $s->id }}">Teste</a></td>
                                 <td>{{ $s->n_associado }}</td>
+                            <tr></tr>
+                            <tr></tr>
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <td><strong>Nome</strong></td>
+                            <td><strong>Nº Associado</strong></td>
+                        </tr>
+                        </tfoot>
                             </tr>
                         @endforeach
                         @else
@@ -32,22 +45,13 @@
                                 </td>
                             </tr>
                         @endisset
-                        <tr></tr>
-                        <tr></tr>
-                        </tbody>
-                        <tfoot>
-                        <tr>
-                            <td><strong>Nome</strong></td>
-                            <td><strong>Nº Associado</strong></td>
-                        </tr>
-                        </tfoot>
                     </table>
                 </div>
                 <div class="row">
                     <div class="col-md-6 align-self-center">
-                        <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">Numero de socios: 1</p>
+                        <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">Numero de socios: {{ $socios->count() }}</p>
                         <div class="form-group">
-                            <a href="{{ route('novosocio') }}"><button class="btn btn-primary btn-sm">Novo</button></a>
+                            <button class="btn btn-primary btn-sm" onclick="mostraNovoUsuario()">Novo</button>
                         </div>
                     </div>
                 </div>
@@ -55,4 +59,64 @@
         </div>
     </div>
     </div>
+    <div class="modal" tabindex="-1" id="novoUsuario">
+        <form>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+
+                    <img height="50%" src="{{asset('img/avatars/avatar2.jpeg')}}"/>
+                    <input type="file" name="foto">
+                    <div>
+                        <h5 class="modal-title">Novo Socio</h5>
+                    </div>
+                    <button type="button" class="close" onclick="fechaNovoUsuario()" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="col">
+                        <div class="form-group">
+                            <a>Informações</a>
+                            <div id="socioInfo">
+                                <div>
+                                    <div>
+                                        <input class="form-control" type="text" placeholder="Nome" name="nome" id="nome" required>
+                                        <input class="form-control" type="email" placeholder="Apelido" name="apelido" id="apelido">
+                                        <input class="form-control" type="text" placeholder="Nº Associado" name="nassociado" id="nassociado" required>
+                                        <input class="form-control" type="text" placeholder="Nascimento" name="nascimento" id="nascimento">
+                                        <input class="form-control" type="text" placeholder="Sexo" name="sexo" id="sexo">
+                                        <input class="form-control" type="text" placeholder="RG" name="rg" id="rg">
+                                        <input class="form-control" type="text" placeholder="CPF" name="cpf" id="cpf">
+                                        <input class="form-control" type="text" placeholder="Numero celular" name="tcelular" id="tcelular">
+                                        <input class="form-control" type="text" placeholder="Nº CR" name="ncr" id="ncr">
+                                    </div>
+                                </div>
+                                </div>
+                            <button type="submit" class="btn btn-primary">Salvar</button>
+                            <button type="reset" class="btn btn-secondary">Limpar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                </div>
+            </div>
+    </form>
+    </div>
+@endsection
+@section('javascript')
+    <SCRIPT type="text/javascript">
+        function mostraNovoUsuario() {
+            $('#barraLateral').hide();
+            $('#corpo').hide();
+            $('#novoUsuario').show();
+        }
+        function fechaNovoUsuario() {
+            $('#barraLateral').show();
+            $('#corpo').show()
+            $('#novoUsuario').hide()
+        }
+    </SCRIPT>
 @endsection
