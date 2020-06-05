@@ -10,10 +10,7 @@ class PagesController extends Controller
     public function paginaInicial(){
         $socios = Socio::all();
 
-        return view('inicio', compact('socios'));
+        return view('profile');//, compact('socios'))
 
-    }
-    public function admin(){
-        return view('admin');
     }
 }

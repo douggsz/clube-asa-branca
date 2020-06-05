@@ -45,11 +45,6 @@
                                 </form>
                             </div>
                         </li>
-                        <li class="nav-item dropdown no-arrow" role="presentation">
-                            <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" href="{{route('admin')}}">
-                                    <span class="d-none d-lg-inline mr-2 text-gray-600 small">Teste</span>
-                                    <img class="border rounded-circle img-profile" src="{{asset('img/avatars/avatar1.jpeg')}}"></a>
-                        </li>
                     </ul>
                 </div>
             </nav>

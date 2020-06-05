@@ -1,37 +1,37 @@
 @extends('layout.app')
-@section('titulo', $socio->nome )
+@section('titulo', '$socio->nome' )
 @section('barraLateral')
     @component('components.barraLateral')
     @endcomponent
 @endsection
 @section('body')
     <div id="content">
-        <div class="container-fluid">
-            <h3 class="text-dark mb-4">{{$socio->nome}}</h3>
+        <div class="container-fluid" id="corpo">
+            <h3 class="text-dark mb-4">{{'$socio->nome'}}</h3>
             <div class="row mb-3">
                 <div class="col-lg-4">
                     <div class="card mb-4">
                         <div class="card-body text-center shadow">
                             <img class="rounded-circle mb-3 mt-4" src="{{asset('img/dogs/image2.jpeg')}}" width="160" height="160">
                             <div class="mb-3">
-                                <button class="btn btn-primary btn-sm" onclick="alert('')" type="button">Mudar foto</button></div>
+                                <button class="btn btn-primary btn-sm" onclick="#" type="button">Mudar foto</button></div>
                         </div>
                     </div>
-                    <input type="hidden" value="{{ $socio->id }}" id="idSocio">
+                    <input type="hidden" value="{{ '$socio->id' }}" id="idSocio">
                     <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <h6 class="text-primary font-weight-bold m-0" onclick="presencas()">Presença</h6>
-                        </div>
+                        <button type="button" class="card-header border-0 py-3" onclick="presencas()">
+                            <a href="/socios/presencas/1" class="text-primary font-weight-bold m-0" >Presença</a>
+                        </button>
                     </div>
                     <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <h6 class="text-primary font-weight-bold m-0" onclick="">Pagamentos</h6>
-                        </div>
+                        <button type="button" class="card-header border-0 py-3" onclick="pagamentos()">
+                            <h6 class="text-primary font-weight-bold m-0">Pagamentos</h6>
+                        </button>
                     </div>
                     <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <h6 class="text-primary font-weight-bold m-0" onclick="">Registros</h6>
-                        </div>
+                        <button TYPE="button" class="card-header border-0 py-3" onclick="registros()">
+                            <h6 class="text-primary font-weight-bold m-0">Registros</h6>
+                        </button>
                     </div>
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
@@ -127,13 +127,24 @@
             </div>
         </div>
     </div>
-
 @endsection
 
 @section('javascript')
     <script type="text/javascript">
-
-        public function presencas() {
+        function presencas() {
+            $('#barraLateral').hide();
+            $('#corpo').hide();
+            $('#novaPresenca').show();
+        }
+        function fecha() {
+            $('#barraLateral').show();
+            $('#corpo').show()
+            $('#novaPresenca').hide()
+        }
+        function pagamentos() {
+            alert('');
+        }
+        function registros() {
             alert('');
         }
 

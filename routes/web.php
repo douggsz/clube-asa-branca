@@ -25,4 +25,13 @@ Route::get('/socios/{id}', function ($id){
         return view('inicio');
     }
 });
-Route::get('/administrador','PagesController@admin')->name('admin');
+Route::get('/socios/presencas/{id}', function ($id){
+    $presencas = new App\Presenca();
+    $listapresencas = $presencas::all();
+    $lista = $listapresencas->find('socio_id', $id);
+    if (isset($lista)){
+        return view('presencas', compact('lista'));
+    } else {
+        return view('inicio');
+    }
+});

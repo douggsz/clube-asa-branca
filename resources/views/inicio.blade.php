@@ -70,7 +70,7 @@
                     <div>
                         <h5 class="modal-title">Novo Socio</h5>
                     </div>
-                    <button type="button" class="close" onclick="fechaNovoUsuario()" aria-label="Close">
+                    <button type="button" class="close" onclick="fecha()" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -113,7 +113,7 @@
             $('#corpo').hide();
             $('#novoUsuario').show();
         }
-        function fechaNovoUsuario() {
+        function fecha() {
             $('#barraLateral').show();
             $('#corpo').show()
             $('#novoUsuario').hide()
