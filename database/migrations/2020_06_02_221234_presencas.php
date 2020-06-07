@@ -16,9 +16,10 @@ class Presencas extends Migration
         Schema::create('presencas', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('socio_id');
-            $table->string('calibre');
-            $table->string('tiros');
-            $table->string('data');
+            $table->string('ncr',20);
+            $table->string('calibre', 20);
+            $table->string('tiros', 10);
+            $table->string('data',20);
             $table->foreign('socio_id')->references('id')->on('socios');
             $table->softDeletes();
             $table->timestamps();

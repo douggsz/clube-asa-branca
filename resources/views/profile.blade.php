@@ -19,18 +19,8 @@
                     </div>
                     <input type="hidden" value="{{ '$socio->id' }}" id="idSocio">
                     <div class="card shadow mb-4">
-                        <button type="button" class="card-header border-0 py-3" onclick="presencas()">
-                            <a href="/socios/presencas/1" class="text-primary font-weight-bold m-0" >Presença</a>
-                        </button>
-                    </div>
-                    <div class="card shadow mb-4">
                         <button type="button" class="card-header border-0 py-3" onclick="pagamentos()">
                             <h6 class="text-primary font-weight-bold m-0">Pagamentos</h6>
-                        </button>
-                    </div>
-                    <div class="card shadow mb-4">
-                        <button TYPE="button" class="card-header border-0 py-3" onclick="registros()">
-                            <h6 class="text-primary font-weight-bold m-0">Registros</h6>
                         </button>
                     </div>
                     <div class="card shadow mb-4">

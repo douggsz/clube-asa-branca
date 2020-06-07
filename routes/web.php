@@ -15,6 +15,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'PagesController@paginainicial');
 Route::get('/socios', 'PagesController@paginaInicial')->name('inicio');
+Route::get('/socios/presencas', 'PagesController@presencas')->name('presenca');
+Route::get('/socios/registros', 'PagesController@registros')->name('registro');
+
 Route::get('/socios/{id}', function ($id){
     $socios = new App\Socio();
     $listasocios = $socios::all();
@@ -22,16 +25,6 @@ Route::get('/socios/{id}', function ($id){
     if (isset($socio)) {
         return view('profile', compact('socio'));
     } else{
-        return view('inicio');
-    }
-});
-Route::get('/socios/presencas/{id}', function ($id){
-    $presencas = new App\Presenca();
-    $listapresencas = $presencas::all();
-    $lista = $listapresencas->find('socio_id', $id);
-    if (isset($lista)){
-        return view('presencas', compact('lista'));
-    } else {
         return view('inicio');
     }
 });

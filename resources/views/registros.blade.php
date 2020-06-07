@@ -1,5 +1,5 @@
 @extends('layout.app')
-@section('titulo', 'Presenças')
+@section('titulo', 'Registros')
 @section('barraLateral')
     @component('components.barraLateral')
     @endcomponent
@@ -11,7 +11,7 @@
                 <div class="shadow card">
                     <div class="modal-header">
                         <div>
-                            <h5 class="modal-title">Lista de presenças</h5>
+                            <h5 class="modal-title">Registros</h5>
                         </div>
                     </div>
                     <div class="modal-body">
@@ -20,9 +20,8 @@
                             <tr>
                                 <th>Nome</th>
                                 <th>Nº CR</th>
-                                <th>Calibre</th>
-                                <th>Tiros</th>
-                                <th>Data</th>
+                                <th>Expedição</th>
+                                <th>Validade</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -32,9 +31,8 @@
                             <tr>
                                 <th>Nome</th>
                                 <th>Nº CR</th>
-                                <th>Calibre</th>
-                                <th>Tiros</th>
-                                <th>Data</th>
+                                <th>Expedição</th>
+                                <th>Validade</th>
                             </tr>
                             </tfoot>
                         </table>
