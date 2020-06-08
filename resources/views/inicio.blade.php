@@ -21,14 +21,13 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @isset($socios)
-                        @foreach($socios as $s)
                             <tr>
-                                <td><img class="rounded-circle mr-2" width="30" height="30" src="{{asset('img/avatars/avatar1.jpeg')}}">
-                                    <a href="{{ 'socios/ . $s->id' }}">Teste</a></td>
+                                <td>
+                                    <img class="rounded-circle mr-2" width="30" height="30" src="{{asset('img/avatars/avatar1.jpeg')}}">
+                                    <a href="{{ 'socios/ . $s->id' }}">Teste</a>
+                                </td>
                                 <td>{{ '$s->n_associado' }}</td>
-                            <tr></tr>
-                            <tr></tr>
+                            <tr>
                         </tbody>
                         <tfoot>
                         <tr>
@@ -36,20 +35,11 @@
                             <td><strong>Nº Associado</strong></td>
                         </tr>
                         </tfoot>
-                            </tr>
-                        @endforeach
-                        @else
-                            <tr>
-                                <td>
-                                    <h4>Não há socios</h4>
-                                </td>
-                            </tr>
-                        @endisset
                     </table>
                 </div>
                 <div class="row">
                     <div class="col-md-6 align-self-center">
-                        <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">Numero de socios: {{ '$socios->count()' }}</p>
+                        <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">Numero de socios: </p>
                         <div class="form-group">
                             <button class="btn btn-primary btn-sm" onclick="mostraNovoUsuario()">Novo</button>
                         </div>
@@ -108,6 +98,24 @@
 @endsection
 @section('javascript')
     <SCRIPT type="text/javascript">
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': "{{ csrf_token() }}"
+            }
+        })
+
+        function carregaSocios() {
+
+            $.getJSON('/api/socios', function (data) {
+                $('#dataTable_info').append(data.length)
+
+
+            })
+
+        }
+
+
         function mostraNovoUsuario() {
             $('#barraLateral').hide();
             $('#corpo').hide();

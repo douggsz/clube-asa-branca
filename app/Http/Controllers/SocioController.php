@@ -10,7 +10,8 @@ class SocioController extends Controller
 
     public function index()
     {
-        //
+        $lista = Socio::all();
+        return json_encode($lista);
     }
     public function lista(){
         $lista = Socio::all();
