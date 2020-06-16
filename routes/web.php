@@ -17,7 +17,6 @@ Route::get('/', 'PagesController@paginainicial');
 Route::get('/socios', 'PagesController@paginaInicial')->name('inicio');
 Route::get('/socios/presencas', 'PagesController@presencas')->name('presenca');
 Route::get('/socios/registros', 'PagesController@registros')->name('registro');
-
 Route::get('/socios/{id}', function ($id){
     $socios = new App\Socio();
     $listasocios = $socios::all();

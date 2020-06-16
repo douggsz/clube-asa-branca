@@ -9,9 +9,9 @@ class PagesController extends Controller
 {
     public function paginaInicial(){
 
-        $socios = Socio::all();
+        $listaSocios = Socio::all();
 
-        return view('inicio');//, compact('socios'))
+        return view('inicio', compact('listaSocios'));
 
     }
      public function presencas(){
