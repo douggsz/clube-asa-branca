@@ -81,14 +81,14 @@
                                 <div>
                                     <div>
                                         <p><input class="form-control" type="text" placeholder="Nome" name="nome" id="nome" required></p>
-                                        <p><input class="form-control" type="email" placeholder="Apelido" name="apelido" id="apelido"></p>
+                                        <p><input class="form-control" type="text" placeholder="Apelido" name="apelido" id="apelido"></p>
                                         <p><input class="form-control" type="text" placeholder="Nº Associado" name="n_associado" id="n_associado" required></p>
                                         <p><input class="form-control" type="text" placeholder="Nascimento" name="nascimento" id="nascimento"></p>
                                         <p><input class="form-control" type="text" placeholder="Sexo" name="sexo" id="sexo"></p>
                                         <p><input class="form-control" type="text" placeholder="RG" name="rg" id="rg"></p>
                                         <p><input class="form-control" type="text" placeholder="CPF" name="cpf" id="cpf"></p>
-                                        <p><input class="form-control" type="text" placeholder="Numero celular" name="tcelular" id="tcelular"></p>
-                                        <p><input class="form-control" type="text" placeholder="Nº CR" name="ncr" id="ncr"></p>
+                                        <p><input class="form-control" type="text" placeholder="Numero celular" name="n_celular" id="n_celular"></p>
+                                        <p><input class="form-control" type="text" placeholder="Nº CR" name="n_cr" id="n_cr"></p>
                                     </div>
                                 </div>
                                 </div>

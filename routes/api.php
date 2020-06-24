@@ -12,3 +12,5 @@ Route::get('/socios/presencas','PresencasController@listaJSON');
 Route::resource('socios','SocioController');
 Route::resource('pagamentos','PayController');
 Route::resource('presencas','PresencasController');
+Route::resource('contatos', 'ContactController');
+Route::resource('enderecos','AddressController');

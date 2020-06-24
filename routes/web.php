@@ -27,3 +27,6 @@ Route::get('/socios/{id}', function ($id){
         return view('inicio');
     }
 });
+Route::post('/socios/{id}', 'SocioController@update');
+Route::post('/contatos/{id}','ContactController@update');
+Route::post('/enderecos/{id}','AddressController@update');

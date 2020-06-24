@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Registro extends Model
 {
     use SoftDeletes;
+
+    public function socio(){
+        $this->belongsTo('App/Socio');
+    }
 }
