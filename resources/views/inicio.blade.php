@@ -26,7 +26,8 @@
                                 @foreach($listaSocios as $socio)
                                     <tr>
                                         <td>
-                                        <a href="{{'/socios/'.$socio->id}}">{{$socio->nome}}</a></td>
+                                            <img class="rounded-circle mr-2" width="30" height="30" src="{{ asset('/storage/'. $socio->foto->img) }}" />
+                                            <a href="{{'/socios/'.$socio->id}}">{{$socio->nome}}</a></td>
                                         <td>{{$socio->n_associado}}</td>
                                     </tr>
                                 @endforeach
@@ -50,22 +51,20 @@
                         <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">
                             {{ 'Numero de socios: ' . \App\Socio::all()->count() }}
                         </p>
-                        <div class="form-group">
-                            <button class="btn btn-primary btn-sm" onclick="mostraNovoUsuario()">Novo</button>
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary btn-sm shadow" onclick="mostraNovoUsuario()">Novo</button>
+        </div>
     </div>
     </div>
     <div class="modal" tabindex="-1" id="novoUsuario">
-        <form id="formNovoSocio" method="post" action="/api/socios">
+        <form id="formNovoSocio" method="post" action="/api/socios" enctype="multipart/form-data">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <img height="50%" src="{{asset('img/avatars/avatar2.jpeg')}}"/>
-                    <span><input type="file" name="foto"></span>
                     <div>
                         <h5 class="modal-title">Novo Socio</h5>
                     </div>
@@ -80,6 +79,10 @@
                             <div id="socioInfo">
                                 <div>
                                     <div>
+                                        <p><div class="custom-file">
+                                            <input type="file" class="custom-file-input" name="foto" id="foto" accept=".jpg,.jpeg,.png">
+                                            <label class="custom-file-label" for="customFile">Selecionar foto</label>
+                                        </div></p>
                                         <p><input class="form-control" type="text" placeholder="Nome" name="nome" id="nome" required></p>
                                         <p><input class="form-control" type="text" placeholder="Apelido" name="apelido" id="apelido"></p>
                                         <p><input class="form-control" type="text" placeholder="Nº Associado" name="n_associado" id="n_associado" required></p>

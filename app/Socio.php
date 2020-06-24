@@ -18,4 +18,7 @@ class Socio extends Model
     public function registro(){
         return $this->hasOne('App\Registro');
     }
+    public function foto(){
+        return $this->hasOne('App\Foto');
+    }
 }

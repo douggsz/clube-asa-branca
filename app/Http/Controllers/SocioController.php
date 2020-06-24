@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Contato;
 use App\Endereco;
+use App\Foto;
 use App\Registro;
 use App\Socio;
 use Illuminate\Http\Request;
@@ -57,6 +58,11 @@ class SocioController extends Controller
         $novoSocioEndereco = new Endereco();
         $novoSocio->endereco()->save($novoSocioEndereco);
 
+        $novoSocioFoto = new Foto();
+        $foto = $request->file('foto')->store('img', 'public');
+        $novoSocioFoto->img = $foto;
+        $novoSocio->foto()->save($novoSocioFoto);
+
         return redirect()->action('PagesController@paginainicial');
     }
     public function show($id)
@@ -69,7 +75,9 @@ class SocioController extends Controller
     }
     public function update(Request $request, $id)
     {
+
         $atualizaSocio = Socio::all()->find($id);
+
         $atualizaSocio->nome = $request->nome;
         $atualizaSocio->apelido = $request->apelido;
         $atualizaSocio->n_associado = $request->n_associado;
@@ -78,6 +86,7 @@ class SocioController extends Controller
         $atualizaSocio->cpf = $request->cpf;
         $atualizaSocio->sexo = $request->sexo;
         $atualizaSocio->save();
+
         return redirect('/socios/'. $id);
     }
     public function destroy($id)

@@ -12,9 +12,15 @@
                 <div class="col-lg-4">
                     <div class="card mb-4">
                         <div class="card-body text-center shadow">
-                            <img class="rounded-circle mb-3 mt-4" src="{{asset('img/dogs/image2.jpeg')}}" width="160" height="160">
-                            <div class="mb-3">
-                                <button class="btn btn-primary btn-sm" onclick="#" type="button">Mudar foto</button></div>
+                            <img class="rounded-circle mb-3 mt-4" src="{{ asset('storage/'. $socio->foto->img )}}" width="160" height="160">
+                            <div class="custom-file">
+                                <form action="/fotos/{{ $socio->foto->id }}" method="POST" enctype="multipart/form-data">
+                                    @csrf
+                                    <input type="file" class="custom-file-input" name="foto" id="foto" accept=".jpg,.jpeg,.png">
+                                    <label class="custom-file-label" for="customFile">Mudar foto</label>
+                                    <br><br><button class="btn btn-primary">Salvar</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                     <input type="hidden" value="{{ $socio->id }}" id="idSocio">

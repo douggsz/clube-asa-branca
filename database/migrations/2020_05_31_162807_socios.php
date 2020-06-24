@@ -22,7 +22,6 @@ class Socios extends Migration
             $table->string('cpf',20)->nullable();
             $table->string('rg',20)->nullable();
             $table->string('sexo',20)->nullable();
-            $table->string('foto',50)->nullable();
             $table->SoftDeletes();
             $table->timestamps();
         });
