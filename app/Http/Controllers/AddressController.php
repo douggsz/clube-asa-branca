@@ -31,13 +31,13 @@ class AddressController extends Controller
     public function update(Request $request, $id)
     {
         $atualizarEndereco = Endereco::all()->find($id);
-        $atualizarEndereco->rua = $request->rua;
-        $atualizarEndereco->numero = $request->numero;
-        $atualizarEndereco->bairro = $request->bairro;
-        $atualizarEndereco->cidade = $request->cidade;
-        $atualizarEndereco->uf = $request->uf;
-        $atualizarEndereco->cep = $request->cep;
-        $atualizarEndereco->mail = $request->mail;
+        $atualizarEndereco->rua     = strtoupper($request->rua);
+        $atualizarEndereco->numero  = strtoupper($request->numero);
+        $atualizarEndereco->bairro  = strtoupper($request->bairro);
+        $atualizarEndereco->cidade  = strtoupper($request->cidade);
+        $atualizarEndereco->uf      = strtoupper($request->uf);
+        $atualizarEndereco->cep     = strtoupper($request->cep);
+        $atualizarEndereco->mail    = strtoupper($request->mail);
         $atualizarEndereco->save();
         return redirect('/socios/'. $atualizarEndereco->socio_id);
     }

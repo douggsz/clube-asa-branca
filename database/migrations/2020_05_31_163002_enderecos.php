@@ -18,8 +18,8 @@ class Enderecos extends Migration
             $table->unsignedBigInteger('socio_id');
             $table->string('rua', 50)->nullable();
             $table->string('numero', 10)->nullable();
-            $table->string('cidade', 20)->nullable();
-            $table->string('bairro', 20)->nullable();
+            $table->string('cidade', 50)->nullable();
+            $table->string('bairro', 50)->nullable();
             $table->string('uf', 20)->nullable();
             $table->string('cep', 15)->nullable();
             $table->string('mail', 50)->nullable();

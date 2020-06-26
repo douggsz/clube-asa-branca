@@ -86,12 +86,17 @@
                                         <p><input class="form-control" type="text" placeholder="Nome" name="nome" id="nome" required></p>
                                         <p><input class="form-control" type="text" placeholder="Apelido" name="apelido" id="apelido"></p>
                                         <p><input class="form-control" type="text" placeholder="Nº Associado" name="n_associado" id="n_associado" required></p>
-                                        <p><input class="form-control" type="text" placeholder="Nascimento" name="nascimento" id="nascimento"></p>
-                                        <p><input class="form-control" type="text" placeholder="Sexo" name="sexo" id="sexo"></p>
-                                        <p><input class="form-control" type="text" placeholder="RG" name="rg" id="rg"></p>
-                                        <p><input class="form-control" type="text" placeholder="CPF" name="cpf" id="cpf"></p>
-                                        <p><input class="form-control" type="text" placeholder="Numero celular" name="n_celular" id="n_celular"></p>
+                                        <p>
+                                        @component('components.seletorSexo')
+                                        @endcomponent
+                                        </p>
+                                        <p><input class="form-control" type="text" maxlength="10" placeholder="NASCIMENTO" name="nascimento" id="nascimento"></p>
+                                        <p><input class="form-control" type="text" maxlength="10" placeholder="RG" name="rg" id="rg"></p>
+                                        <p><input class="form-control" type="text" maxlength="14" placeholder="CPF" name="cpf" id="cpf"></p>
+                                        <p><input class="form-control" type="text" maxlength="11" placeholder="Numero celular" name="n_celular" id="n_celular"></p>
                                         <p><input class="form-control" type="text" placeholder="Nº CR" name="n_cr" id="n_cr"></p>
+                                        <p><input class="form-control" type="text" maxlength="10" data-mask="00/00/0000" placeholder="Data Expedição" name="data_expedicao" id="data_expedicao"></p>
+                                        <p><input class="form-control" type="text" maxlength="10" data-mask="00/00/0000" placeholder="Validade" name="data_validade" id="data_validade"></p>
                                     </div>
                                 </div>
                                 </div>
@@ -115,13 +120,7 @@
                 'X-CSRF-TOKEN': "{{ csrf_token() }}"
             }
         })
-        function novoSocio(){
-            novo = {
-                n_associado: $('#nassociado').val(),
-                nome:$('#nome').val()
-            }
-            return novo;
-        }
+
         function salvaSocio() {
         }
         function mostraNovoUsuario() {

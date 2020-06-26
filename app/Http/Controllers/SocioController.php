@@ -38,11 +38,11 @@ class SocioController extends Controller
 
         $novoSocio = new Socio();
 
-        $novoSocio->nome        = $request->nome;
-        $novoSocio->apelido     = $request->apelido;
-        $novoSocio->n_associado = $request->n_associado;
+        $novoSocio->nome        = strtoupper($request->nome);
+        $novoSocio->apelido     = strtoupper($request->apelido);
+        $novoSocio->n_associado = strtoupper($request->n_associado);
         $novoSocio->nascimento  = $request->nascimento;
-        $novoSocio->sexo        = $request->sexo;
+        $novoSocio->sexo        = strtoupper($request->sexo);
         $novoSocio->rg          = $request->rg;
         $novoSocio->cpf         = $request->cpf;
         $novoSocio->save();
@@ -53,6 +53,8 @@ class SocioController extends Controller
 
         $novoSocioRegistro = new Registro();
         $novoSocioRegistro->n_cr = $request->n_cr;
+        $novoSocioRegistro->data_expedicao = $request->data_expedicao;
+        $novoSocioRegistro->data_validade = $request->data_validade;
         $novoSocio->registro()->save($novoSocioRegistro);
 
         $novoSocioEndereco = new Endereco();
@@ -78,13 +80,13 @@ class SocioController extends Controller
 
         $atualizaSocio = Socio::all()->find($id);
 
-        $atualizaSocio->nome = $request->nome;
-        $atualizaSocio->apelido = $request->apelido;
+        $atualizaSocio->nome        = strtoupper($request->nome);
+        $atualizaSocio->apelido     = strtoupper($request->apelido);
         $atualizaSocio->n_associado = $request->n_associado;
-        $atualizaSocio->nascimento = $request->nascimento;
-        $atualizaSocio->rg = $request->rg;
-        $atualizaSocio->cpf = $request->cpf;
-        $atualizaSocio->sexo = $request->sexo;
+        $atualizaSocio->nascimento  = strtoupper($request->nascimento);
+        $atualizaSocio->rg          = $request->rg;
+        $atualizaSocio->cpf         = $request->cpf;
+        $atualizaSocio->sexo        = strtoupper($request->sexo);
         $atualizaSocio->save();
 
         return redirect('/socios/'. $id);

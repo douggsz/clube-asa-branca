@@ -79,7 +79,11 @@
                                                 <div class="form-group"><label><strong>CPF</strong></label><input class="form-control" type="text" @isset($socio->cpf) value="{{$socio->cpf}}" @endif placeholder="CPF" name="cpf" id="cpf"></div>
                                             </div>
                                             <div class="col">
-                                                <div class="form-group"><label><strong>Sexo</strong></label><input class="form-control" type="text" @isset($socio->sexo) value="{{$socio->sexo}}" @endif placeholder="Sexo" name="sexo" id="sexo"></div>
+                                                <div class="form-group"><label><strong>Sexo</strong></label>
+                                                    @component('components.seletorSexo')
+                                                    {{$socio->sexo}}
+                                                    @endcomponent
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="form-group"><button class="btn btn-primary btn-sm">Salvar</button></div>
