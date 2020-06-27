@@ -30,6 +30,11 @@
                         </button>
                     </div>
                     <div class="card shadow mb-4">
+                        <button type="button" class="card-header border-0 py-3" onclick="pagamentos()">
+                            <h6 class="text-primary font-weight-bold m-0">Registros</h6>
+                        </button>
+                    </div>
+                    <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             <h6 class="text-primary font-weight-bold m-0">Telefones</h6>
                         </div>

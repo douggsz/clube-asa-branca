@@ -22,6 +22,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="{{asset('img/icons/favicon-32x32.png')}}">
     <link rel="icon" type="image/png" sizes="96x96" href="{{asset('img/icons/favicon-96x96.png')}}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{asset('img/icons/favicon-16x16.png')}}">
+    <link href="{{asset('css/addons/datatables.min.css')}}" rel="stylesheet">
     <link rel="manifest" href="{{asset('img/icons/manifest.json')}}">
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
@@ -61,12 +62,14 @@
                 <div class="text-center my-auto copyright"><span>Asa Branca {{ date('Y') }}</span></div>
             </div>
         </footer>
-    </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a></div>
+    </div>
+    </div>
 <script src="{{ asset('js/jquery.min.js') }}"></script>
 <script src="{{ asset('bootstrap/js/bootstrap.min.js')  }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
 <script src="{{ asset('js/theme.js') }}"></script>
 <script src="{{ asset('js/app.js') }}"></script>
+<script type="text/javascript" src="{{asset('js/addons/datatables.min.js')}}"></script>
 @yield('javascript')
 </body>
 

@@ -12,7 +12,7 @@
             </div>
             <div class="card-body">
                 <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
-                    <table class="table my-0" id="dataTable">
+                    <table class="table my-0 table-hover" id="sociosTable">
                         <thead>
                         <tr>
                             <th>Nome</th>
@@ -48,9 +48,6 @@
                 </div>
                 <div class="row">
                     <div class="col-md-6 align-self-center">
-                        <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">
-                            {{ 'Numero de socios: ' . \App\Socio::all()->count() }}
-                        </p>
                     </div>
                 </div>
             </div>
@@ -79,10 +76,17 @@
                             <div id="socioInfo">
                                 <div>
                                     <div>
-                                        <p><div class="custom-file">
-                                            <input type="file" class="custom-file-input" name="foto" id="foto" accept=".jpg,.jpeg,.png">
-                                            <label class="custom-file-label" for="customFile">Selecionar foto</label>
-                                        </div></p>
+                                        <p>
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="inputGroupFileAddon01">Foto</span>
+                                                </div>
+                                                <div class="custom-file">
+                                                    <input type="file" class="custom-file-input" name="foto" id="foto" accept=".jpg,.jpeg,.png" aria-describedby="inputGroupFileAddon01">
+                                                    <label class="custom-file-label" for="customFile">Selecionar foto</label>
+                                                </div>
+                                            </div>
+                                        </p>
                                         <p><input class="form-control" type="text" placeholder="Nome" name="nome" id="nome" required></p>
                                         <p><input class="form-control" type="text" placeholder="Apelido" name="apelido" id="apelido"></p>
                                         <p><input class="form-control" type="text" placeholder="Nº Associado" name="n_associado" id="n_associado" required></p>
@@ -90,7 +94,7 @@
                                         @component('components.seletorSexo')
                                         @endcomponent
                                         </p>
-                                        <p><input class="form-control" type="text" maxlength="10" placeholder="NASCIMENTO" name="nascimento" id="nascimento"></p>
+                                        <p><input class="form-control" type="text" maxlength="10" placeholder="Nascimento" name="nascimento" id="nascimento"></p>
                                         <p><input class="form-control" type="text" maxlength="10" placeholder="RG" name="rg" id="rg"></p>
                                         <p><input class="form-control" type="text" maxlength="14" placeholder="CPF" name="cpf" id="cpf"></p>
                                         <p><input class="form-control" type="text" maxlength="11" placeholder="Numero celular" name="n_celular" id="n_celular"></p>
@@ -121,8 +125,10 @@
             }
         })
 
-        function salvaSocio() {
-        }
+
+        $('#sociosTable').DataTable();
+        $('.dataTables_length').addClass('bs-select');
+
         function mostraNovoUsuario() {
             $('#barraLateral').hide();
             $('#corpo').hide();
@@ -133,5 +139,6 @@
             $('#corpo').show()
             $('#novoUsuario').hide()
         }
+
     </SCRIPT>
 @endsection

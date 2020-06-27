@@ -14,9 +14,6 @@
             <li class="nav-item">
                 <a class="nav-link active" href="{{ route('presenca') }}">
                     <i class="fas fa-tachometer-alt"></i><span>Presenças</span></a></li>
-            <li class="nav-item">
-                <a class="nav-link active" href="{{ route('registro') }}">
-                    <i class="fas fa-tachometer-alt"></i><span>Registros</span></a></li>
         </ul>
     </div>
 </nav>
