@@ -22,20 +22,21 @@
                         </thead>
                         <tbody>
 
-                            @isset($listaSocios)
-                                @foreach($listaSocios as $socio)
-                                    <tr>
-                                        <td>
-                                            <img class="rounded-circle mr-2" width="30" height="30" src="{{ asset('/storage/'. $socio->foto->img) }}" />
-                                            <a href="{{'/socios/'.$socio->id}}">{{$socio->nome}}</a></td>
-                                        <td>{{$socio->n_associado}}</td>
-                                    </tr>
-                                @endforeach
-                            @else
+                        @isset($listaSocios)
+                            @foreach($listaSocios as $socio)
                                 <tr>
-                                    <h3> Não há socios</h3>
+                                    <td>
+                                        <img class="rounded-circle mr-2" width="30" height="30"
+                                             src="{{ asset('/storage/'. $socio->foto->img) }}"/>
+                                        <a href="{{'/socios/'.$socio->id}}">{{$socio->nome}}</a></td>
+                                    <td>{{$socio->n_associado}}</td>
                                 </tr>
-                            @endif
+                            @endforeach
+                        @else
+                            <tr>
+                                <h3> Não há socios</h3>
+                            </tr>
+                        @endif
 
                         </tbody>
                         <tfoot>
@@ -58,8 +59,7 @@
     </div>
     </div>
     <div class="modal" tabindex="-1" id="novoUsuario">
-        <form id="formNovoSocio" method="post" action="/api/socios" enctype="multipart/form-data">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <div>
@@ -77,43 +77,60 @@
                                 <div>
                                     <div>
                                         <p>
+                                        <form id="formNovoSocio" method="post" action="/api/socios"
+                                              enctype="multipart/form-data">
                                             <div class="input-group mb-3">
                                                 <div class="input-group-prepend">
-                                                    <span class="input-group-text" id="inputGroupFileAddon01">Foto</span>
+                                                    <span class="input-group-text"
+                                                          id="inputGroupFileAddon01">Foto</span>
                                                 </div>
                                                 <div class="custom-file">
-                                                    <input type="file" class="custom-file-input" name="foto" id="foto" accept=".jpg,.jpeg,.png" aria-describedby="inputGroupFileAddon01">
-                                                    <label class="custom-file-label" for="customFile">Selecionar foto</label>
+                                                    <input type="file" class="custom-file-input" name="foto" id="foto"
+                                                           accept=".jpg,.jpeg,.png"
+                                                           aria-describedby="inputGroupFileAddon01">
+                                                    <label class="custom-file-label" for="customFile">Selecionar
+                                                        foto</label>
                                                 </div>
                                             </div>
                                         </p>
-                                        <p><input class="form-control" type="text" placeholder="Nome" name="nome" id="nome" required></p>
-                                        <p><input class="form-control" type="text" placeholder="Apelido" name="apelido" id="apelido"></p>
-                                        <p><input class="form-control" type="text" placeholder="Nº Associado" name="n_associado" id="n_associado" required></p>
+                                        <p><input class="form-control" type="text" placeholder="Nome" name="nome"
+                                                  id="nome" required></p>
+                                        <p><input class="form-control" type="text" placeholder="Apelido" name="apelido"
+                                                  id="apelido"></p>
+                                        <p><input class="form-control" type="text" placeholder="Nº Associado"
+                                                  name="n_associado" id="n_associado" required></p>
                                         <p>
-                                        @component('components.seletorSexo')
-                                        @endcomponent
+                                            @component('components.seletorSexo')
+                                            @endcomponent
                                         </p>
-                                        <p><input class="form-control" type="text" maxlength="10" placeholder="Nascimento" name="nascimento" id="nascimento"></p>
-                                        <p><input class="form-control" type="text" maxlength="10" placeholder="RG" name="rg" id="rg"></p>
-                                        <p><input class="form-control" type="text" maxlength="14" placeholder="CPF" name="cpf" id="cpf"></p>
-                                        <p><input class="form-control" type="text" maxlength="11" placeholder="Numero celular" name="n_celular" id="n_celular"></p>
-                                        <p><input class="form-control" type="text" placeholder="Nº CR" name="n_cr" id="n_cr"></p>
-                                        <p><input class="form-control" type="text" maxlength="10" data-mask="00/00/0000" placeholder="Data Expedição" name="data_expedicao" id="data_expedicao"></p>
-                                        <p><input class="form-control" type="text" maxlength="10" data-mask="00/00/0000" placeholder="Validade" name="data_validade" id="data_validade"></p>
+                                        <p><input class="form-control" type="text" maxlength="10"
+                                                  placeholder="Nascimento" name="nascimento" id="nascimento"></p>
+                                        <p><input class="form-control" type="text" maxlength="10" placeholder="RG"
+                                                  name="rg" id="rg"></p>
+                                        <p><input class="form-control" type="text" maxlength="14" placeholder="CPF"
+                                                  name="cpf" id="cpf"></p>
+                                        <p><input class="form-control" type="text" maxlength="11"
+                                                  placeholder="Numero celular" name="n_celular" id="n_celular"></p>
+                                        <p><input class="form-control" type="text" placeholder="Nº CR" name="n_cr"
+                                                  id="n_cr"></p>
+                                        <p><input class="form-control" type="text" maxlength="10" data-mask="00/00/0000"
+                                                  placeholder="Data Expedição" name="data_expedicao"
+                                                  id="data_expedicao"></p>
+                                        <p><input class="form-control" type="text" maxlength="10" data-mask="00/00/0000"
+                                                  placeholder="Validade" name="data_validade" id="data_validade"></p>
                                     </div>
                                 </div>
-                                </div>
+                            </div>
                             <button type="submit" class="btn btn-primary">Salvar</button>
                             <button type="reset" class="btn btn-secondary">Limpar</button>
-                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer">
-                </div>
             </div>
-    </form>
+            <div class="modal-footer">
+            </div>
+        </div>
+        </form>
     </div>
 @endsection
 @section('javascript')
@@ -134,6 +151,7 @@
             $('#corpo').hide();
             $('#novoUsuario').show();
         }
+
         function fecha() {
             $('#barraLateral').show();
             $('#corpo').show()

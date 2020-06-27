@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Registro;
 use App\Socio;
 use Illuminate\Http\Request;
 
@@ -16,12 +17,11 @@ class PagesController extends Controller
     }
      public function presencas(){
 
-        return view('presencas');
+        $socios = Registro::all()
+            ->where('n_cr', '<>','0')
+            ->whereNotNull('n_cr');
 
-     }
-     public function registros(){
-
-        return view('registros');
+        return view('presencas', compact('socios'));
 
      }
 

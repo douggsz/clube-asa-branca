@@ -12,13 +12,17 @@
                 <div class="col-lg-4">
                     <div class="card mb-4">
                         <div class="card-body text-center shadow">
-                            <img class="rounded-circle mb-3 mt-4" src="{{ asset('storage/'. $socio->foto->img )}}" width="160" height="160">
+                            <img class="rounded-circle mb-3 mt-4" src="{{ asset('storage/'. $socio->foto->img )}}"
+                                 width="160" height="160">
                             <div class="custom-file">
-                                <form action="/fotos/{{ $socio->foto->id }}" method="POST" enctype="multipart/form-data">
+                                <form action="/fotos/{{ $socio->foto->id }}" method="POST"
+                                      enctype="multipart/form-data">
                                     @csrf
-                                    <input type="file" class="custom-file-input" name="foto" id="foto" accept=".jpg,.jpeg,.png">
+                                    <input type="file" class="custom-file-input" name="foto" id="foto"
+                                           accept=".jpg,.jpeg,.png">
                                     <label class="custom-file-label" for="customFile">Mudar foto</label>
-                                    <br><br><button class="btn btn-primary">Salvar</button>
+                                    <br><br>
+                                    <button class="btn btn-primary">Salvar</button>
                                 </form>
                             </div>
                         </div>
@@ -30,9 +34,43 @@
                         </button>
                     </div>
                     <div class="card shadow mb-4">
-                        <button type="button" class="card-header border-0 py-3" onclick="pagamentos()">
+                        <button type="button" class="btn border-0 py-3" data-toggle="collapse"
+                                href="#registroSocio" aria-expanded="true"
+                                aria-controls="collapseExample" data-target="#registroSocio">
                             <h6 class="text-primary font-weight-bold m-0">Registros</h6>
                         </button>
+                        <div class="collapse" id="registroSocio">
+                            <div class="form-group">
+                                <div class="card-body">
+                                    <form id="formTelefones" action="/registros/{{$socio->contato->id}}" method="POST">
+                                        @csrf
+                                        <div class="form-group"><label
+                                                for="address"><strong>Nº registro</strong></label><input
+                                                class="form-control" type="text"
+                                                @isset($socio->registro->n_cr) value="{{$socio->registro->n_cr}}"
+                                                @endif placeholder="Nº registro" name="n_cr" id="n_cr">
+                                        </div>
+                                        <div class="form-group"><label for="address"><strong>Data
+                                                    expedição</strong></label><input
+                                                class="form-control" type="text"
+                                                @isset($socio->registro->data_expedicao)
+                                                value="{{$socio->registro->data_expedicao}}"
+                                                @endif placeholder="Data Expedição" name="data_expedicao"
+                                                id="data_expedicao"></div>
+                                        <div class="form-group"><label for="address"><strong>Data
+                                                    Validade</strong></label><input
+                                                class="form-control" type="text"
+                                                @isset($socio->registro->data_validade)
+                                                value="{{$socio->registro->data_validade}}"
+                                                @endif placeholder="Telefone Fixo" name="data_validade"
+                                                id="data_validade"></div>
+                                        <div class="form-group">
+                                            <button class="btn btn-primary btn-sm">Salvar</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
@@ -41,9 +79,17 @@
                         <div class="card-body">
                             <form id="formTelefones" action="/contatos/{{$socio->contato->id}}" method="POST">
                                 @csrf
-                                <div class="form-group"><label for="address"><strong>Celular</strong></label><input class="form-control" type="text" @isset($socio->contato->n_celular) value="{{$socio->contato->n_celular}}" @endif placeholder="Numero celular" name="n_celular" id="n_celular"></div>
-                                <div class="form-group"><label for="address"><strong>Fixo</strong></label><input class="form-control" type="text" @isset($socio->contato->n_fixo) value="{{$socio->contato->n_fixo}}" @endif placeholder="Telefone Fixo" name="n_fixo" id="n_fixo"></div>
-                                <div class="form-group"><button class="btn btn-primary btn-sm">Salvar</button></div>
+                                <div class="form-group"><label for="address"><strong>Celular</strong></label><input
+                                        class="form-control" type="text"
+                                        @isset($socio->contato->n_celular) value="{{$socio->contato->n_celular}}"
+                                        @endif placeholder="Numero celular" name="n_celular" id="n_celular"></div>
+                                <div class="form-group"><label for="address"><strong>Fixo</strong></label><input
+                                        class="form-control" type="text"
+                                        @isset($socio->contato->n_fixo) value="{{$socio->contato->n_fixo}}"
+                                        @endif placeholder="Telefone Fixo" name="n_fixo" id="n_fixo"></div>
+                                <div class="form-group">
+                                    <button class="btn btn-primary btn-sm">Salvar</button>
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -60,38 +106,63 @@
                                         @csrf
                                         <div class="form-row">
                                             <div class="col">
-                                                <div class="form-group"><label><strong>Nome</strong></label><input class="form-control" type="text" @isset($socio->nome) value="{{$socio->nome}}" @endif placeholder="Nome" name="nome" id="nome" required></div>
+                                                <div class="form-group"><label><strong>Nome</strong></label><input
+                                                        class="form-control" type="text"
+                                                        @isset($socio->nome) value="{{$socio->nome}}"
+                                                        @endif placeholder="Nome" name="nome" id="nome" required></div>
                                             </div>
                                             <div class="col">
-                                                <div class="form-group"><label><strong>Apelido</strong></label><input class="form-control" type="text" @isset($socio->apelido) value="{{$socio->apelido}}" @endif placeholder="Apelido" name="apelido" id="apelido"></div>
-                                            </div>
-                                        </div>
-                                        <div class="form-row">
-                                            <div class="col">
-                                                <div class="form-group"><label><strong>Nº Associado</strong></label><input class="form-control" type="text" @isset($socio->n_associado) value="{{$socio->n_associado}}" @endif placeholder="Nº Associado" name="n_associado" id="n_associado" required></div>
-                                            </div>
-                                            <div class="col">
-                                                <div class="form-group"><label><strong>Nascimento</strong></label><input class="form-control" type="text" @isset($socio->nascimento) value="{{$socio->nascimento}}" @endif placeholder="Nascimento" name="nascimento" id="nascimento"></div>
+                                                <div class="form-group"><label><strong>Apelido</strong></label><input
+                                                        class="form-control" type="text"
+                                                        @isset($socio->apelido) value="{{$socio->apelido}}"
+                                                        @endif placeholder="Apelido" name="apelido" id="apelido"></div>
                                             </div>
                                         </div>
                                         <div class="form-row">
                                             <div class="col">
-                                                <div class="form-group"><label><strong>RG</strong></label><input class="form-control" type="text" @isset($socio->rg) value="{{$socio->rg}}" @endif placeholder="RG" name="rg" id="rg"></div>
+                                                <div class="form-group"><label><strong>Nº
+                                                            Associado</strong></label><input class="form-control"
+                                                                                             type="text"
+                                                                                             @isset($socio->n_associado) value="{{$socio->n_associado}}"
+                                                                                             @endif placeholder="Nº Associado"
+                                                                                             name="n_associado"
+                                                                                             id="n_associado" required>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="form-group"><label><strong>Nascimento</strong></label><input
+                                                        class="form-control" type="text"
+                                                        @isset($socio->nascimento) value="{{$socio->nascimento}}"
+                                                        @endif placeholder="Nascimento" name="nascimento"
+                                                        id="nascimento"></div>
                                             </div>
                                         </div>
                                         <div class="form-row">
                                             <div class="col">
-                                                <div class="form-group"><label><strong>CPF</strong></label><input class="form-control" type="text" @isset($socio->cpf) value="{{$socio->cpf}}" @endif placeholder="CPF" name="cpf" id="cpf"></div>
+                                                <div class="form-group"><label><strong>RG</strong></label><input
+                                                        class="form-control" type="text"
+                                                        @isset($socio->rg) value="{{$socio->rg}}"
+                                                        @endif placeholder="RG" name="rg" id="rg"></div>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col">
+                                                <div class="form-group"><label><strong>CPF</strong></label><input
+                                                        class="form-control" type="text"
+                                                        @isset($socio->cpf) value="{{$socio->cpf}}"
+                                                        @endif placeholder="CPF" name="cpf" id="cpf"></div>
                                             </div>
                                             <div class="col">
                                                 <div class="form-group"><label><strong>Sexo</strong></label>
                                                     @component('components.seletorSexo')
-                                                    {{$socio->sexo}}
+                                                        {{$socio->sexo}}
                                                     @endcomponent
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="form-group"><button class="btn btn-primary btn-sm">Salvar</button></div>
+                                        <div class="form-group">
+                                            <button class="btn btn-primary btn-sm">Salvar</button>
+                                        </div>
                                     </form>
                                 </div>
                             </div>
@@ -102,30 +173,53 @@
                                 <div class="card-body">
                                     <form id="formContato" action="/enderecos/{{$socio->endereco->id}}" method="POST">
                                         @csrf
-                                        <div class="form-group"><label><strong>Rua</strong></label><input class="form-control" type="text" @isset($socio->endereco->rua) value="{{$socio->endereco->rua}}" @endif placeholder="Rua" name="rua" id="rua"></div>
+                                        <div class="form-group"><label><strong>Rua</strong></label><input
+                                                class="form-control" type="text"
+                                                @isset($socio->endereco->rua) value="{{$socio->endereco->rua}}"
+                                                @endif placeholder="Rua" name="rua" id="rua"></div>
                                         <div class="form-row">
                                             <div class="col">
-                                                <div class="form-group"><label><strong>Numero</strong></label><input class="form-control" type="text" @isset($socio->endereco->numero) value="{{$socio->endereco->numero}}" @endif placeholder="Numero" name="numero" id="numero"></div>
+                                                <div class="form-group"><label><strong>Numero</strong></label><input
+                                                        class="form-control" type="text"
+                                                        @isset($socio->endereco->numero) value="{{$socio->endereco->numero}}"
+                                                        @endif placeholder="Numero" name="numero" id="numero"></div>
                                             </div>
                                             <div class="col">
-                                                <div class="form-group"><label><strong>Bairro</strong></label><input class="form-control" type="text" @isset($socio->endereco->bairro) value="{{$socio->endereco->bairro}}" @endif placeholder="Bairro" name="bairro" id="bairro"></div>
+                                                <div class="form-group"><label><strong>Bairro</strong></label><input
+                                                        class="form-control" type="text"
+                                                        @isset($socio->endereco->bairro) value="{{$socio->endereco->bairro}}"
+                                                        @endif placeholder="Bairro" name="bairro" id="bairro"></div>
                                             </div>
                                             <div class="col">
-                                                <div class="form-group"><label><strong>Cidade</strong></label><input class="form-control" type="text" @isset($socio->endereco->cidade) value="{{$socio->endereco->cidade}}" @endif placeholder="Cidade" name="cidade" id="cidade"></div>
+                                                <div class="form-group"><label><strong>Cidade</strong></label><input
+                                                        class="form-control" type="text"
+                                                        @isset($socio->endereco->cidade) value="{{$socio->endereco->cidade}}"
+                                                        @endif placeholder="Cidade" name="cidade" id="cidade"></div>
                                             </div>
                                             <div class="col">
-                                                <div class="form-group"><label><strong>UF</strong></label><input class="form-control" type="text" @isset($socio->endereco->uf) value="{{$socio->endereco->uf}}" @endif placeholder="UF" name="uf" id="uf"></div>
+                                                <div class="form-group"><label><strong>UF</strong></label><input
+                                                        class="form-control" type="text"
+                                                        @isset($socio->endereco->uf) value="{{$socio->endereco->uf}}"
+                                                        @endif placeholder="UF" name="uf" id="uf"></div>
                                             </div>
                                         </div>
                                         <div class="form-row">
                                             <div class="col">
-                                                <div class="form-group"><label><strong>CEP</strong></label><input class="form-control" type="text" @isset($socio->endereco->cep) value="{{$socio->endereco->cep}}" @endif placeholder="CEP" name="cep" id="cep"></div>
+                                                <div class="form-group"><label><strong>CEP</strong></label><input
+                                                        class="form-control" type="text"
+                                                        @isset($socio->endereco->cep) value="{{$socio->endereco->cep}}"
+                                                        @endif placeholder="CEP" name="cep" id="cep"></div>
                                             </div>
                                             <div class="col">
-                                                <div class="form-group"><label><strong>E-Mail</strong></label><input class="form-control" type="text" @isset($socio->endereco->mail) value="{{$socio->endereco->mail}}" @endif placeholder="E-Mail" name="mail" id="mail"></div>
+                                                <div class="form-group"><label><strong>E-Mail</strong></label><input
+                                                        class="form-control" type="text"
+                                                        @isset($socio->endereco->mail) value="{{$socio->endereco->mail}}"
+                                                        @endif placeholder="E-Mail" name="mail" id="mail"></div>
                                             </div>
                                         </div>
-                                        <div class="form-group"><button class="btn btn-primary btn-sm">Salvar</button></div>
+                                        <div class="form-group">
+                                            <button class="btn btn-primary btn-sm">Salvar</button>
+                                        </div>
                                     </form>
                                 </div>
                             </div>
@@ -144,14 +238,17 @@
             $('#corpo').hide();
             $('#novaPresenca').show();
         }
+
         function fecha() {
             $('#barraLateral').show();
             $('#corpo').show()
             $('#novaPresenca').hide()
         }
+
         function pagamentos() {
             alert('');
         }
+
         function registros() {
             alert('');
         }
