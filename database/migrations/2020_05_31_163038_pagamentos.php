@@ -6,28 +6,19 @@ use Illuminate\Support\Facades\Schema;
 
 class Pagamentos extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::create('pagamentos', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('socio_id');
+            $table->foreignId('socio_id')
+                ->constrained();
             $table->string('vencimento', 20)->nullable('false');
-            $table->foreign('socio_id')->references('id')->on('socios');
+            //$table->foreign('socio_id')->references('id')->on('socios');
             $table->SoftDeletes();
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('pagamentos');

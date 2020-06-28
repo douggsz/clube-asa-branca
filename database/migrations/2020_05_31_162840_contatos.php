@@ -6,29 +6,21 @@ use Illuminate\Support\Facades\Schema;
 
 class Contatos extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::create('contatos', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('socio_id');
+            $table->foreignId('socio_id')
+                ->constrained()
+                ->onDelete('cascade');
             $table->string('n_celular', 20)->nullable();
             $table->string('n_fixo', 20)->nullable();
-            $table->foreign('socio_id')->references('id')->on('socios');
+            //$table->foreign('socio_id')->references('id')->on('socios');
             $table->SoftDeletes();
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('contatos');

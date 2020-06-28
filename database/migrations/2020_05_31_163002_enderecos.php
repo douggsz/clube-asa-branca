@@ -6,16 +6,14 @@ use Illuminate\Support\Facades\Schema;
 
 class Enderecos extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
+
     public function up()
     {
         Schema::create('enderecos', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('socio_id');
+            $table->foreignId('socio_id')
+                ->constrained()
+                ->onDelete('cascade');
             $table->string('rua', 50)->nullable();
             $table->string('numero', 10)->nullable();
             $table->string('cidade', 50)->nullable();
@@ -23,17 +21,12 @@ class Enderecos extends Migration
             $table->string('uf', 20)->nullable();
             $table->string('cep', 15)->nullable();
             $table->string('mail', 50)->nullable();
-            $table->foreign('socio_id')->references('id')->on('socios');
+            //$table->foreign('socio_id')->references('id')->on('socios');
             $table->SoftDeletes();
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('enderecos');

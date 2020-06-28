@@ -86,7 +86,7 @@
                                                 </div>
                                                 <div class="custom-file">
                                                     <input type="file" class="custom-file-input" name="foto" id="foto"
-                                                           accept=".jpg,.jpeg,.png"
+                                                           accept=".jpg,.jpeg,.png" required
                                                            aria-describedby="inputGroupFileAddon01">
                                                     <label class="custom-file-label" for="customFile">Selecionar
                                                         foto</label>
