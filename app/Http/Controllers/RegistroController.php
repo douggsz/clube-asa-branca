@@ -9,10 +9,6 @@ class RegistroController extends Controller
 {
     public function index()
     {
-        $registros = Registro::all()
-            ->where('n_cr', '<>','0')
-            ->whereNotNull('n_cr');
-        return json_encode($registros);
     }
 
     public function create()

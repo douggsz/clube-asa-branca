@@ -18,7 +18,7 @@ class PagesController extends Controller
      public function presencas(){
 
         $socios = Registro::all()
-            ->where('n_cr', '<>','0')
+            ->where('n_cr', '>','0')
             ->whereNotNull('n_cr');
 
         return view('presencas', compact('socios'));

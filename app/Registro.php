@@ -9,7 +9,8 @@ class Registro extends Model
 {
     use SoftDeletes;
 
-    public function socio(){
-        $this->belongsTo('App/Socio');
+    function socio()
+    {
+        return $this->belongsTo('App\Socio');
     }
 }

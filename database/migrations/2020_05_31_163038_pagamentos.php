@@ -12,7 +12,7 @@ class Pagamentos extends Migration
             $table->bigIncrements('id');
             $table->foreignId('socio_id')
                 ->constrained();
-            $table->string('vencimento', 20)->nullable('false');
+            //$table->string('vencimento', 20)->nullable('false');
             //$table->foreign('socio_id')->references('id')->on('socios');
             $table->SoftDeletes();
             $table->timestamps();

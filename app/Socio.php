@@ -9,16 +9,29 @@ class Socio extends Model
 {
     use SoftDeletes;
 
-    public function endereco(){
+    public function endereco()
+    {
         return $this->hasOne('App\Endereco');
     }
-    public function contato(){
+
+    public function contato()
+    {
         return $this->hasOne('App\Contato');
     }
-    public function registro(){
+
+    public function registro()
+    {
         return $this->hasOne('App\Registro');
     }
-    public function foto(){
+
+    public function foto()
+    {
         return $this->hasOne('App\Foto');
     }
+
+    public function pagamento()
+    {
+        return $this->hasMany('App\Pagamento');
+    }
+
 }
