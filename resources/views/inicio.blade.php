@@ -21,7 +21,6 @@
                         </tr>
                         </thead>
                         <tbody>
-
                         @isset($listaSocios)
                             @foreach($listaSocios as $socio)
                                 <tr>

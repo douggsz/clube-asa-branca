@@ -34,4 +34,9 @@ class Socio extends Model
         return $this->hasMany('App\Pagamento');
     }
 
+    public function presenca()
+    {
+        return $this->hasMany('App\Presenca');
+    }
+
 }

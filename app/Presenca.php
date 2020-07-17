@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Presenca extends Model
 {
     use SoftDeletes;
+
+    function socio()
+    {
+        return $this->belongsTo('App\Socio');
+    }
 }
