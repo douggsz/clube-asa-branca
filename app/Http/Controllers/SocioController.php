@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Contato;
 use App\Endereco;
 use App\Foto;
+use App\Pagamento;
+use App\Presenca;
 use App\Registro;
 use App\Socio;
 use Illuminate\Http\Request;
@@ -104,8 +106,13 @@ class SocioController extends Controller
     public function destroy($id)
     {
 
-        $socioExcluir = Socio::all()->find($id);
-        $socioExcluir::destroy($id);
+        Contato::where('socio_id',$id)->delete();
+        Endereco::where('socio_id',$id)->delete();
+        Foto::where('socio_id',$id)->delete();
+        Pagamento::where('socio_id',$id)->delete();
+        Presenca::where('socio_id', $id)->delete();
+        Registro::where('socio_id', $id)->delete();
+        Socio::all()->find($id)->delete();
 
         return redirect()->action('PagesController@paginainicial');
 
