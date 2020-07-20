@@ -102,14 +102,15 @@
                                             @component('components.seletorSexo')
                                             @endcomponent
                                         </p>
-                                        <p><input class="form-control" type="text" maxlength="10"
+                                        <p><input class="form-control" type="text" maxlength="10" data-mask="00/00/0000"
                                                   placeholder="Nascimento" name="nascimento" id="nascimento"></p>
                                         <p><input class="form-control" type="text" maxlength="10" placeholder="RG"
                                                   name="rg" id="rg"></p>
                                         <p><input class="form-control" type="text" maxlength="14" placeholder="CPF"
-                                                  name="cpf" id="cpf"></p>
-                                        <p><input class="form-control" type="text" maxlength="11"
-                                                  placeholder="Numero celular" name="n_celular" id="n_celular"></p>
+                                                  name="cpf" id="cpf" data-mask="000.000.000-00"></p>
+                                        <p><input class="form-control " type="text" maxlength="11"
+                                                  data-mask="00000-0000" placeholder="Numero celular"
+                                                  name="n_celular" id="n_celular"></p>
                                         <p><input class="form-control" type="text" placeholder="Nº CR" name="n_cr"
                                                   id="n_cr"></p>
                                         <p><input class="form-control" type="text" maxlength="10" data-mask="00/00/0000"

@@ -67,6 +67,10 @@ class PresencasController extends Controller
 
     public function destroy($id)
     {
-        //
+        $presencaExcluir = Presenca::all()->find($id);
+        $presencaExcluir::destroy($id);
+
+        return redirect()->action('PagesController@presencas');
+
     }
 }

@@ -22,6 +22,7 @@
                             <th>Calibre</th>
                             <th>Tiros</th>
                             <th>Data</th>
+                            <th></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -33,6 +34,12 @@
                                     <td>{{$comparecimento->calibre}}</td>
                                     <td>{{$comparecimento->tiros}}</td>
                                     <td>{{$comparecimento->data}}</td>
+                                    <td>
+                                        <a class="close"
+                                           href="/socios/presencas/excluir/{{$comparecimento->id}}">
+                                            <span aria-hidden="true">x</span>
+                                        </a>
+                                    </td>
                                 </tr>
                             @endforeach
                         @endif
@@ -44,14 +51,13 @@
                             <th>Calibre</th>
                             <th>Tiros</th>
                             <th>Data</th>
+                            <th></th>
                         </tr>
                         </tfoot>
                     </table>
                 </div>
             </div>
             <div class="modal-footer">
-
-                <button class="btn btn-primary btn-sm shadow" id="passadasAlt"><a>Passadas</a></button>
                 <button class="btn btn-primary btn-sm shadow" id="mostraNovoUsuario"><a>Novo</a></button>
             </div>
         </div>
@@ -90,7 +96,7 @@
                                             <input type="hidden" value=" {{ $socios[0]->n_cr }}" name="ncr"
                                                    id="idSelecionado"></p>
                                         <p><input class="form-control" type="text" name="data" id="data"
-                                                  placeholder="Data presença"></p>
+                                                  placeholder="Data presença" data-mask="00/00/0000"></p>
                                         <div class="row">
                                             <div class="form-group col">
                                                 <input class="form-control" type="text" name="tiros" id="tiros"

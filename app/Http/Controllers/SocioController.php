@@ -11,25 +11,31 @@ use Illuminate\Http\Request;
 
 class SocioController extends Controller
 {
-    private function Regras(){
+    private function Regras()
+    {
         return [
-          'nome' => 'required|min:2|max:100',
-          'n_associado' => 'required|unique:socios'
+            'nome' => 'required|min:2|max:100',
+            'n_associado' => 'required|unique:socios'
         ];
     }
+
     public function index()
     {
         $lista = Socio::all();
         return json_encode($lista);
     }
-    public function lista(){
+
+    public function lista()
+    {
         $lista = Socio::all();
         return compact('lista');
     }
+
     public function create()
     {
         //
     }
+
     public function store(Request $request)
     {
         $request->validate(
@@ -38,17 +44,17 @@ class SocioController extends Controller
 
         $novoSocio = new Socio();
 
-        $novoSocio->nome        = strtoupper($request->nome);
-        $novoSocio->apelido     = strtoupper($request->apelido);
+        $novoSocio->nome = strtoupper($request->nome);
+        $novoSocio->apelido = strtoupper($request->apelido);
         $novoSocio->n_associado = strtoupper($request->n_associado);
-        $novoSocio->nascimento  = $request->nascimento;
-        $novoSocio->sexo        = strtoupper($request->sexo);
-        $novoSocio->rg          = $request->rg;
-        $novoSocio->cpf         = $request->cpf;
+        $novoSocio->nascimento = $request->nascimento;
+        $novoSocio->sexo = strtoupper($request->sexo);
+        $novoSocio->rg = $request->rg;
+        $novoSocio->cpf = $request->cpf;
         $novoSocio->save();
 
         $novoSocioContato = new Contato();
-        $novoSocioContato->n_celular  = $request->n_celular;
+        $novoSocioContato->n_celular = $request->n_celular;
         $novoSocio->contato()->save($novoSocioContato);
 
         $novoSocioRegistro = new Registro();
@@ -67,32 +73,41 @@ class SocioController extends Controller
 
         return redirect()->action('PagesController@paginainicial');
     }
+
     public function show($id)
     {
 
     }
+
     public function edit($id)
     {
         //
     }
+
     public function update(Request $request, $id)
     {
 
         $atualizaSocio = Socio::all()->find($id);
 
-        $atualizaSocio->nome        = strtoupper($request->nome);
-        $atualizaSocio->apelido     = strtoupper($request->apelido);
+        $atualizaSocio->nome = strtoupper($request->nome);
+        $atualizaSocio->apelido = strtoupper($request->apelido);
         $atualizaSocio->n_associado = $request->n_associado;
-        $atualizaSocio->nascimento  = strtoupper($request->nascimento);
-        $atualizaSocio->rg          = $request->rg;
-        $atualizaSocio->cpf         = $request->cpf;
-        $atualizaSocio->sexo        = strtoupper($request->sexo);
+        $atualizaSocio->nascimento = strtoupper($request->nascimento);
+        $atualizaSocio->rg = $request->rg;
+        $atualizaSocio->cpf = $request->cpf;
+        $atualizaSocio->sexo = strtoupper($request->sexo);
         $atualizaSocio->save();
 
-        return redirect('/socios/'. $id);
+        return redirect('/socios/' . $id);
     }
+
     public function destroy($id)
     {
-        //
+
+        $socioExcluir = Socio::all()->find($id);
+        $socioExcluir::destroy($id);
+
+        return redirect()->action('PagesController@paginainicial');
+
     }
 }
