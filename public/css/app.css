@@ -10,6 +10,15 @@ table.dataTable thead .sorting_desc_disabled:after,
 table.dataTable thead .sorting_desc_disabled:before {
     bottom: .5em;
 }
-body{
+
+body {
     background: url("public/img/jpg/man-wearing-jacket-carrying-a-gun-3536235.jpg");
+}
+
+a:link {
+    color: gray;
+}
+
+a:visited {
+    color: gray;
 }

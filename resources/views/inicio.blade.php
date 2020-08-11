@@ -53,7 +53,7 @@
             </div>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-primary btn-sm shadow" onclick="mostraNovoUsuario()">Novo</button>
+            <button class="btn btn-primary btn-sm shadow" id="mostraNovoUsuario">Novo</button>
         </div>
     </div>
     </div>
@@ -64,7 +64,7 @@
                     <div>
                         <h5 class="modal-title">Novo Socio</h5>
                     </div>
-                    <button type="button" class="close" onclick="fecha()" aria-label="Close">
+                    <button type="button" class="close" id="fechaNovoUsuario" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -76,8 +76,9 @@
                                 <div>
                                     <div>
                                         <p>
-                                        <form id="formNovoSocio" method="post" action="/api/socios"
+                                        <form id="formNovoSocio" method="post" action="/socio/novo"
                                               enctype="multipart/form-data">
+                                            @csrf
                                             <div class="input-group mb-3">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text"
@@ -94,8 +95,6 @@
                                         </p>
                                         <p><input class="form-control" type="text" placeholder="Nome" name="nome"
                                                   id="nome" required></p>
-                                        <p><input class="form-control" type="text" placeholder="Apelido" name="apelido"
-                                                  id="apelido"></p>
                                         <p><input class="form-control" type="text" placeholder="Nº Associado"
                                                   name="n_associado" id="n_associado" required></p>
                                         <p>
@@ -132,31 +131,4 @@
         </div>
         </form>
     </div>
-@endsection
-@section('javascript')
-    <SCRIPT type="text/javascript">
-
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': "{{ csrf_token() }}"
-            }
-        })
-
-
-        $('#sociosTable').DataTable();
-        $('.dataTables_length').addClass('bs-select');
-
-        function mostraNovoUsuario() {
-            $('#barraLateral').hide();
-            $('#corpo').hide();
-            $('#novoUsuario').show();
-        }
-
-        function fecha() {
-            $('#barraLateral').show();
-            $('#corpo').show()
-            $('#novoUsuario').hide()
-        }
-
-    </SCRIPT>
 @endsection

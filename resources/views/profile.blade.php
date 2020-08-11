@@ -33,6 +33,7 @@
                             <h6 class="text-primary font-weight-bold m-0">Pagamentos</h6>
                         </button>
                     </div>
+
                     <div class="card shadow mb-3">
                         <button type="button" class="btn border-0 py-3" data-toggle="collapse"
                                 href="#registroSocio" aria-expanded="true"
@@ -42,7 +43,7 @@
                         <div class="collapse" id="registroSocio">
                             <div class="form-group">
                                 <div class="card-body">
-                                    <form id="formTelefones" action="/registros/{{$socio->contato->id}}" method="POST">
+                                    <form id="formRegistros" action="/registros/{{$socio->registro->id}}" method="POST">
                                         @csrf
                                         <div class="form-group"><label
                                                 for="address"><strong>Nº registro</strong></label><input
@@ -55,14 +56,14 @@
                                                 class="form-control" type="text" data-mask="00/00/0000"
                                                 @isset($socio->registro->data_expedicao)
                                                 value="{{$socio->registro->data_expedicao}}"
-                                                @endif placeholder="Data Expedição" name="data_expedicao"
+                                                @endif placeholder="Data de Expedição" name="data_expedicao"
                                                 id="data_expedicao"></div>
                                         <div class="form-group"><label for="address"><strong>Data
                                                     Validade</strong></label><input
                                                 class="form-control" type="text" data-mask="00/00/0000"
                                                 @isset($socio->registro->data_validade)
                                                 value="{{$socio->registro->data_validade}}"
-                                                @endif placeholder="Telefone Fixo" name="data_validade"
+                                                @endif placeholder="Data de validade" name="data_validade"
                                                 id="data_validade"></div>
                                         <div class="form-group">
                                             <button class="btn btn-primary btn-sm">Salvar</button>
@@ -70,27 +71,6 @@
                                     </form>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="card shadow mb-3">
-                        <div class="card-header py-3">
-                            <h6 class="text-primary font-weight-bold m-0">Telefones</h6>
-                        </div>
-                        <div class="card-body">
-                            <form id="formTelefones" action="/contatos/{{$socio->contato->id}}" method="POST">
-                                @csrf
-                                <div class="form-group"><label for="address"><strong>Celular</strong></label><input
-                                        class="form-control" type="text" data-mask="00000-0000"
-                                        @isset($socio->contato->n_celular) value="{{$socio->contato->n_celular}}"
-                                        @endif placeholder="Numero celular" name="n_celular" id="n_celular"></div>
-                                <div class="form-group"><label for="address"><strong>Fixo</strong></label><input
-                                        class="form-control" type="text" data-mask="00000-0000"
-                                        @isset($socio->contato->n_fixo) value="{{$socio->contato->n_fixo}}"
-                                        @endif placeholder="Telefone Fixo" name="n_fixo" id="n_fixo"></div>
-                                <div class="form-group">
-                                    <button class="btn btn-primary btn-sm">Salvar</button>
-                                </div>
-                            </form>
                         </div>
                     </div>
 
@@ -120,10 +100,14 @@
                     <div class="row">
                         <div class="col">
                             <div class="card shadow mb-3">
-                                <div class="card-header py-3">
-                                    <p class="text-primary m-0 font-weight-bold">Informações do socio</p>
-                                </div>
-                                <div class="card-body">
+
+                                <button type="button" class="btn border-0 py-3" data-toggle="collapse"
+                                        href="#informacoesSocio" aria-expanded="true"
+                                        aria-controls="collapseExample" data-target="#informacoesSocio">
+                                    <h6 class="text-primary font-weight-bold m-0">Informações do socio</h6>
+                                </button>
+
+                                <div class="card-body collapse" id="informacoesSocio">
                                     <form id="formInformacoes" action="/socios/{{ $socio->id }}" method="POST">
                                         @csrf
                                         <div class="form-row">
@@ -134,10 +118,11 @@
                                                         @endif placeholder="Nome" name="nome" id="nome" required></div>
                                             </div>
                                             <div class="col">
-                                                <div class="form-group"><label><strong>Apelido</strong></label><input
-                                                        class="form-control" type="text"
-                                                        @isset($socio->apelido) value="{{$socio->apelido}}"
-                                                        @endif placeholder="Apelido" name="apelido" id="apelido"></div>
+                                                <div class="form-group"><label><strong>Celular</strong></label><input
+                                                        class="form-control" type="text" data-mask="00000-0000"
+                                                        @isset($socio->n_celular) value="{{$socio->n_celular}}"
+                                                        @endif placeholder="Numero celular" name="n_celular"
+                                                        id="n_celular"></div>
                                             </div>
                                         </div>
                                         <div class="form-row">
@@ -188,12 +173,14 @@
                                 </div>
                             </div>
 
-                            <div class="card shadow">
-                                <div class="card-header py-3">
-                                    <p class="text-primary m-0 font-weight-bold">Endereços</p>
-                                </div>
-                                <div class="card-body">
-                                    <form id="formContato" action="/enderecos/{{$socio->endereco->id}}" method="POST">
+                            <div class="card shadow mb-3">
+                                <button type="button" class="btn border-0 py-3" data-toggle="collapse"
+                                        href="#enderecoSocios" aria-expanded="true"
+                                        aria-controls="collapseExample" data-target="#enderecoSocios">
+                                    <h6 class="text-primary font-weight-bold m-0">Endereços</h6>
+                                </button>
+                                <div class="card-body collapse" id="enderecoSocios">
+                                    <form id="formEndereco" action="/enderecos/{{$socio->endereco->id}}" method="POST">
                                         @csrf
                                         <div class="form-group"><label><strong>Rua</strong></label><input
                                                 class="form-control" type="text"
@@ -245,8 +232,106 @@
                                     </form>
                                 </div>
                             </div>
+                            <div class="card shadow mb-3">
+                                <button type="button" class="btn border-0 py-3" data-toggle="collapse"
+                                        href="#presencaSocio" aria-expanded="true"
+                                        aria-controls="collapseExample" data-target="#presencaSocio">
+                                    <h6 class="text-primary font-weight-bold m-0">Presenças</h6>
+                                </button>
+                                <div class="card-body collapse" id="presencaSocio">
 
+                                    @if(count($presenca) > 0)
+                                        <table class="table my-0" id="tpresencas">
+                                            <thead>
+                                            <tr>
+                                                <th>Nome</th>
+                                                <th>Nº CR</th>
+                                                <th>Calibre</th>
+                                                <th>Tiros</th>
+                                                <th>Data</th>
+                                                <th></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach($presenca as $comparecimento)
+                                                    <tr>
+                                                        <td>{{$comparecimento->socio->nome}}</td>
+                                                        <td>{{$comparecimento->ncr}}</td>
+                                                        <td>{{$comparecimento->calibre}}</td>
+                                                        <td>{{$comparecimento->tiros}}</td>
+                                                        <td>{{$comparecimento->data}}</td>
+                                                        <td>
+                                                            <a class="close"
+                                                               href="/socios/presencas/excluir/{{$comparecimento->id}}">
+                                                                <span aria-hidden="true">x</span>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                            <tfoot>
+                                            <tr>
+                                                <th>Nome</th>
+                                                <th>Nº CR</th>
+                                                <th>Calibre</th>
+                                                <th>Tiros</th>
+                                                <th>Data</th>
+                                                <th></th>
+                                            </tr>
+                                            </tfoot>
+                                        </table>
+                                    @else
+                                        <h3 class="text-center">Não há presenças</h3>
+                                    @endif
 
+                                </div>
+                            </div>
+                            <div class="card shadow mb-3">
+                                <button type="button" class="btn border-0 py-3" data-toggle="collapse"
+                                        href="#passadaSocio" aria-expanded="true"
+                                        aria-controls="collapseExample" data-target="#passadaSocio">
+                                    <h6 class="text-primary font-weight-bold m-0">Passadas</h6>
+                                </button>
+                                <div class="card-body collapse" id="passadaSocio">
+                                    @if(count($passada) > 0)
+
+                                        <table class="table my-0" id="tpresencas">
+                                            <thead>
+                                            <tr>
+                                                <th>Nome</th>
+                                                <th>Data</th>
+                                                <th>Nº passadas</th>
+                                                <th>Modalidade</th>
+                                                <th>Pagamento</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            @foreach($passada as $prato)
+                                                <tr>
+                                                    <td>{{$prato->socio->nome}}</td>
+                                                    <td>{{$prato->ncr}}</td>
+                                                    <td>{{$prato->calibre}}</td>
+                                                    <td>{{$prato->tiros}}</td>
+                                                    <td>{{$prato->data}}</td>
+                                                </tr>
+                                            @endforeach
+                                            </tbody>
+                                            <tfoot>
+                                            <tr>
+                                                <th>Nome</th>
+                                                <th>Data</th>
+                                                <th>Nº passadas</th>
+                                                <th>Modalidade</th>
+                                                <th>Pagamento</th>
+                                            </tr>
+                                            </tfoot>
+                                        </table>
+
+                                    @else
+                                        <h3 class="text-center">Nenhuma passada</h3>
+                                    @endif
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

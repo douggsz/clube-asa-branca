@@ -1,5 +1,5 @@
 @extends('layout.app')
-@section('titulo', 'Presenças')
+@section('titulo','Passadas')
 @section('barraLateral')
     @component('components.barraLateral')
     @endcomponent
@@ -10,36 +10,29 @@
             <div class="shadow card">
                 <div class="modal-header">
                     <div>
-                        <h5 class="modal-title">Lista de presenças</h5>
+                        <h5 class="modal-title">Passadas</h5>
                     </div>
                 </div>
                 <div class="modal-body">
-                    <table class="table my-0" id="tpresencas">
+                    <table class="table my-0" id="tPassadas">
                         <thead>
                         <tr>
                             <th>Nome</th>
-                            <th>Nº CR</th>
-                            <th>Calibre</th>
-                            <th>Tiros</th>
                             <th>Data</th>
-                            <th></th>
+                            <th>Nº passadas</th>
+                            <th>Modalidade</th>
+                            <th>Pagamento</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @isset($presencas)
-                            @foreach($presencas as $comparecimento)
+                        @isset($passadas)
+                            @foreach($passadas as $pratos)
                                 <tr>
-                                    <td>{{$comparecimento->socio->nome}}</td>
-                                    <td>{{$comparecimento->ncr}}</td>
-                                    <td>{{$comparecimento->calibre}}</td>
-                                    <td>{{$comparecimento->tiros}}</td>
-                                    <td>{{$comparecimento->data}}</td>
-                                    <td>
-                                        <a class="close"
-                                           href="/socios/presencas/excluir/{{$comparecimento->id}}">
-                                            <span aria-hidden="true">x</span>
-                                        </a>
-                                    </td>
+                                    <td>{{$pratos->socio->nome}}</td>
+                                    <td>{{$pratos->ncr}}</td>
+                                    <td>{{$pratos->calibre}}</td>
+                                    <td>{{$pratos->tiros}}</td>
+                                    <td>{{$pratos->data}}</td>
                                 </tr>
                             @endforeach
                         @endif
@@ -47,36 +40,36 @@
                         <tfoot>
                         <tr>
                             <th>Nome</th>
-                            <th>Nº CR</th>
-                            <th>Calibre</th>
-                            <th>Tiros</th>
                             <th>Data</th>
-                            <th></th>
+                            <th>Nº passadas</th>
+                            <th>Modalidade</th>
+                            <th>Pagamento</th>
                         </tr>
                         </tfoot>
                     </table>
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-primary btn-sm shadow" id="mostraNovaPresenca"><a>Novo</a></button>
+                <button class="btn btn-primary btn-sm shadow" id="mostraNovaPassada"><a>Novo</a></button>
             </div>
         </div>
     </div>
-    <div class="modal" tabindex="-1" id="novoUsuario">
+
+    <div class="modal" tabindex="-1" id="novaPassada">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <div>
                         <h5 class="modal-title">Nova presença</h5>
                     </div>
-                    <button class="close" id="fechaNovaPresença" aria-label="Close">
+                    <button class="close" id="fechaNovaPassada" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <div class="col">
                         <div class="form-group">
-                            <form action="/presencas" method="POST">
+                            <form action="/passada" method="POST">
                                 @csrf
                                 <a>Informações</a>
                                 <div id="presencaInfo">
@@ -97,17 +90,23 @@
                                             <input type="hidden" value=" {{ $socios[0]->n_cr }}" name="ncr"
                                                    id="idSelecionado"></p>
                                         <p><input class="form-control" type="text" name="data" id="data"
-                                                  placeholder="Data presença" data-mask="00/00/0000"></p>
+                                                  placeholder="Data Passada" data-mask="00/00/0000"></p>
                                         <div class="row">
                                             <div class="form-group col">
-                                                <input class="form-control" type="text" name="tiros" id="tiros"
-                                                       placeholder="Nº Tiros"></div>
+                                                <input class="form-control" type="text" name="n_passadas"
+                                                       id="n_passadas"
+                                                       placeholder="Nº Passadas"></div>
                                             <div class="form-group col">
-                                                <input class="form-control" type="text" name="calibre" id="calibre"
-                                                       placeholder="Calibre"></div>
+                                                <input class="form-control" type="text" name="modalidade"
+                                                       id="modalidade"
+                                                       placeholder="Modalidade"></div>
                                         </div>
-                                        <p><input class="form-control" type="text" name="modalidade" id="modalidade"
-                                                  placeholder="Modalidade"></p>
+                                        <p>
+                                            <select class="form-control" name="pagamento" id="pagamento">
+                                                <option value="true">Sim</option>
+                                                <option value="false" selected>Não</option>
+                                            </select>
+                                        </p>
                                     </div>
                                 </div>
                                 <button type="submit" class="btn btn-primary">Salvar</button>

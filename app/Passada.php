@@ -5,11 +5,12 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Contato extends Model
+class Passada extends Model
 {
     use SoftDeletes;
 
-    public function socio(){
-        $this->belongsTo('App/Socio');
+    function socio()
+    {
+        return $this->belongsTo('App\Socio');
     }
 }

@@ -53,11 +53,8 @@ class SocioController extends Controller
         $novoSocio->sexo = strtoupper($request->sexo);
         $novoSocio->rg = $request->rg;
         $novoSocio->cpf = $request->cpf;
+        $novoSocio->n_celular = $request->n_celular;
         $novoSocio->save();
-
-        $novoSocioContato = new Contato();
-        $novoSocioContato->n_celular = $request->n_celular;
-        $novoSocio->contato()->save($novoSocioContato);
 
         $novoSocioRegistro = new Registro();
         $novoSocioRegistro->n_cr = $request->n_cr;
@@ -73,7 +70,7 @@ class SocioController extends Controller
         $novoSocioFoto->img = $foto;
         $novoSocio->foto()->save($novoSocioFoto);
 
-        return redirect()->action('PagesController@paginainicial');
+        return redirect()->route('inicio');
     }
 
     public function show($id)
@@ -98,6 +95,7 @@ class SocioController extends Controller
         $atualizaSocio->rg = $request->rg;
         $atualizaSocio->cpf = $request->cpf;
         $atualizaSocio->sexo = strtoupper($request->sexo);
+        $atualizaSocio->n_celular = $request->n_celular;
         $atualizaSocio->save();
 
         return redirect('/socios/' . $id);
