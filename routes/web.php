@@ -1,5 +1,6 @@
 <?php
 
+use App\Pagamento;
 use App\Passada;
 use App\Presenca;
 use App\Socio;
@@ -21,22 +22,24 @@ Route::get('/socios', 'PagesController@paginaInicial')->name('inicio');
 Route::get('/socios/presencas', 'PagesController@presencas')->name('presenca');
 Route::get('/socios/passadas', 'PagesController@passadas')->name('passadas');
 Route::get('/socios/{id}', function ($id) {
-
     $listaSocio = Socio::all();
     $socio = $listaSocio->find($id);
     $listaPassada = Passada::all();
-    $passada = $listaPassada->where('socio_id', $id);
+    $passadas = $listaPassada->where('socio_id', $id);
     $listaPresenca = Presenca::all();
     $presenca = $listaPresenca->where('socio_id', $id);
-
+    $listaPagamento = Pagamento::all()->where('socio_id',$id);
+    $pagamentos = $listaPagamento->where('pago', false);
+    $quitados = $listaPagamento->where('pago', true);
     if (isset($socio)) {
-        return view('profile', compact('socio', 'passada', 'presenca'));
+        return view('profile', compact('socio', 'passadas', 'presenca', 'pagamentos', 'quitados'));
     } else {
         return view('inicio');
     }
 });
 Route::get('/socios/presencas/excluir/{id}', 'PresencasController@destroy');
 Route::get('/socios/apagar/{id}', 'SocioController@destroy');
+Route::get('/socios/pagamento/{id}/pago','PayController@pagamento');
 Route::post('/socio/novo', 'SocioController@store');
 Route::post('/presencas', 'PresencasController@store');
 Route::post('/passadas', 'PassadasController@store');

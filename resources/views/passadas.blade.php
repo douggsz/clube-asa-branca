@@ -26,13 +26,18 @@
                         </thead>
                         <tbody>
                         @isset($passadas)
-                            @foreach($passadas as $pratos)
+                            @foreach($passadas as $passada)
                                 <tr>
-                                    <td>{{$pratos->socio->nome}}</td>
-                                    <td>{{$pratos->ncr}}</td>
-                                    <td>{{$pratos->calibre}}</td>
-                                    <td>{{$pratos->tiros}}</td>
-                                    <td>{{$pratos->data}}</td>
+                                    <td><a href="/socios/{{$passada->socio_id}}">
+                                            {{$passada->socio->nome}}</a></td>
+                                    <td>{{$passada->data}}</td>
+                                    <td>{{$passada->n_passadas}}</td>
+                                    <td>{{$passada->modalidade}}</td>
+                                    <td>@if($passada->pagamento->pago == 0)
+                                            Não foi pago
+                                        @else
+                                            Pago
+                                        @endif</td>
                                 </tr>
                             @endforeach
                         @endif
@@ -69,13 +74,13 @@
                 <div class="modal-body">
                     <div class="col">
                         <div class="form-group">
-                            <form action="/passada" method="POST">
+                            <form action="/passadas" method="POST">
                                 @csrf
                                 <a>Informações</a>
                                 <div id="presencaInfo">
                                     <div>
                                         <p>
-                                            <select class="form-control" name="nome" id="sociosRegistro">
+                                            <select class="form-control" name="n_cr" id="sociosRegistro">
                                                 @isset($socios)
                                                     @foreach($socios as $registro)
                                                         <option
@@ -102,6 +107,7 @@
                                                        placeholder="Modalidade"></div>
                                         </div>
                                         <p>
+                                            <label for="pagamento">Pago ?</label>
                                             <select class="form-control" name="pagamento" id="pagamento">
                                                 <option value="true">Sim</option>
                                                 <option value="false" selected>Não</option>

@@ -29,7 +29,8 @@
                         @isset($presencas)
                             @foreach($presencas as $comparecimento)
                                 <tr>
-                                    <td>{{$comparecimento->socio->nome}}</td>
+                                    <td><a href="/socios/{{$comparecimento->socio_id}}">
+                                            {{$comparecimento->socio->nome}}</a></td>
                                     <td>{{$comparecimento->ncr}}</td>
                                     <td>{{$comparecimento->calibre}}</td>
                                     <td>{{$comparecimento->tiros}}</td>

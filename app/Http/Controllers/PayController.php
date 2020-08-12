@@ -17,12 +17,19 @@ class PayController extends Controller
     {
         //
     }
-    public function novaAnuidade($socio){
-        $anuidade = new Pagamento();
-        $anuidade->vencimento = '10';
-        $anuidade->socio_id = $socio;
-        $anuidade->save();
-        return redirect()->action('PagesController@paginainicial');
+
+    public function novaAnuidade($socio)
+    {
+
+    }
+
+    public function pagamento($id)
+    {
+        $pagamentoDivida = Pagamento::all()->find($id);
+        $pagamentoDivida->pago = true;
+        $pagamentoDivida->save();
+
+        return redirect('/socios/' . $pagamentoDivida->socio_id);
     }
 
     public function store(Request $request)

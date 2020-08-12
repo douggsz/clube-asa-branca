@@ -9,14 +9,9 @@ class Pagamento extends Model
 {
     use SoftDeletes;
 
-    function socio()
+    function passada()
     {
-        return $this->belongsTo('App\Socio');
-    }
-
-    public function metodo()
-    {
-        return $this->hasMany('App\FormaPagamento');
+        return $this->belongsTo('App\Passada');
     }
 
 }

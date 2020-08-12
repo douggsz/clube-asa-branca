@@ -28,10 +28,43 @@
                         </div>
                     </div>
                     <input type="hidden" value="{{ $socio->id }}" id="idSocio">
-                    <div class="card shadow mb-4">
-                        <button type="button" class="card-header border-0 py-3" onclick="pagamentos()">
+
+                    <div class="card shadow mb-3">
+                        <button type="button" class="btn border-0 py-3" data-toggle="collapse"
+                                href="#pagamentoSocio" aria-expanded="true"
+                                aria-controls="collapseExample" data-target="#pagamentoSocio">
                             <h6 class="text-primary font-weight-bold m-0">Pagamentos</h6>
                         </button>
+                        <div class="card-body collapse shadow" id="pagamentoSocio">
+                            @if(count($pagamentos) > 0)
+                                <table class="table my-0" id="tpagamentos">
+                                    <thead>
+                                    <th>Descrição</th>
+                                    <th>Data</th>
+                                    <th>Valor</th>
+                                    <th></th>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($pagamentos as $pagamento)
+                                        <tr>
+                                            <td>{{$pagamento->descricao}}</td>
+                                            <td>{{$pagamento->data}}</td>
+                                            <td>R${{$pagamento->valor}}</td>
+                                            <td><a href="/socios/pagamento/{{$pagamento->id}}/pago">x</a></td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                    <tfoot>
+                                    <th>Descrição</th>
+                                    <th>Data</th>
+                                    <th>Valor</th>
+                                    <th></th>
+                                    </tfoot>
+                                </table>
+                            @else
+                                <h4 class="text-center">Nenhum Pagamento Pendente</h4>
+                            @endif
+                        </div>
                     </div>
 
                     <div class="card shadow mb-3">
@@ -40,7 +73,7 @@
                                 aria-controls="collapseExample" data-target="#registroSocio">
                             <h6 class="text-primary font-weight-bold m-0">Registros</h6>
                         </button>
-                        <div class="collapse" id="registroSocio">
+                        <div class="card-body collapse" id="registroSocio">
                             <div class="form-group">
                                 <div class="card-body">
                                     <form id="formRegistros" action="/registros/{{$socio->registro->id}}" method="POST">
@@ -80,7 +113,7 @@
                                 aria-controls="collapseExample" data-target="#dialogEx">
                             <h6 class="text-danger font-weight-bold m-0">APAGAR SOCIO</h6>
                         </button>
-                        <div class="collapse" id="dialogEx">
+                        <div class="card-body collapse" id="dialogEx">
                             <div class="form-group">
                                 <div class="card-body">
                                     <button type="button" class="btn border-0" id="dialogCn"><h6
@@ -253,21 +286,21 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach($presenca as $comparecimento)
-                                                    <tr>
-                                                        <td>{{$comparecimento->socio->nome}}</td>
-                                                        <td>{{$comparecimento->ncr}}</td>
-                                                        <td>{{$comparecimento->calibre}}</td>
-                                                        <td>{{$comparecimento->tiros}}</td>
-                                                        <td>{{$comparecimento->data}}</td>
-                                                        <td>
-                                                            <a class="close"
-                                                               href="/socios/presencas/excluir/{{$comparecimento->id}}">
-                                                                <span aria-hidden="true">x</span>
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
+                                            @foreach($presenca as $comparecimento)
+                                                <tr>
+                                                    <td>{{$comparecimento->socio->nome}}</td>
+                                                    <td>{{$comparecimento->ncr}}</td>
+                                                    <td>{{$comparecimento->calibre}}</td>
+                                                    <td>{{$comparecimento->tiros}}</td>
+                                                    <td>{{$comparecimento->data}}</td>
+                                                    <td>
+                                                        <a class="close"
+                                                           href="/socios/presencas/excluir/{{$comparecimento->id}}">
+                                                            <span aria-hidden="true">x</span>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
                                             </tbody>
                                             <tfoot>
                                             <tr>
@@ -293,8 +326,7 @@
                                     <h6 class="text-primary font-weight-bold m-0">Passadas</h6>
                                 </button>
                                 <div class="card-body collapse" id="passadaSocio">
-                                    @if(count($passada) > 0)
-
+                                    @if(count($passadas) > 0)
                                         <table class="table my-0" id="tpresencas">
                                             <thead>
                                             <tr>
@@ -306,13 +338,17 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            @foreach($passada as $prato)
+                                            @foreach($passadas as $passada)
                                                 <tr>
-                                                    <td>{{$prato->socio->nome}}</td>
-                                                    <td>{{$prato->ncr}}</td>
-                                                    <td>{{$prato->calibre}}</td>
-                                                    <td>{{$prato->tiros}}</td>
-                                                    <td>{{$prato->data}}</td>
+                                                    <td>{{$passada->socio->nome}}</td>
+                                                    <td>{{$passada->data}}</td>
+                                                    <td>{{$passada->n_passadas}}</td>
+                                                    <td>{{$passada->modalidade}}</td>
+                                                    <td>@if($passada->pagamento->pago == 0)
+                                                            Não foi pago
+                                                        @else
+                                                            Pago
+                                                        @endif</td>
                                                 </tr>
                                             @endforeach
                                             </tbody>
@@ -329,6 +365,43 @@
 
                                     @else
                                         <h3 class="text-center">Nenhuma passada</h3>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="card shadow mb-3">
+                                <button type="button" class="btn border-0 py-3" data-toggle="collapse"
+                                        href="#quitadosSocios" aria-expanded="true"
+                                        aria-controls="collapseExample" data-target="#quitadosSocios">
+                                    <h6 class="text-primary font-weight-bold m-0">Quitados</h6>
+                                </button>
+                                <div class="card-body collapse" id="quitadosSocios">
+                                    @if(count($quitados) > 0)
+                                        <table class="table my-0" id="tquitados">
+                                            <thead>
+                                            <th>Descrição</th>
+                                            <th>Data</th>
+                                            <th>Valor</th>
+                                            </thead>
+                                            <tbody>
+                                            @foreach($quitados as $quitado)
+                                                <tr>
+                                                    <td>{{$quitado->descricao}}</td>
+                                                    <td>{{$quitado->data}}</td>
+                                                    <td>R${{$quitado->valor}}</td>
+                                                </tr>
+                                            @endforeach
+                                            </tbody>
+                                            <tfoot>
+                                            <th>Descrição</th>
+                                            <th>Data</th>
+                                            <th>Valor</th>
+                                            </tfoot>
+                                        </table>
+                                        @if(count($pagamentos) > 0)
+                                            <h4 class="text-center">Há dividas</h4>
+                                        @endif
+                                    @else
+                                        <h4 class="text-center">Há dividas</h4>
                                     @endif
                                 </div>
                             </div>

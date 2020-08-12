@@ -13,4 +13,8 @@ class Passada extends Model
     {
         return $this->belongsTo('App\Socio');
     }
+    public function pagamento(){
+        return $this->hasOne('App\Pagamento');
+    }
+
 }

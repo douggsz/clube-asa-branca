@@ -20,9 +20,8 @@ class CreatePassadasTable extends Migration
                 ->onDelete('cascade');
             $table->string('nome', 100);
             $table->string('data', 15);
-            $table->string('n_passadas0',10);
+            $table->string('n_passadas',10);
             $table->string('modalidade', 10);
-            $table->boolean('pagamento')->default(false);
             $table->softDeletes();
             $table->timestamps();
         });
