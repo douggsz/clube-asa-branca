@@ -10,7 +10,8 @@ class PayController extends Controller
 
     public function index()
     {
-        //
+        $lista = Pagamento::all();
+        return json_encode($lista);
     }
 
     public function create()

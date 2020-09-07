@@ -56,7 +56,6 @@
             <button class="btn btn-primary btn-sm shadow" id="mostraNovoUsuario">Novo</button>
         </div>
     </div>
-    </div>
     <div class="modal" tabindex="-1" id="novoUsuario">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -76,7 +75,7 @@
                                 <div>
                                     <div>
                                         <p>
-                                        <form id="formNovoSocio" method="post" action="/socio/novo"
+                                        <form id="formNovoSocio" method="post" action="/socios/new"
                                               enctype="multipart/form-data">
                                             @csrf
                                             <div class="input-group mb-3">
@@ -85,50 +84,122 @@
                                                           id="inputGroupFileAddon01">Foto</span>
                                                 </div>
                                                 <div class="custom-file">
-                                                    <input type="file" class="custom-file-input" name="foto" id="foto"
-                                                           accept=".jpg,.jpeg,.png" required
+                                                    <input type="file"
+                                                           class="custom-file-input @if ($errors->has('foto')) is-invalid @endif"
+                                                           name="foto" id="foto"
+                                                           accept=".jpg,.jpeg,.png"
                                                            aria-describedby="inputGroupFileAddon01">
                                                     <label class="custom-file-label" for="customFile">Selecionar
                                                         foto</label>
                                                 </div>
+                                                @if($errors->has('foto'))
+                                                    <div class="invalid-feedback">
+                                                        {{$errors->first('foto')}}
+                                                    </div>
+                                                @endif
                                             </div>
                                         </p>
-                                        <p><input class="form-control" type="text" placeholder="Nome" name="nome"
-                                                  id="nome" required></p>
-                                        <p><input class="form-control" type="text" placeholder="Nº Associado"
-                                                  name="n_associado" id="n_associado" required></p>
+                                        <p>
+                                        <div>
+                                            <input
+                                                class="form-control @if ($errors->has('nome')) is-invalid @endif"
+                                                type="text" placeholder="Nome" name="nome"
+                                                id="nome"/>
+                                            @if($errors->has('nome'))
+                                                <div class="invalid-feedback">
+                                                    {{$errors->first('nome')}}
+                                                </div>
+                                            @endif
+                                        </div>
+                                        </p>
+                                        <p>
+                                        <div>
+                                            <input
+                                                class="form-control @if ($errors->has('n_associado')) is-invalid @endif"
+                                                type="text" placeholder="Nº Associado"
+                                                name="n_associado" id="n_associado"/>
+                                            @if($errors->has('n_associado'))
+                                                <div class="invalid-feedback">
+                                                    {{$errors->first('n_associado')}}
+                                                </div>
+                                            @endif
+                                        </div>
+                                        </p>
                                         <p>
                                             @component('components.seletorSexo')
                                             @endcomponent
                                         </p>
-                                        <p><input class="form-control" type="text" maxlength="10" data-mask="00/00/0000"
-                                                  placeholder="Nascimento" name="nascimento" id="nascimento"></p>
-                                        <p><input class="form-control" type="text" maxlength="10" placeholder="RG"
-                                                  name="rg" id="rg"></p>
-                                        <p><input class="form-control" type="text" maxlength="14" placeholder="CPF"
-                                                  name="cpf" id="cpf" data-mask="000.000.000-00"></p>
-                                        <p><input class="form-control " type="text" maxlength="11"
-                                                  data-mask="00000-0000" placeholder="Numero celular"
-                                                  name="n_celular" id="n_celular"></p>
-                                        <p><input class="form-control" type="text" placeholder="Nº CR" name="n_cr"
-                                                  id="n_cr"></p>
-                                        <p><input class="form-control" type="text" maxlength="10" data-mask="00/00/0000"
-                                                  placeholder="Data Expedição" name="data_expedicao"
-                                                  id="data_expedicao"></p>
-                                        <p><input class="form-control" type="text" maxlength="10" data-mask="00/00/0000"
-                                                  placeholder="Validade" name="data_validade" id="data_validade"></p>
-                                    </div>
+                                        <p>
+                                        <div>
+                                            <input class="form-control"
+                                                   type="text" maxlength="10"
+                                                   data-mask="00/00/0000"
+                                                   placeholder="Nascimento" name="nascimento" id="nascimento">
+                                        </div>
+                                        </p>
+                                        <p>
+                                        <div>
+                                            <input class="form-control" type="text" maxlength="10" placeholder="RG"
+                                                   name="rg" id="rg"></div>
+                                        </p>
+                                        <p>
+                                        <div>
+                                            <input class="form-control" type="text" maxlength="14" placeholder="CPF"
+                                                   name="cpf" id="cpf" data-mask="000.000.000-00">
+                                        </p></div>
+                                    <p>
+                                    <div>
+                                        <input class="form-control " type="text" maxlength="11"
+                                               data-mask="00000-0000" placeholder="Numero celular"
+                                               name="n_celular" id="n_celular"></div>
+                                    </p>
+
+                                    <p>
+                                    <div>
+                                        <input class="form-control @if ($errors->has('n_cr')) is-invalid @endif" type="text"
+                                               placeholder="Nº CR" name="n_cr"
+                                               id="n_cr">
+                                        @if($errors->has('n_cr'))
+                                            <div class="invalid-feedback">
+                                                {{$errors->first('n_cr')}}
+                                            </div>
+                                        @endif</div>
+                                    </p>
+                                    <p>
+                                    <div>
+                                        <input class="form-control @if ($errors->has('data_expedicao')) is-invalid @endif" type="text"
+                                               maxlength="10" data-mask="00/00/0000"
+                                               placeholder="Data Expedição" name="data_expedicao"
+                                               id="data_expedicao">
+                                        @if($errors->has('data_expedicao'))
+                                            <div class="invalid-feedback">
+                                                {{$errors->first('data_expedicao')}}
+                                            </div>
+                                        @endif</div>
+                                    </p>
+                                    <p>
+                                    <div>
+                                        <input class="form-control @if ($errors->has('data_validade')) is-invalid @endif" type="text"
+                                               maxlength="10" data-mask="00/00/0000"
+                                               placeholder="Validade" name="data_validade" id="data_validade">
+                                        @if($errors->has('data_validade'))
+                                            <div class="invalid-feedback">
+                                                {{$errors->first('data_validade')}}
+                                            </div>
+                                        @endif</div>
+                                    </p>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-primary">Salvar</button>
-                            <button type="reset" class="btn btn-secondary">Limpar</button>
                         </div>
+                        <button type="submit" class="btn btn-primary">Salvar</button>
+                        <button type="reset" class="btn btn-secondary">Limpar</button>
                     </div>
                 </div>
             </div>
-            <div class="modal-footer">
-            </div>
         </div>
-        </form>
+        <div class="modal-footer">
+        </div>
+    </div>
+    </form>
     </div>
 @endsection

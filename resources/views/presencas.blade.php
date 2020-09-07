@@ -20,7 +20,7 @@
                             <th>Nome</th>
                             <th>Nº CR</th>
                             <th>Calibre</th>
-                            <th>Tiros</th>
+                            <th>Disparos</th>
                             <th>Data</th>
                             <th></th>
                         </tr>
@@ -31,7 +31,7 @@
                                 <tr>
                                     <td><a href="/socios/{{$comparecimento->socio_id}}">
                                             {{$comparecimento->socio->nome}}</a></td>
-                                    <td>{{$comparecimento->ncr}}</td>
+                                    <td>{{$comparecimento->n_cr}}</td>
                                     <td>{{$comparecimento->calibre}}</td>
                                     <td>{{$comparecimento->tiros}}</td>
                                     <td>{{$comparecimento->data}}</td>
@@ -50,7 +50,7 @@
                             <th>Nome</th>
                             <th>Nº CR</th>
                             <th>Calibre</th>
-                            <th>Tiros</th>
+                            <th>Disparos</th>
                             <th>Data</th>
                             <th></th>
                         </tr>
@@ -77,7 +77,7 @@
                 <div class="modal-body">
                     <div class="col">
                         <div class="form-group">
-                            <form action="/presencas" method="POST">
+                            <form action="/presencas/new" method="POST">
                                 @csrf
                                 <a>Informações</a>
                                 <div id="presencaInfo">
@@ -95,20 +95,54 @@
                                         </p>
                                         <p><input class="form-control" type="text" name="registro" id="crSelecionado"
                                                   value="Registro: {{ $socios[0]->n_cr }}" disabled required>
-                                            <input type="hidden" value=" {{ $socios[0]->n_cr }}" name="ncr"
+                                            <input type="hidden" value=" {{ $socios[0]->n_cr }}" name="n_cr"
                                                    id="idSelecionado"></p>
-                                        <p><input class="form-control" type="text" name="data" id="data"
-                                                  placeholder="Data presença" data-mask="00/00/0000"></p>
+                                        <p>
+                                        <div><input class="form-control @if ($errors->has('data')) is-invalid @endif"
+                                                    type="text" name="data" id="data"
+                                                    placeholder="Data presença" data-mask="00/00/0000">
+                                            @if($errors->has('data'))
+                                                <div class="invalid-feedback">
+                                                    {{$errors->first('data')}}
+                                                </div>
+                                            @endif
+                                        </div>
+                                        </p>
                                         <div class="row">
                                             <div class="form-group col">
-                                                <input class="form-control" type="text" name="tiros" id="tiros"
-                                                       placeholder="Nº Tiros"></div>
+                                                <input
+                                                    class="form-control @if ($errors->has('tiros')) is-invalid @endif"
+                                                    type="text" name="tiros" id="tiros"
+                                                    placeholder="Nº Disparos">
+                                                @if($errors->has('tiros'))
+                                                    <div class="invalid-feedback">
+                                                        {{$errors->first('tiros')}}
+                                                    </div>
+                                                @endif
+                                            </div>
                                             <div class="form-group col">
-                                                <input class="form-control" type="text" name="calibre" id="calibre"
-                                                       placeholder="Calibre"></div>
+                                                <input
+                                                    class="form-control @if ($errors->has('calibre')) is-invalid @endif"
+                                                    type="text" name="calibre" id="calibre"
+                                                    placeholder="Calibre">
+                                                @if($errors->has('calibre'))
+                                                    <div class="invalid-feedback">
+                                                        {{$errors->first('calibre')}}
+                                                    </div>
+                                                @endif
+                                            </div>
                                         </div>
-                                        <p><input class="form-control" type="text" name="modalidade" id="modalidade"
-                                                  placeholder="Modalidade"></p>
+                                        <p><div><input
+                                                class="form-control @if ($errors->has('modalidade')) is-invalid @endif"
+                                                type="text" name="modalidade" id="modalidade"
+                                                placeholder="Modalidade">
+                                            @if($errors->has('modalidade'))
+                                                <div class="invalid-feedback">
+                                                    {{$errors->first('modalidade')}}
+                                                </div>
+                                            @endif
+                                        </div>
+                                        </p>
                                     </div>
                                 </div>
                                 <button type="submit" class="btn btn-primary">Salvar</button>

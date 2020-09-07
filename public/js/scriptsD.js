@@ -1,6 +1,5 @@
 $(document).ready(function () {
 
-
     $('#tpresencas').DataTable();
     $('.dataTables_length').addClass('bs-select');
 

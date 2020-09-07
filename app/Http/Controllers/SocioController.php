@@ -6,6 +6,7 @@ use App\Contato;
 use App\Endereco;
 use App\Foto;
 use App\Pagamento;
+use App\Passada;
 use App\Presenca;
 use App\Registro;
 use App\Socio;
@@ -13,11 +14,10 @@ use Illuminate\Http\Request;
 
 class SocioController extends Controller
 {
-    private function Regras()
+    private function Rules()
     {
         return [
-            'nome' => 'required|min:2|max:100',
-            'n_associado' => 'required|unique:socios'
+
         ];
     }
 
@@ -27,12 +27,6 @@ class SocioController extends Controller
         return json_encode($lista);
     }
 
-    public function lista()
-    {
-        $lista = Socio::all();
-        return compact('lista');
-    }
-
     public function create()
     {
         //
@@ -40,9 +34,11 @@ class SocioController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate(
-            $this->Regras()
-        );
+        $rules = new RulesController();
+        $message = $rules->getMessages();
+        $rule = $rules ->getRules();
+
+        $request->validate($rule, $message);
 
         $novoSocio = new Socio();
 
@@ -70,11 +66,31 @@ class SocioController extends Controller
         $novoSocioFoto->img = $foto;
         $novoSocio->foto()->save($novoSocioFoto);
 
+        $novoPagamento = new Pagamento();
+        $novoPagamento->descricao = "Anuidade";
+        $novoPagamento->valor = "300";
+        $novoSocio->pagamento()->save($novoPagamento);
+
         return redirect()->route('inicio');
     }
 
     public function show($id)
     {
+
+        $listaSocio = Socio::all();
+        $socio = $listaSocio->find($id);
+        $listaPassada = Passada::all();
+        $passadas = $listaPassada->where('socio_id', $id);
+        $listaPresenca = Presenca::all();
+        $presenca = $listaPresenca->where('socio_id', $id);
+        $listaPagamento = Pagamento::all()->where('socio_id', $id);
+        $pagamentos = $listaPagamento->where('pago', false);
+        $quitados = $listaPagamento->where('pago', true);
+        if (isset($socio)) {
+            return view('profile', compact('socio', 'passadas', 'presenca', 'pagamentos', 'quitados'));
+        } else {
+            return view('inicio');
+        }
 
     }
 
@@ -104,10 +120,10 @@ class SocioController extends Controller
     public function destroy($id)
     {
 
-        Contato::where('socio_id',$id)->delete();
-        Endereco::where('socio_id',$id)->delete();
-        Foto::where('socio_id',$id)->delete();
-        Pagamento::where('socio_id',$id)->delete();
+        Contato::where('socio_id', $id)->delete();
+        Endereco::where('socio_id', $id)->delete();
+        Foto::where('socio_id', $id)->delete();
+        Pagamento::where('socio_id', $id)->delete();
         Presenca::where('socio_id', $id)->delete();
         Registro::where('socio_id', $id)->delete();
         Socio::all()->find($id)->delete();

@@ -10,30 +10,35 @@ use Illuminate\Http\Request;
 
 class PagesController extends Controller
 {
-    public function paginaInicial(){
+    public function paginaInicial()
+    {
 
         $listaSocios = Socio::all();
 
         return view('inicio', compact('listaSocios'));
 
     }
-     public function presencas(){
+
+    public function presencas()
+    {
 
         $presencas = Presenca::all();
 
         $socios = Registro::all()
             ->whereNotNull('n_cr');
 
-        return view('presencas', compact('socios','presencas'));
+        return view('presencas', compact('socios', 'presencas'));
 
-     }
-     public function passadas(){
-         $passadas = Passada::all();
+    }
 
-         $socios = Registro::all()
-             ->whereNotNull('n_cr');
+    public function passadas()
+    {
+        $passadas = Passada::all();
 
-         return view('passadas', compact('socios','passadas'));
-     }
+        $socios = Registro::all()
+            ->whereNotNull('n_cr');
+
+        return view('passadas', compact('socios', 'passadas'));
+    }
 
 }

@@ -15,7 +15,7 @@
                             <img class="rounded-circle mb-3 mt-4" src="{{ asset('storage/'. $socio->foto->img )}}"
                                  width="160" height="160">
                             <div class="custom-file">
-                                <form action="/fotos/{{ $socio->foto->id }}" method="POST"
+                                <form action="/fotos/edit/{{ $socio->foto->id }}" method="POST"
                                       enctype="multipart/form-data">
                                     @csrf
                                     <input type="file" class="custom-file-input" name="foto" id="foto"
@@ -76,28 +76,49 @@
                         <div class="card-body collapse" id="registroSocio">
                             <div class="form-group">
                                 <div class="card-body">
-                                    <form id="formRegistros" action="/registros/{{$socio->registro->id}}" method="POST">
+                                    <form id="formRegistros" action="/registros/edit/{{$socio->registro->id}}"
+                                          method="POST">
                                         @csrf
                                         <div class="form-group"><label
                                                 for="address"><strong>Nº registro</strong></label><input
-                                                class="form-control" type="text"
+                                                class="form-control @if ($errors->has('n_cr')) is-invalid @endif"
+                                                type="text"
                                                 @isset($socio->registro->n_cr) value="{{$socio->registro->n_cr}}"
                                                 @endif placeholder="Nº registro" name="n_cr" id="n_cr">
+                                            @if($errors->has('n_cr'))
+                                                <div class="invalid-feedback">
+                                                    {{$errors->first('n_cr')}}
+                                                </div>
+                                            @endif
                                         </div>
                                         <div class="form-group"><label for="address"><strong>Data
                                                     expedição</strong></label><input
-                                                class="form-control" type="text" data-mask="00/00/0000"
+                                                class="form-control @if ($errors->has('data_expedicao')) is-invalid @endif"
+                                                type="text" data-mask="00/00/0000"
                                                 @isset($socio->registro->data_expedicao)
                                                 value="{{$socio->registro->data_expedicao}}"
                                                 @endif placeholder="Data de Expedição" name="data_expedicao"
-                                                id="data_expedicao"></div>
+                                                id="data_expedicao">
+                                            @if($errors->has('data_expedicao'))
+                                                <div class="invalid-feedback">
+                                                    {{$errors->first('data_expedicao')}}
+                                                </div>
+                                            @endif
+                                        </div>
                                         <div class="form-group"><label for="address"><strong>Data
                                                     Validade</strong></label><input
-                                                class="form-control" type="text" data-mask="00/00/0000"
+                                                class="form-control @if ($errors->has('data_validade')) is-invalid @endif"
+                                                type="text" data-mask="00/00/0000"
                                                 @isset($socio->registro->data_validade)
                                                 value="{{$socio->registro->data_validade}}"
                                                 @endif placeholder="Data de validade" name="data_validade"
-                                                id="data_validade"></div>
+                                                id="data_validade">
+                                            @if($errors->has('data_validade'))
+                                                <div class="invalid-feedback">
+                                                    {{$errors->first('data_validade')}}
+                                                </div>
+                                            @endif
+                                        </div>
                                         <div class="form-group">
                                             <button class="btn btn-primary btn-sm">Salvar</button>
                                         </div>
@@ -141,7 +162,7 @@
                                 </button>
 
                                 <div class="card-body collapse" id="informacoesSocio">
-                                    <form id="formInformacoes" action="/socios/{{ $socio->id }}" method="POST">
+                                    <form id="formInformacoes" action="/socios/edit/{{ $socio->id }}" method="POST">
                                         @csrf
                                         <div class="form-row">
                                             <div class="col">
@@ -213,7 +234,8 @@
                                     <h6 class="text-primary font-weight-bold m-0">Endereços</h6>
                                 </button>
                                 <div class="card-body collapse" id="enderecoSocios">
-                                    <form id="formEndereco" action="/enderecos/{{$socio->endereco->id}}" method="POST">
+                                    <form id="formEndereco" action="/enderecos/edit/{{$socio->endereco->id}}"
+                                          method="POST">
                                         @csrf
                                         <div class="form-group"><label><strong>Rua</strong></label><input
                                                 class="form-control" type="text"

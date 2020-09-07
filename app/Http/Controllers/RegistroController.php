@@ -7,8 +7,11 @@ use Illuminate\Http\Request;
 
 class RegistroController extends Controller
 {
+
     public function index()
     {
+        $lista = Registro::all();
+        return json_encode($lista);
     }
 
     public function create()
@@ -33,6 +36,12 @@ class RegistroController extends Controller
 
     public function update(Request $request, $id)
     {
+        $rules = new RulesController();
+        $message = $rules->getMessages();
+        $rule = $rules ->getRules();
+
+        $request->validate($rule, $message);
+
         $atualizaRegistro = Registro::all()->find($id);
 
         $atualizaRegistro->n_cr = $request->n_cr;

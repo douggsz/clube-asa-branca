@@ -74,7 +74,7 @@
                 <div class="modal-body">
                     <div class="col">
                         <div class="form-group">
-                            <form action="/passadas" method="POST">
+                            <form action="/passadas/new" method="POST">
                                 @csrf
                                 <a>Informações</a>
                                 <div id="presencaInfo">
@@ -91,20 +91,45 @@
                                             </select>
                                         </p>
                                         <p><input class="form-control" type="text" name="registro" id="crSelecionado"
-                                                  value="Registro: {{ $socios[0]->n_cr }}" disabled required>
+                                                  value="Registro: {{ $socios[0]->n_cr }}" disabled>
                                             <input type="hidden" value=" {{ $socios[0]->n_cr }}" name="ncr"
                                                    id="idSelecionado"></p>
-                                        <p><input class="form-control" type="text" name="data" id="data"
-                                                  placeholder="Data Passada" data-mask="00/00/0000"></p>
+                                        <p>
+                                        <div>
+                                            <input class="form-control @if ($errors->has('data')) is-invalid @endif"
+                                                   type="text" name="data" id="data"
+                                                   placeholder="Data Passada" data-mask="00/00/0000">
+                                            @if($errors->has('data'))
+                                                <div class="invalid-feedback">
+                                                    {{$errors->first('data')}}
+                                                </div>
+                                            @endif
+                                        </div>
+                                        </p>
                                         <div class="row">
+                                            <div
+                                                class="form-group col">
+                                                <input
+                                                    class="form-control @if ($errors->has('n_passadas')) is-invalid @endif"
+                                                    type="text" name="n_passadas" id="n_passadas" placeholder="Nº Passadas">
+                                                @if($errors->has('n_passadas'))
+                                                    <div class="invalid-feedback">
+                                                        {{$errors->first('n_passadas')}}
+                                                    </div>
+                                                @endif
+                                            </div>
                                             <div class="form-group col">
-                                                <input class="form-control" type="text" name="n_passadas"
-                                                       id="n_passadas"
-                                                       placeholder="Nº Passadas"></div>
-                                            <div class="form-group col">
-                                                <input class="form-control" type="text" name="modalidade"
-                                                       id="modalidade"
-                                                       placeholder="Modalidade"></div>
+                                                <input
+                                                    class="form-control @if ($errors->has('modalidade')) is-invalid @endif"
+                                                    type="text" name="modalidade"
+                                                    id="modalidade"
+                                                    placeholder="Modalidade">
+                                                @if($errors->has('modalidade'))
+                                                    <div class="invalid-feedback">
+                                                        {{$errors->first('modalidade')}}
+                                                    </div>
+                                                @endif
+                                            </div>
                                         </div>
                                         <p>
                                             <label for="pagamento">Pago ?</label>

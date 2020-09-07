@@ -21,7 +21,6 @@ class Enderecos extends Migration
             $table->string('uf', 20)->nullable();
             $table->string('cep', 15)->nullable();
             $table->string('mail', 50)->nullable();
-            //$table->foreign('socio_id')->references('id')->on('socios');
             $table->SoftDeletes();
             $table->timestamps();
         });

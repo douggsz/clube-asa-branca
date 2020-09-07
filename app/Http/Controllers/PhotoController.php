@@ -38,10 +38,10 @@ class PhotoController extends Controller
     {
         $novaFoto = Foto::all()->find($id);
         Storage::disk('public')->delete($novaFoto->img);
-        $patch = $request->file('foto')->store('img','public');
+        $patch = $request->file('foto')->store('img', 'public');
         $novaFoto->img = $patch;
         $novaFoto->save();
-        return redirect('/socios/'. $novaFoto->socio_id);
+        return redirect('/socios/' . $novaFoto->socio_id);
     }
 
     public function destroy($id)

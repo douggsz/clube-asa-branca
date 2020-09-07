@@ -9,9 +9,11 @@ use Illuminate\Http\Request;
 
 class PresencasController extends Controller
 {
+
     public function index()
     {
-        //
+        $lista = Presenca::all();
+        return json_encode($lista);
     }
 
     public function listaJSON()
@@ -27,10 +29,17 @@ class PresencasController extends Controller
     public function store(Request $request)
     {
 
+
+        $rules = new RulesController();
+        $message = $rules->getMessages();
+        $rule = $rules ->getRules();
+
+        $request->validate($rule, $message);
+
         $socios = Registro::all();
 
         foreach ($socios as $socio) {
-            if ($socio->n_cr === $request->ncr) {
+            if ($socio->n_cr === $request->n_cr) {
                 $socioID = $socio->socio_id;
             }
         }
@@ -38,7 +47,7 @@ class PresencasController extends Controller
         $novaPresenca = new Presenca();
 
         $novaPresenca->socio_id = $socioID;
-        $novaPresenca->ncr = $request->ncr;
+        $novaPresenca->ncr = $request->n_cr;
         $novaPresenca->calibre = strtoupper($request->calibre);
         $novaPresenca->tiros = $request->tiros;
         $novaPresenca->data = $request->data;

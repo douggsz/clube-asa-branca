@@ -21,30 +21,15 @@ Route::get('/', 'PagesController@paginainicial');
 Route::get('/socios', 'PagesController@paginaInicial')->name('inicio');
 Route::get('/socios/presencas', 'PagesController@presencas')->name('presenca');
 Route::get('/socios/passadas', 'PagesController@passadas')->name('passadas');
-Route::get('/socios/{id}', function ($id) {
-    $listaSocio = Socio::all();
-    $socio = $listaSocio->find($id);
-    $listaPassada = Passada::all();
-    $passadas = $listaPassada->where('socio_id', $id);
-    $listaPresenca = Presenca::all();
-    $presenca = $listaPresenca->where('socio_id', $id);
-    $listaPagamento = Pagamento::all()->where('socio_id',$id);
-    $pagamentos = $listaPagamento->where('pago', false);
-    $quitados = $listaPagamento->where('pago', true);
-    if (isset($socio)) {
-        return view('profile', compact('socio', 'passadas', 'presenca', 'pagamentos', 'quitados'));
-    } else {
-        return view('inicio');
-    }
-});
+Route::get('/socios/{id}', 'SocioController@show');
 Route::get('/socios/presencas/excluir/{id}', 'PresencasController@destroy');
 Route::get('/socios/apagar/{id}', 'SocioController@destroy');
 Route::get('/socios/pagamento/{id}/pago','PayController@pagamento');
-Route::post('/socio/novo', 'SocioController@store');
-Route::post('/presencas', 'PresencasController@store');
-Route::post('/passadas', 'PassadasController@store');
-Route::post('/socios/{id}', 'SocioController@update');
-Route::post('/contatos/{id}', 'ContactController@update');
-Route::post('/enderecos/{id}', 'AddressController@update');
-Route::post('/fotos/{id}', 'PhotoController@update');
-Route::post('/registros/{id}', 'RegistroController@update');
+Route::post('/socios/new', 'SocioController@store');
+Route::post('/presencas/new', 'PresencasController@store');
+Route::post('/passadas/new', 'PassadasController@store');
+Route::post('/socios/edit/{id}', 'SocioController@update');
+Route::post('/contatos/edit/{id}', 'ContactController@update');
+Route::post('/enderecos/edit/{id}', 'AddressController@update');
+Route::post('/fotos/edit/{id}', 'PhotoController@update');
+Route::post('/registros/edit/{id}', 'RegistroController@update');

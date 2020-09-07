@@ -21,7 +21,7 @@ class CreatePassadasTable extends Migration
             $table->string('nome', 100);
             $table->string('data', 15);
             $table->string('n_passadas',10);
-            $table->string('modalidade', 10);
+            $table->string('modalidade', 50);
             $table->softDeletes();
             $table->timestamps();
         });

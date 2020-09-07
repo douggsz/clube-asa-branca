@@ -12,13 +12,13 @@ class Presencas extends Migration
         Schema::create('presencas', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->foreignId('socio_id')
-                ->constrained();
+                ->constrained()
+                ->onDelete('cascade');
             $table->string('ncr', 20);
             $table->string('calibre', 50);
             $table->string('tiros', 10);
             $table->string('data', 20);
             $table->string('modalidade', 50);
-            //$table->foreign('socio_id')->references('id')->on('socios');
             $table->softDeletes();
             $table->timestamps();
         });
