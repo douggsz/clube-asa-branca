@@ -6,9 +6,31 @@ use App\Presenca;
 use App\Registro;
 use App\Socio;
 use Illuminate\Http\Request;
+use App\Http\Middleware\PresencaMiddleware;
+use Illuminate\Support\Facades\App;
 
 class PresencasController extends Controller
 {
+
+    private function Rules()
+    {
+        return [
+            'calibre' => 'required',
+            'tiros' => 'required',
+            'modalidade' => 'required',
+            'data' => 'required'
+        ];
+    }
+
+    private function Messages()
+    {
+        return [
+            'calibre.required' => 'Informar calibre utilizado',
+            'tiros.required' => 'Informar numero de disparos',
+            'modalidade.required' => 'Deve ser informada a modalidade',
+            'data.required' => 'Informar a data'
+        ];
+    }
 
     public function index()
     {
@@ -29,12 +51,7 @@ class PresencasController extends Controller
     public function store(Request $request)
     {
 
-
-        $rules = new RulesController();
-        $message = $rules->getMessages();
-        $rule = $rules ->getRules();
-
-        $request->validate($rule, $message);
+        $request->validate($this->Rules(), $this->Messages());
 
         $socios = Registro::all();
 

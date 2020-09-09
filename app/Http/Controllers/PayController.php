@@ -33,6 +33,16 @@ class PayController extends Controller
         return redirect('/socios/' . $pagamentoDivida->socio_id);
     }
 
+    public function exclusao($id)
+    {
+        $exDivida = Pagamento::all()->find($id);
+        $exDivida->delete();
+
+        return redirect('/socios/' . $exDivida->socio_id);
+    }
+
+
+
     public function store(Request $request)
     {
 

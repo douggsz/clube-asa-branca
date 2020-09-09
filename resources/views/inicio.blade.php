@@ -78,7 +78,7 @@
                                         <form id="formNovoSocio" method="post" action="/socios/new"
                                               enctype="multipart/form-data">
                                             @csrf
-                                            <div class="input-group mb-3">
+                                            <div class="input-group mb-4">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text"
                                                           id="inputGroupFileAddon01">Foto</span>

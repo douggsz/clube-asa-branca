@@ -8,6 +8,25 @@ use Illuminate\Http\Request;
 class RegistroController extends Controller
 {
 
+    private function Rules()
+    {
+        return [
+            'n_cr' => 'required|unique:registros',
+            'data_expedicao' => 'required',
+            'data_validade' => 'required'
+        ];
+    }
+
+    private function Messages()
+    {
+        return [
+            'data_expedicao.required' => 'Data de expedição é obrigatória',
+            'data_validade.required' => 'Data de validade é obrigatória',
+            'n_cr.required' => 'Informar CR',
+            'n_cr.unique' => 'CR já cadastrado',
+        ];
+    }
+
     public function index()
     {
         $lista = Registro::all();
@@ -36,11 +55,8 @@ class RegistroController extends Controller
 
     public function update(Request $request, $id)
     {
-        $rules = new RulesController();
-        $message = $rules->getMessages();
-        $rule = $rules ->getRules();
 
-        $request->validate($rule, $message);
+        $request->validate($this->Rules(), $this->Messages());
 
         $atualizaRegistro = Registro::all()->find($id);
 

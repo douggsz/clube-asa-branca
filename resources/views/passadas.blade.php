@@ -22,6 +22,7 @@
                             <th>Nº passadas</th>
                             <th>Modalidade</th>
                             <th>Pagamento</th>
+                            <th>Ações</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -33,11 +34,18 @@
                                     <td>{{$passada->data}}</td>
                                     <td>{{$passada->n_passadas}}</td>
                                     <td>{{$passada->modalidade}}</td>
-                                    <td>@if($passada->pagamento->pago == 0)
+                                    <td>
+                                        @if($passada->pagamento->pago == 0)
                                             Não foi pago
                                         @else
                                             Pago
-                                        @endif</td>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <div style="text-align: center;">
+                                            <a href="/socios/passada/excluir/{{$passada->id}}">x</a>
+                                        </div>
+                                    </td>
                                 </tr>
                             @endforeach
                         @endif
@@ -49,6 +57,7 @@
                             <th>Nº passadas</th>
                             <th>Modalidade</th>
                             <th>Pagamento</th>
+                            <th>Ações</th>
                         </tr>
                         </tfoot>
                     </table>
@@ -111,7 +120,8 @@
                                                 class="form-group col">
                                                 <input
                                                     class="form-control @if ($errors->has('n_passadas')) is-invalid @endif"
-                                                    type="text" name="n_passadas" id="n_passadas" placeholder="Nº Passadas">
+                                                    type="text" name="n_passadas" id="n_passadas"
+                                                    placeholder="Nº Passadas">
                                                 @if($errors->has('n_passadas'))
                                                     <div class="invalid-feedback">
                                                         {{$errors->first('n_passadas')}}

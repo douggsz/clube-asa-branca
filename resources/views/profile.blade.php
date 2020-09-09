@@ -8,11 +8,11 @@
     <div id="content">
         <div class="container-fluid" id="corpo">
             <h3 class="text-dark mb-4">{{ $socio->nome }}</h3>
-            <div class="row mb-3">
+            <div class="row mb-4">
                 <div class="col-lg-4">
-                    <div class="card mb-3">
+                    <div class="card-body mb-4">
                         <div class="card-body text-center shadow">
-                            <img class="rounded-circle mb-3 mt-4" src="{{ asset('storage/'. $socio->foto->img )}}"
+                            <img class="rounded-circle mb-4 mt-4" src="{{ asset('storage/'. $socio->foto->img )}}"
                                  width="160" height="160">
                             <div class="custom-file">
                                 <form action="/fotos/edit/{{ $socio->foto->id }}" method="POST"
@@ -29,7 +29,7 @@
                     </div>
                     <input type="hidden" value="{{ $socio->id }}" id="idSocio">
 
-                    <div class="card shadow mb-3">
+                    <div class="card shadow mb-4">
                         <button type="button" class="btn border-0 py-3" data-toggle="collapse"
                                 href="#pagamentoSocio" aria-expanded="true"
                                 aria-controls="collapseExample" data-target="#pagamentoSocio">
@@ -42,7 +42,7 @@
                                     <th>Descrição</th>
                                     <th>Data</th>
                                     <th>Valor</th>
-                                    <th></th>
+                                    <th>Ações</th>
                                     </thead>
                                     <tbody>
                                     @foreach($pagamentos as $pagamento)
@@ -50,7 +50,13 @@
                                             <td>{{$pagamento->descricao}}</td>
                                             <td>{{$pagamento->data}}</td>
                                             <td>R${{$pagamento->valor}}</td>
-                                            <td><a href="/socios/pagamento/{{$pagamento->id}}/pago">x</a></td>
+                                            <td>
+
+                                                <a href="/socios/pagamento/{{$pagamento->id}}/pago">
+                                                    <button type="button" class="btn btn-sm">pago</button>
+                                                </a>
+                                                <a href="/socios/passada/excluir/{{$pagamento->passada_id}}">x</a>
+                                            </td>
                                         </tr>
                                     @endforeach
                                     </tbody>
@@ -58,7 +64,7 @@
                                     <th>Descrição</th>
                                     <th>Data</th>
                                     <th>Valor</th>
-                                    <th></th>
+                                    <th>Ações</th>
                                     </tfoot>
                                 </table>
                             @else
@@ -67,7 +73,7 @@
                         </div>
                     </div>
 
-                    <div class="card shadow mb-3">
+                    <div class="card shadow mb-4">
                         <button type="button" class="btn border-0 py-3" data-toggle="collapse"
                                 href="#registroSocio" aria-expanded="true"
                                 aria-controls="collapseExample" data-target="#registroSocio">
@@ -128,7 +134,7 @@
                         </div>
                     </div>
 
-                    <div class="card shadow mb-3">
+                    <div class="card shadow mb-4">
                         <button type="button" class="btn border-0 py-3" data-toggle="collapse"
                                 href="#dialogEx" aria-expanded="true" id="btnExcluir"
                                 aria-controls="collapseExample" data-target="#dialogEx">
@@ -153,7 +159,7 @@
                 <div class="col-lg-8">
                     <div class="row">
                         <div class="col">
-                            <div class="card shadow mb-3">
+                            <div class="card shadow mb-4">
 
                                 <button type="button" class="btn border-0 py-3" data-toggle="collapse"
                                         href="#informacoesSocio" aria-expanded="true"
@@ -227,7 +233,7 @@
                                 </div>
                             </div>
 
-                            <div class="card shadow mb-3">
+                            <div class="card shadow mb-4">
                                 <button type="button" class="btn border-0 py-3" data-toggle="collapse"
                                         href="#enderecoSocios" aria-expanded="true"
                                         aria-controls="collapseExample" data-target="#enderecoSocios">
@@ -287,7 +293,7 @@
                                     </form>
                                 </div>
                             </div>
-                            <div class="card shadow mb-3">
+                            <div class="card shadow mb-4">
                                 <button type="button" class="btn border-0 py-3" data-toggle="collapse"
                                         href="#presencaSocio" aria-expanded="true"
                                         aria-controls="collapseExample" data-target="#presencaSocio">
@@ -341,7 +347,7 @@
 
                                 </div>
                             </div>
-                            <div class="card shadow mb-3">
+                            <div class="card shadow mb-4">
                                 <button type="button" class="btn border-0 py-3" data-toggle="collapse"
                                         href="#passadaSocio" aria-expanded="true"
                                         aria-controls="collapseExample" data-target="#passadaSocio">
@@ -360,19 +366,21 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            @foreach($passadas as $passada)
-                                                <tr>
-                                                    <td>{{$passada->socio->nome}}</td>
-                                                    <td>{{$passada->data}}</td>
-                                                    <td>{{$passada->n_passadas}}</td>
-                                                    <td>{{$passada->modalidade}}</td>
-                                                    <td>@if($passada->pagamento->pago == 0)
-                                                            Não foi pago
-                                                        @else
-                                                            Pago
-                                                        @endif</td>
-                                                </tr>
-                                            @endforeach
+                                            @isset($passadas)
+                                                @foreach($passadas as $passada)
+                                                    <tr>
+                                                        <td>{{$passada->socio->nome}}</td>
+                                                        <td>{{$passada->data}}</td>
+                                                        <td>{{$passada->n_passadas}}</td>
+                                                        <td>{{$passada->modalidade}}</td>
+                                                        <td>@if($passada->pagamento->pago == 0)
+                                                                Não foi pago
+                                                            @else
+                                                                Pago
+                                                            @endif</td>
+                                                    </tr>
+                                                @endforeach
+                                            @endif
                                             </tbody>
                                             <tfoot>
                                             <tr>
@@ -390,7 +398,7 @@
                                     @endif
                                 </div>
                             </div>
-                            <div class="card shadow mb-3">
+                            <div class="card shadow mb-4">
                                 <button type="button" class="btn border-0 py-3" data-toggle="collapse"
                                         href="#quitadosSocios" aria-expanded="true"
                                         aria-controls="collapseExample" data-target="#quitadosSocios">
@@ -403,6 +411,7 @@
                                             <th>Descrição</th>
                                             <th>Data</th>
                                             <th>Valor</th>
+                                            <th>Acões</th>
                                             </thead>
                                             <tbody>
                                             @foreach($quitados as $quitado)
@@ -410,6 +419,17 @@
                                                     <td>{{$quitado->descricao}}</td>
                                                     <td>{{$quitado->data}}</td>
                                                     <td>R${{$quitado->valor}}</td>
+
+                                                    <td>
+                                                        <div style="text-align: center;">
+                                                            @if(empty($quitado->passada_id))
+                                                                <a href="/socios/pagamento/{{$quitado->id}}/excluir">x</a>
+                                                            @else
+                                                                <a href="/socios/passada/excluir/{{$quitado->passada_id}}">x</a>
+                                                            @endif
+                                                        </div>
+                                                    </td>
+
                                                 </tr>
                                             @endforeach
                                             </tbody>
@@ -417,13 +437,15 @@
                                             <th>Descrição</th>
                                             <th>Data</th>
                                             <th>Valor</th>
+                                            <th>Ações</th>
                                             </tfoot>
                                         </table>
-                                        @if(count($pagamentos) > 0)
+                                        @if(count($pagamentos) <> 0)
                                             <h4 class="text-center">Há dividas</h4>
                                         @endif
                                     @else
-                                        <h4 class="text-center">Há dividas</h4>
+                                        <hr/>
+                                        <h4 class="text-center">Não há dividas</h4>
                                     @endif
                                 </div>
                             </div>

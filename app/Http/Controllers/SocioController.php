@@ -17,7 +17,28 @@ class SocioController extends Controller
     private function Rules()
     {
         return [
+            'n_cr' => 'required|unique:registros',
+            'data_expedicao' => 'required',
+            'data_validade' => 'required',
+            'nome' => 'required|min:2|max:100',
+            'n_associado' => 'required|unique:socios',
+            'foto' => 'required'
+        ];
+    }
 
+    private function Messages()
+    {
+        return [
+            'n_cr.required' => 'Informar CR',
+            'n_cr.unique' => 'CR já cadastrado',
+            'nome.required' => 'Nome é obrigatório',
+            'nome.min' => 'Nome deve conter 2 caracteres',
+            'nome.max' => 'Nome não pode ter mais de 100 caracteres',
+            'n_associado.required' => 'Numero do associado é obrigatório',
+            'n_associado.unique' => 'Numero de associado já cadastrado',
+            'data_expedicao.required' => 'Data de expedição é obrigatória',
+            'data_validade.required' => 'Data de validade é obrigatória',
+            'foto.required' => 'Foto não escolhida'
         ];
     }
 
@@ -34,11 +55,8 @@ class SocioController extends Controller
 
     public function store(Request $request)
     {
-        $rules = new RulesController();
-        $message = $rules->getMessages();
-        $rule = $rules ->getRules();
 
-        $request->validate($rule, $message);
+        $request->validate($this->Rules(),$this->Messages());
 
         $novoSocio = new Socio();
 
@@ -120,12 +138,12 @@ class SocioController extends Controller
     public function destroy($id)
     {
 
-        Contato::where('socio_id', $id)->delete();
         Endereco::where('socio_id', $id)->delete();
         Foto::where('socio_id', $id)->delete();
         Pagamento::where('socio_id', $id)->delete();
         Presenca::where('socio_id', $id)->delete();
         Registro::where('socio_id', $id)->delete();
+        Passada::where('socio_id', $id)->delete();
         Socio::all()->find($id)->delete();
 
         return redirect()->action('PagesController@paginainicial');

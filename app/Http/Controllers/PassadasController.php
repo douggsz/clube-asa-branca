@@ -8,9 +8,27 @@ use App\Passada;
 use App\Registro;
 use App\Socio;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class PassadasController extends Controller
 {
+    private function Rules()
+    {
+        return [
+            'n_passadas' => 'required',
+            'modalidade' => 'required',
+            'data' => 'required'
+        ];
+    }
+
+    private function Messages()
+    {
+        return [
+            'n_passadas.required' => 'Informar numero de passadas',
+            'modalidade.required' => 'Deve ser informada a modalidade',
+            'data.required' => 'Informar a data',
+        ];
+    }
 
     public function index()
     {
@@ -26,11 +44,7 @@ class PassadasController extends Controller
     public function store(Request $request)
     {
 
-        $rules = new RulesController();
-        $message = $rules->getMessages();
-        $rule = $rules ->getRules();
-
-        $request->validate($rule, $message);
+        $request->validate($this->Rules(), $this->Messages());
 
         $socios = Registro::all();
 
@@ -92,6 +106,8 @@ class PassadasController extends Controller
 
     public function destroy($id)
     {
-        //
+        Passada::all()->find($id)->delete();
+        Pagamento::where('passada_id', $id)->delete();
+        return redirect()->route('passadas');
     }
 }
