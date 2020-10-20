@@ -1,41 +1,34 @@
 $(document).ready(function () {
 
-    $('#tpresencas').DataTable();
+    $('#tppresencas').DataTable();
+    $('#sociosTable').DataTable();
     $('.dataTables_length').addClass('bs-select');
+
 
     $('#mostraNovaPresenca').click(function () {
         $('#barraLateral').hide();
         $('#corpo').hide();
-        $('#novoUsuario').show();
-    })
+        $('#novaPresenca').show();
+    });
 
     $('#fechaNovaPresença').click(function () {
         $('#barraLateral').show();
         $('#corpo').show()
-        $('#novoUsuario').hide()
+        $('#novaPresenca').hide()
     })
 
     $('#sociosRegistro').change(function () {
         $('#crSelecionado').attr('value', 'Registro: ' + $('#sociosRegistro').val());
         $('#idSelecionado').attr('value', $('#sociosRegistro').val());
     })
-    $('#tPassadas').DataTable();
-    $('.dataTables_length').addClass('bs-select');
 
-    $('#mostraNovaPassada').click(function () {
-        $('#barraLateral').hide();
-        $('#corpo').hide();
-        $('#novaPassada').show();
+    $('#btnExcluir').click(function () {
+        $('#btnExcluir').hide();
+        $('#dialogCn').click(function () {
+            $('#btnExcluir').click();
+            $('#btnExcluir').show();
+        })
     });
-
-    $('#fechaNovaPassada').click(function () {
-        $('#barraLateral').show();
-        $('#corpo').show();
-        $('#novaPassada').hide();
-    })
-
-    $('#sociosTable').DataTable();
-    $('.dataTables_length').addClass('bs-select');
 
     $('#mostraNovoUsuario').click(function () {
 

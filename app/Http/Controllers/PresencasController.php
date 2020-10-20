@@ -15,9 +15,6 @@ class PresencasController extends Controller
     private function Rules()
     {
         return [
-            'calibre' => 'required',
-            'tiros' => 'required',
-            'modalidade' => 'required',
             'data' => 'required'
         ];
     }
@@ -25,9 +22,6 @@ class PresencasController extends Controller
     private function Messages()
     {
         return [
-            'calibre.required' => 'Informar calibre utilizado',
-            'tiros.required' => 'Informar numero de disparos',
-            'modalidade.required' => 'Deve ser informada a modalidade',
             'data.required' => 'Informar a data'
         ];
     }
@@ -53,26 +47,18 @@ class PresencasController extends Controller
 
         $request->validate($this->Rules(), $this->Messages());
 
-        $socios = Registro::all();
-
-        foreach ($socios as $socio) {
-            if ($socio->n_cr === $request->n_cr) {
-                $socioID = $socio->socio_id;
-            }
-        }
-
         $novaPresenca = new Presenca();
 
-        $novaPresenca->socio_id = $socioID;
-        $novaPresenca->ncr = $request->n_cr;
+        $novaPresenca->socio_id = $request->idsocio;
         $novaPresenca->calibre = strtoupper($request->calibre);
         $novaPresenca->tiros = $request->tiros;
         $novaPresenca->data = $request->data;
-        $novaPresenca->modalidade = strtoupper($request->modalidade);
+        $novaPresenca->copa = strtoupper($request->copa);
+        $novaPresenca->insumos = strtoupper($request->insumos);
 
         $novaPresenca->save();
 
-        return redirect()->action('PagesController@presencas');
+        return redirect('/socios/' . $request->idsocio);
 
     }
 
@@ -91,11 +77,11 @@ class PresencasController extends Controller
         //
     }
 
-    public function destroy($id)
+    public function destroy($id , $idS)
     {
 
         Presenca::all()->find($id)->delete();
-        return redirect()->action('PagesController@presencas');
+        return redirect('/socios/' . $idS);
 
     }
 }

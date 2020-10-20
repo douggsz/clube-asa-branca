@@ -13,9 +13,9 @@ class Registros extends Migration
             $table->foreignId('socio_id')
                 ->constrained()
                 ->onDelete('cascade');
-            $table->string('n_cr', 20);
-            $table->string('data_expedicao', 20);
-            $table->string('data_validade', 20);
+            $table->string('n_cr', 20)->nullable();
+            $table->string('data_expedicao', 20)->nullable();
+            $table->string('data_validade', 20)->nullable();
             //$table->foreign('socio_id')->references('id')->on('socios');
             $table->SoftDeletes();
             $table->timestamps();

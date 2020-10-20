@@ -5,13 +5,12 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Presenca extends Model
+class Anuidade extends Model
 {
     use SoftDeletes;
 
-    function socio()
+    public function pagamento()
     {
-        return $this->belongsTo('App\Socio');
+        return $this->hasMany('App\Pagamento');
     }
-
 }

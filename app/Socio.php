@@ -13,8 +13,8 @@ class Socio extends Model
     {
         return $this->hasOne('App\Endereco');
     }
-    public function passada(){
-        return $this->hasMany('App\Passada');
+    public function anuidade(){
+        return $this->hasOne('App\Anuidade');
     }
 
     public function registro()

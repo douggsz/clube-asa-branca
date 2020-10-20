@@ -24,21 +24,13 @@ class PagesController extends Controller
 
         $presencas = Presenca::all();
 
-        $socios = Registro::all()
-            ->whereNotNull('n_cr');
-
-        return view('presencas', compact('socios', 'presencas'));
-
-    }
-
-    public function passadas()
-    {
-        $passadas = Passada::all();
+        $presencaUnica = $presencas->unique('socio_id');
 
         $socios = Registro::all()
             ->whereNotNull('n_cr');
 
-        return view('passadas', compact('socios', 'passadas'));
+        return view('presencas', compact('socios', 'presencas', 'presencaUnica'));
+
     }
 
 }

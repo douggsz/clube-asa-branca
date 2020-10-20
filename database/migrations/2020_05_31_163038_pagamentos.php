@@ -11,12 +11,9 @@ class Pagamentos extends Migration
         Schema::create('pagamentos', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->foreignId('socio_id');
-            $table->foreignId('passada_id')->nullable()
-                ->onDelete('cascade');
             $table->string('descricao', 255);
             $table->string('data', 15)->nullable();
             $table->string('valor', 10);
-            $table->boolean('pago')->default(false);
             $table->SoftDeletes();
             $table->timestamps();
         });

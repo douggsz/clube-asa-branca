@@ -14,146 +14,86 @@
                     </div>
                 </div>
                 <div class="modal-body">
-                    <table class="table my-0" id="tpresencas">
-                        <thead>
-                        <tr>
-                            <th>Nome</th>
-                            <th>Nº CR</th>
-                            <th>Calibre</th>
-                            <th>Disparos</th>
-                            <th>Data</th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @isset($presencas)
-                            @foreach($presencas as $comparecimento)
-                                <tr>
-                                    <td><a href="/socios/{{$comparecimento->socio_id}}">
-                                            {{$comparecimento->socio->nome}}</a></td>
-                                    <td>{{$comparecimento->n_cr}}</td>
-                                    <td>{{$comparecimento->calibre}}</td>
-                                    <td>{{$comparecimento->tiros}}</td>
-                                    <td>{{$comparecimento->data}}</td>
-                                    <td>
-                                        <a class="close"
-                                           href="/socios/presencas/excluir/{{$comparecimento->id}}">
-                                            <span aria-hidden="true">x</span>
-                                        </a>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        @endif
-                        </tbody>
-                        <tfoot>
-                        <tr>
-                            <th>Nome</th>
-                            <th>Nº CR</th>
-                            <th>Calibre</th>
-                            <th>Disparos</th>
-                            <th>Data</th>
-                            <th></th>
-                        </tr>
-                        </tfoot>
-                    </table>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-primary btn-sm shadow" id="mostraNovaPresenca"><a>Novo</a></button>
-            </div>
-        </div>
-    </div>
-    <div class="modal" tabindex="-1" id="novoUsuario">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <div>
-                        <h5 class="modal-title">Nova presença</h5>
-                    </div>
-                    <button class="close" id="fechaNovaPresença" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="col">
-                        <div class="form-group">
-                            <form action="/presencas/new" method="POST">
-                                @csrf
-                                <a>Informações</a>
-                                <div id="presencaInfo">
-                                    <div>
-                                        <p>
-                                            <select class="form-control" name="nome" id="sociosRegistro">
-                                                @isset($socios)
-                                                    @foreach($socios as $registro)
-                                                        <option
-                                                            value="{{$registro->n_cr}}">{{$registro->socio->nome}}
-                                                        </option>
-                                                    @endforeach
-                                                @endif
-                                            </select>
-                                        </p>
-                                        <p><input class="form-control" type="text" name="registro" id="crSelecionado"
-                                                  value="Registro: {{ $socios[0]->n_cr }}" disabled required>
-                                            <input type="hidden" value=" {{ $socios[0]->n_cr }}" name="n_cr"
-                                                   id="idSelecionado"></p>
-                                        <p>
-                                        <div><input class="form-control @if ($errors->has('data')) is-invalid @endif"
-                                                    type="text" name="data" id="data"
-                                                    placeholder="Data presença" data-mask="00/00/0000">
-                                            @if($errors->has('data'))
-                                                <div class="invalid-feedback">
-                                                    {{$errors->first('data')}}
-                                                </div>
-                                            @endif
+                    @isset($presencaUnica)
+                        @foreach($presencaUnica as $comparecimento)
+                            <tr>
+                                <div class="card mb-1">
+                                    <button type="button" class="btn border-0 py-3" data-toggle="collapse"
+                                            href="#usuario{{$comparecimento->socio_id}}" aria-expanded="true"
+                                            aria-controls="collapseExample"
+                                            data-target="#usuario{{$comparecimento->socio_id}}">
+                                        <h6 class="text font-weight-bold m-0">{{$comparecimento->socio->nome}}</h6>
+                                    </button>
+                                </div>
+                                <div class="card-body collapse" id="usuario{{$comparecimento->socio_id}}">
+                                    <div class="form-group">
+                                        <div class="card-body">
+                                            <table class="table my-0" id="tppresencas">
+                                                <thead>
+                                                <tr>
+                                                    <th>Data</th>
+                                                    <th>Calibre</th>
+                                                    <th>Disparos</th>
+                                                    <th>Insumos</th>
+                                                    <th>Copa</th>
+                                                    <th>Pago</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                @foreach($presencas as $dia)
+                                                    <tr>
+                                                        @if($dia->socio_id == $comparecimento->socio_id)
+                                                        <td>{{$dia->data}}</td>
+                                                        <td>{{$dia->calibre}}</td>
+                                                        <td>{{$dia->tiros}}</td>
+                                                        <td>{{$dia->insumos}}</td>
+                                                        <td>{{$dia->copa}}</td>
+                                                        <td>
+                                                            @if($dia->calibre == null &&
+                                                                $dia->tiros == null &&
+                                                                $dia->insumos == null &&
+                                                                $dia->copa == null)
+                                                                Somente assinatura
+                                                            @else
+                                                                @if($dia->pago)
+                                                                    Sim
+                                                                @else
+                                                                    Não
+                                                                @endif
+                                                            @endif
+                                                        </td>
+
+                                                        <td>
+                                                            <a class="close"
+                                                               href="/socios/presencas/excluir/{{$dia->id}}/{{$dia->socio->id}}">
+                                                                <span aria-hidden="true">x</span>
+                                                            </a>
+                                                        </td>
+                                                        @endif
+                                                    </tr>
+                                                @endforeach
+                                                </tbody>
+                                                <tfoot>
+                                                <tr>
+                                                    <th>Data</th>
+                                                    <th>Calibre</th>
+                                                    <th>Disparos</th>
+                                                    <th>Insumos</th>
+                                                    <th>Copa</th>
+                                                    <th>Pago</th>
+                                                </tr>
+                                                </tfoot>
+                                            </table>
+
                                         </div>
-                                        </p>
-                                        <div class="row">
-                                            <div class="form-group col">
-                                                <input
-                                                    class="form-control @if ($errors->has('tiros')) is-invalid @endif"
-                                                    type="text" name="tiros" id="tiros"
-                                                    placeholder="Nº Disparos">
-                                                @if($errors->has('tiros'))
-                                                    <div class="invalid-feedback">
-                                                        {{$errors->first('tiros')}}
-                                                    </div>
-                                                @endif
-                                            </div>
-                                            <div class="form-group col">
-                                                <input
-                                                    class="form-control @if ($errors->has('calibre')) is-invalid @endif"
-                                                    type="text" name="calibre" id="calibre"
-                                                    placeholder="Calibre">
-                                                @if($errors->has('calibre'))
-                                                    <div class="invalid-feedback">
-                                                        {{$errors->first('calibre')}}
-                                                    </div>
-                                                @endif
-                                            </div>
-                                        </div>
-                                        <p><div><input
-                                                class="form-control @if ($errors->has('modalidade')) is-invalid @endif"
-                                                type="text" name="modalidade" id="modalidade"
-                                                placeholder="Modalidade">
-                                            @if($errors->has('modalidade'))
-                                                <div class="invalid-feedback">
-                                                    {{$errors->first('modalidade')}}
-                                                </div>
-                                            @endif
-                                        </div>
-                                        </p>
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-primary">Salvar</button>
-                            </form>
-                        </div>
-                    </div>
+                            </tr>
+                        @endforeach
+                    @endif
                 </div>
             </div>
         </div>
     </div>
-    </div>
-    <div class="modal-footer">
-    </div>
+
 @endsection
