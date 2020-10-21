@@ -2,6 +2,8 @@ $(document).ready(function () {
 
     $('#tppresencas').DataTable();
     $('#sociosTable').DataTable();
+    $('#tInsumos').DataTable();
+    $('#tCopa').DataTable();
     $('.dataTables_length').addClass('bs-select');
 
 

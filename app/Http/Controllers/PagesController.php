@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Copa;
+use App\Insumo;
 use App\Passada;
 use App\Presenca;
 use App\Registro;
@@ -29,7 +31,10 @@ class PagesController extends Controller
         $socios = Registro::all()
             ->whereNotNull('n_cr');
 
-        return view('presencas', compact('socios', 'presencas', 'presencaUnica'));
+        $copas = Copa::all();
+        $insumos = Insumo::all();
+
+        return view('presencas', compact('socios', 'presencas', 'copas' ,'insumos','presencaUnica'));
 
     }
 

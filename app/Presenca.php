@@ -14,4 +14,14 @@ class Presenca extends Model
         return $this->belongsTo('App\Socio');
     }
 
+    public function insumo()
+    {
+        return $this->hasOne('App\Insumo');
+    }
+
+    public function copa()
+    {
+        return $this->hasOne('App\Copa');
+    }
+
 }

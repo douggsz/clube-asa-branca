@@ -19,7 +19,6 @@ class Presencas extends Migration
             $table->string('data', 20)->nullable();
             $table->string('copa', 50)->nullable();
             $table->string('insumos', 50)->nullable();
-            $table->boolean('pago')->default(false);
             $table->softDeletes();
             $table->timestamps();
         });

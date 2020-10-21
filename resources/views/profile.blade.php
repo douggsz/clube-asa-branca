@@ -148,7 +148,8 @@
                                                                                 <div class="form-group">
                                                                                     <label><strong>Pagamento da
                                                                                             anuidade</strong></label><input
-                                                                                        class="form-control" type="number"
+                                                                                        class="form-control"
+                                                                                        type="number"
                                                                                         placeholder="Valor"
                                                                                         name="valorPago"
                                                                                         id="valorPago"
@@ -326,9 +327,6 @@
                                                 <th>Data</th>
                                                 <th>Calibre</th>
                                                 <th>Disparos</th>
-                                                <th>Insumos</th>
-                                                <th>Copa</th>
-                                                <th>Pago</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -337,21 +335,9 @@
                                                     <td>{{$comparecimento->data}}</td>
                                                     <td>{{$comparecimento->calibre}}</td>
                                                     <td>{{$comparecimento->tiros}}</td>
-                                                    <td>{{$comparecimento->insumos}}</td>
-                                                    <td>{{$comparecimento->copa}}</td>
+
                                                     <td>
-                                                        @if($comparecimento->calibre == null &&
-                                                            $comparecimento->tiros == null &&
-                                                            $comparecimento->insumos == null &&
-                                                            $comparecimento->copa == null)
-                                                            Somente assinatura
-                                                        @else
-                                                            @if($comparecimento->pago)
-                                                                Sim
-                                                            @else
-                                                                Não
-                                                            @endif
-                                                        @endif
+
                                                     </td>
 
                                                     <td>
@@ -368,12 +354,101 @@
                                                 <th>Data</th>
                                                 <th>Calibre</th>
                                                 <th>Disparos</th>
-                                                <th>Insumos</th>
-                                                <th>Copa</th>
-                                                <th>Pago</th>
                                             </tr>
                                             </tfoot>
                                         </table>
+                                        <div class="card-body">
+                                            <div class="card mb-1">
+                                                <button type="button" class="btn border-0 py-3" data-toggle="collapse"
+                                                        href="#insumoTable" aria-expanded="true"
+                                                        aria-controls="collapseExample" data-target="#insumoTable">
+                                                    <h6 class="text-primary font-weight-bold m-0">Insumos</h6>
+                                                </button>
+                                                <div class="card-body collapse" id="insumoTable">
+                                                    <table class="table my-0" id="tInsumos">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>Data</th>
+                                                            <th>Valor</th>
+                                                            <th>Descrção</th>
+                                                            <th>Pago</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        @foreach($insumos as $i)
+                                                            @if($socio->id == $i->presenca->socio_id)
+                                                                <tr>
+                                                                    <td>{{$i->presenca->data}}</td>
+                                                                    <td>{{number_format($i->valor, 2)}}</td>
+                                                                    <td>{{$i->descricao}}</td>
+                                                                    <td>
+                                                                        @if($i->pagamento == true)
+                                                                            Sim
+                                                                        @else
+                                                                            Não
+                                                                        @endif
+                                                                    </td>
+                                                                </tr>
+                                                            @endif
+                                                        @endforeach
+                                                        </tbody>
+                                                        <tfoot>
+                                                        <tr>
+                                                            <th>Data</th>
+                                                            <th>Valor</th>
+                                                            <th>Descrção</th>
+                                                            <th>Pago</th>
+                                                        </tr>
+                                                        </tfoot>
+                                                    </table>
+                                                </div>
+                                            </div><!-- insumos -->
+                                            <div class="card mb-1">
+                                                <button type="button" class="btn border-0 py-3" data-toggle="collapse"
+                                                        href="#copaTable" aria-expanded="true"
+                                                        aria-controls="collapseExample" data-target="#copaTable">
+                                                    <h6 class="text-primary font-weight-bold m-0">Copa</h6>
+                                                </button>
+                                                <div class="card-body collapse" id="copaTable">
+                                                    <table class="table my-0" id="tCopa">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>Data</th>
+                                                            <th>Valor</th>
+                                                            <th>Descrção</th>
+                                                            <th>Pago</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        @foreach($copas as $c)
+                                                            @if($socio->id == $c->presenca->socio_id)
+                                                                <tr>
+                                                                    <td>{{$c->presenca->data}}</td>
+                                                                    <td>{{number_format($c->valor, 2)}}</td>
+                                                                    <td>{{$c->descricao}}</td>
+                                                                    <td>
+                                                                        @if($c->pagamento == true)
+                                                                            Sim
+                                                                        @else
+                                                                            Não
+                                                                        @endif
+                                                                    </td>
+                                                                </tr>
+                                                            @endif
+                                                        @endforeach
+                                                        </tbody>
+                                                        <tfoot>
+                                                        <tr>
+                                                            <th>Data</th>
+                                                            <th>Valor</th>
+                                                            <th>Descrção</th>
+                                                            <th>Pago</th>
+                                                        </tr>
+                                                        </tfoot>
+                                                    </table>
+                                                </div>
+                                            </div><!-- copa -->
+                                        </div>
                                     @else
                                         <h3 class="text-center">Não há presenças</h3>
                                     @endif
@@ -383,16 +458,6 @@
                                     </div>
                                 </div>
                             </div> <!-- presenças -->
-                            <div class="card shadow mb-4">
-                                <button type="button" class="btn border-0 py-3" data-toggle="collapse"
-                                        href="#pagamentosSocios" aria-expanded="true"
-                                        aria-controls="collapseExample" data-target="#pagamentosSocios">
-                                    <h6 class="text-primary font-weight-bold m-0">Pagamentos</h6>
-                                </button>
-                                <div class="card-body collapse" id="pagamentosSocios">
-
-                                </div>
-                            </div> <!-- pagamento -->
                             <div class="card shadow mb-4">
                                 <button type="button" class="btn border-0 py-3" data-toggle="collapse"
                                         href="#dialogEx" aria-expanded="true" id="btnExcluir"
@@ -453,15 +518,17 @@
                                                 @endif
                                             </select>
                                         </p>
-                                        <p><input class="form-control" type="text" name="registro" id="crSelecionado"
-                                                  value="Registro: {{ $socios[0]->n_cr }}" disabled
+                                        <p><input class="form-control text" type="text" name="registro"
+                                                  id="crSelecionado"
+                                                  value="Registro: {{ $socio->registro->n_cr }}" disabled
                                                   @if(is_null($socio->registro->n_cr))
                                                   hidden
                                                 @endif>
-                                            <input type="hidden" value=" {{ $socios[0]->n_cr }}" name="n_cr"
+                                            <input type="hidden" value=" {{ $socio->registro->n_cr }}" name="n_cr"
                                                    id="idSelecionado"></p>
                                         <p>
                                         <div>
+                                            <label for="data">Data</label>
                                             <input class="form-control @if ($errors->has('data')) is-invalid @endif"
                                                    type="text" name="data" id="data"
                                                    placeholder="Data Passada" data-mask="00/00/0000">
@@ -473,18 +540,25 @@
                                         </div>
                                         </p>
                                         <div class="row">
-                                            <div class="form-group col">
+                                            <div class="form-group col"
+                                                 @if(is_null($socio->registro->n_cr))
+                                                 hidden
+                                                @endif
+                                            >
+                                                <label for="disparos">Disparos</label>
                                                 <input
                                                     class="form-control"
                                                     type="text" name="tiros"
                                                     id="tiros"
                                                     placeholder="Disparos"
-                                                    @if(is_null($socio->registro->n_cr))
-                                                    hidden
-                                                    @endif
                                                 >
                                             </div>
-                                            <div class="form-group col">
+                                            <div class="form-group col"
+                                                 @if(is_null($socio->registro->n_cr))
+                                                 hidden
+                                                @endif
+                                            >
+                                                <label for="calibre">Calibre</label>
                                                 <input
                                                     class="form-control"
                                                     type="text" name="calibre"
@@ -496,35 +570,59 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="form-group
+                                            <div class="form-group border
                                                 @if(isset($socio->registro->n_cr)))
                                                 col
-                                                 @endif">
-                                                <input
-                                                    class="form-control"
-                                                    type="text" name="insumos"
-                                                    id="insumos"
-                                                    placeholder="Insumos"
-                                                    @if(is_null($socio->registro->n_cr))
-                                                    hidden
-                                                    @endif>
-                                            </div>
-                                            <div class="form-group col">
-                                                <input
-                                                    class="form-control"
-                                                    type="text" name="copa"
-                                                    id="copa"
-                                                    placeholder="Copa">
-                                            </div>
+                                                 @endif"
+                                                 @if(is_null($socio->registro->n_cr))
+                                                 hidden
+                                                @endif
+                                            >
+                                                <p>
+                                                    <label for="insumo">Insumos</label>
+                                                    <input
+                                                        class="form-control"
+                                                        type="text" name="insumo"
+                                                        id="insumo"
+                                                        placeholder="Quantidade"
 
+                                                </p>
+                                                <div>
+                                                    <textarea name="descricaoInsumos" id="descricaoInsumos"
+                                                              placeholder="Descrição dos gastos em insumos"></textarea>
+                                                </div>
+                                                <p>
+                                                    <label for="pagamentoInsumo">Pago ?</label>
+                                                    <select class="form-control" name="pagamentoInsumo"
+                                                            id="pagamentoInsumo">
+                                                        <option value="true">Sim</option>
+                                                        <option value="false" selected>Não</option>
+                                                    </select>
+                                                </p>
+                                            </div>
+                                            <div class="form-group col border">
+                                                <p>
+                                                    <label for="copa">Copa</label>
+                                                    <input
+                                                        class="form-control"
+                                                        type="text" name="copa"
+                                                        id="copa"
+                                                        placeholder="Copa">
+                                                </p>
+                                                <div>
+                                                    <textarea name="descricaoCopa" id="descricaoCopa"
+                                                              placeholder="Descrição dos gastos na copa"></textarea>
+                                                </div>
+                                                <p>
+                                                    <label for="pagamentoCopa">Pago ?</label>
+                                                    <select class="form-control" name="pagamentoCopa"
+                                                            id="pagamentoCopa">
+                                                        <option value="true">Sim</option>
+                                                        <option value="false" selected>Não</option>
+                                                    </select>
+                                                </p>
+                                            </div>
                                         </div>
-                                        <p>
-                                            <label for="pagamento">Pago ?</label>
-                                            <select class="form-control" name="pagamento" id="pagamento">
-                                                <option value="true">Sim</option>
-                                                <option value="false" selected>Não</option>
-                                            </select>
-                                        </p>
                                     </div>
                                 </div>
                                 <button type="submit" class="btn btn-primary">Salvar</button>
@@ -534,6 +632,6 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> <!-- modAL -->
     </div>
 @endsection

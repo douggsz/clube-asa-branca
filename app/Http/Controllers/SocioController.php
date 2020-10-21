@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Contato;
+use App\Copa;
 use App\Endereco;
 use App\Foto;
+use App\Insumo;
 use App\Pagamento;
 use App\Passada;
 use App\Presenca;
@@ -81,14 +83,16 @@ class SocioController extends Controller
 
     public function show($id)
     {
-        $registros = Registro::all()->where('n_cr','<>', '');
+        $registros = Registro::all()->where('n_cr', '<>', '');
         $socios = Socio::all();
         $socio = $socios->find($id);
         $listaPresenca = Presenca::all();
         $presenca = $listaPresenca->where('socio_id', $id);
+        $copas = Copa::all();
+        $insumos = Insumo::all();
 
         if (isset($socio)) {
-            return view('profile', compact('socio', 'socios', 'registros', 'presenca'));
+            return view('profile', compact('socio', 'socios', 'registros', 'presenca', 'insumos', 'copas'));
         } else {
             return view('inicio');
         }

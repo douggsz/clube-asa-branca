@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Copa;
+use App\Insumo;
+use App\Pagamento;
 use App\Presenca;
 use App\Registro;
 use App\Socio;
@@ -48,16 +51,52 @@ class PresencasController extends Controller
         $request->validate($this->Rules(), $this->Messages());
 
         $novaPresenca = new Presenca();
-
         $novaPresenca->socio_id = $request->idsocio;
         $novaPresenca->calibre = strtoupper($request->calibre);
         $novaPresenca->tiros = $request->tiros;
         $novaPresenca->data = $request->data;
-        $novaPresenca->copa = strtoupper($request->copa);
-        $novaPresenca->insumos = strtoupper($request->insumos);
-
         $novaPresenca->save();
 
+        if (isset($request->copa)) {
+            $novoGastoCopa = new Copa();
+            $novoGastoCopa->valor = $request->copa;
+
+            if ($request->pagamentoCopa == true) {
+
+                $novoGastoCopa->pagamento = true;
+
+                $pagamento = new Pagamento();
+                $pagamento->socio_id = $request->idsocio;
+                $pagamento->descricao = "Copa";
+                $pagamento->data = date('d/m/Y');
+                $pagamento->valor = $request->copa;
+                $pagamento->save();
+
+            }
+            $novoGastoCopa->descricao = $request->descricaoCopa;
+            $novaPresenca->copa()->save($novoGastoCopa);
+        }
+
+        if (isset($request->insumo)) {
+            $novoGastoInsumo = new Insumo();
+            $novoGastoInsumo->valor = $request->insumo;
+
+            if ($request->pagamentoInsumo == true) {
+
+                $novoGastoInsumo->pagamento = true;
+
+                $pagamento = new Pagamento();
+                $pagamento->socio_id = $request->idsocio;
+                $pagamento->descricao = "Insumo";
+                $pagamento->data = date('d/m/Y');
+                $pagamento->valor = $request->insumo;
+                $pagamento->save();
+
+            }
+
+            $novoGastoInsumo->descricao = $request->descricaoInsumos;
+            $novaPresenca->insumo()->save($novoGastoInsumo);
+        }
         return redirect('/socios/' . $request->idsocio);
 
     }
@@ -77,10 +116,12 @@ class PresencasController extends Controller
         //
     }
 
-    public function destroy($id , $idS)
+    public function destroy($id, $idS)
     {
 
         Presenca::all()->find($id)->delete();
+        Insumo::where('presenca_id', $id)->delete();
+        Copa::where('presenca_id', $id)->delete();
         return redirect('/socios/' . $idS);
 
     }

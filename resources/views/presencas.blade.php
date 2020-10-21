@@ -36,39 +36,54 @@
                                                     <th>Disparos</th>
                                                     <th>Insumos</th>
                                                     <th>Copa</th>
-                                                    <th>Pago</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
                                                 @foreach($presencas as $dia)
                                                     <tr>
                                                         @if($dia->socio_id == $comparecimento->socio_id)
-                                                        <td>{{$dia->data}}</td>
-                                                        <td>{{$dia->calibre}}</td>
-                                                        <td>{{$dia->tiros}}</td>
-                                                        <td>{{$dia->insumos}}</td>
-                                                        <td>{{$dia->copa}}</td>
-                                                        <td>
-                                                            @if($dia->calibre == null &&
-                                                                $dia->tiros == null &&
-                                                                $dia->insumos == null &&
-                                                                $dia->copa == null)
-                                                                Somente assinatura
-                                                            @else
-                                                                @if($dia->pago)
-                                                                    Sim
-                                                                @else
-                                                                    Não
-                                                                @endif
-                                                            @endif
-                                                        </td>
 
-                                                        <td>
-                                                            <a class="close"
-                                                               href="/socios/presencas/excluir/{{$dia->id}}/{{$dia->socio->id}}">
-                                                                <span aria-hidden="true">x</span>
-                                                            </a>
-                                                        </td>
+                                                            <td>{{$dia->data}}</td>
+                                                            <td>{{$dia->calibre}}</td>
+                                                            <td>{{$dia->tiros}}</td>
+
+                                                            <td>
+                                                                @foreach($copas  as $c)
+                                                                    @if($c->presenca_id == $dia->id)
+                                                                        @isset($c->valor)
+                                                                            {{number_format($c->valor, 2)}}
+                                                                        @endif
+                                                                            @if($c->pagamento == false)
+                                                                                *
+                                                                            @endif
+                                                                    @endif
+                                                                @endforeach
+                                                            </td>
+
+                                                            <td>
+                                                                @foreach($insumos  as $i)
+                                                                    @if($i->presenca_id == $dia->id)
+                                                                        @isset($i->valor)
+                                                                            {{number_format($i->valor, 2)}}
+                                                                            @if($i->pagamento == false)
+                                                                                *
+                                                                            @endif
+                                                                        @endif
+                                                                    @endif
+                                                                @endforeach
+                                                            </td>
+
+                                                            <td>
+
+                                                            </td>
+
+                                                            <td>
+                                                                <a class="close"
+                                                                   href="/socios/presencas/excluir/{{$dia->id}}/{{$dia->socio->id}}">
+                                                                    <span aria-hidden="true">x</span>
+                                                                </a>
+                                                            </td>
+
                                                         @endif
                                                     </tr>
                                                 @endforeach
@@ -80,7 +95,6 @@
                                                     <th>Disparos</th>
                                                     <th>Insumos</th>
                                                     <th>Copa</th>
-                                                    <th>Pago</th>
                                                 </tr>
                                                 </tfoot>
                                             </table>
