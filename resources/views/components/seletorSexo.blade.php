@@ -1,4 +1,4 @@
-<select class="form-control" name="sexo">
+<select class="form-control" name="sexo" id="sexo_profile">
     <option value="Masculino"
             @isset($slot)
                 @if($slot == "MASCULINO")

@@ -9,8 +9,9 @@ class Foto extends Model
 {
     use SoftDeletes;
 
-    public function socio(){
-        $this->belongsTo('App/Socio');
+    public function socio()
+    {
+        return $this->belongsTo('App/Socio');
     }
 
 }

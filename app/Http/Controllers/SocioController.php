@@ -16,30 +16,10 @@ use Illuminate\Http\Request;
 
 class SocioController extends Controller
 {
-    private function Rules()
-    {
-        return [
-            'nome' => 'required|min:2|max:100',
-            'n_associado' => 'required|unique:socios',
-            'foto' => 'required'
-        ];
-    }
-
-    private function Messages()
-    {
-        return [
-            'nome.required' => 'Nome é obrigatório',
-            'nome.min' => 'Nome deve conter 2 caracteres',
-            'nome.max' => 'Nome não pode ter mais de 100 caracteres',
-            'n_associado.required' => 'Numero do associado é obrigatório',
-            'n_associado.unique' => 'Numero de associado já cadastrado',
-            'foto.required' => 'Foto não escolhida'
-        ];
-    }
 
     public function index()
     {
-        $lista = Socio::all();
+        $lista = Socio::with('foto')->get()->all();
         return json_encode($lista);
     }
 
@@ -50,8 +30,6 @@ class SocioController extends Controller
 
     public function store(Request $request)
     {
-
-        $request->validate($this->Rules(), $this->Messages());
 
         $novoSocio = new Socio();
 
@@ -83,19 +61,9 @@ class SocioController extends Controller
 
     public function show($id)
     {
-        $registros = Registro::all()->where('n_cr', '<>', '');
-        $socios = Socio::all();
-        $socio = $socios->find($id);
-        $listaPresenca = Presenca::all();
-        $presenca = $listaPresenca->where('socio_id', $id);
-        $copas = Copa::all();
-        $insumos = Insumo::all();
 
-        if (isset($socio)) {
-            return view('profile', compact('socio', 'socios', 'registros', 'presenca', 'insumos', 'copas'));
-        } else {
-            return view('inicio');
-        }
+        $lista = Socio::with('foto')->find($id);
+        return json_encode($lista);
 
     }
 

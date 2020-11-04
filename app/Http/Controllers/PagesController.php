@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Anuidade;
 use App\Copa;
 use App\Insumo;
 use App\Passada;
@@ -18,6 +19,14 @@ class PagesController extends Controller
         $listaSocios = Socio::all();
 
         return view('inicio', compact('listaSocios'));
+
+    }
+
+    public function profile($idSocio){
+
+        $anuidade = Anuidade::all()->find('socio_id', $idSocio);
+
+        return view('profile', compact('idSocio', 'anuidade'));
 
     }
 

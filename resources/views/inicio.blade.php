@@ -21,21 +21,6 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @isset($listaSocios)
-                            @foreach($listaSocios as $socio)
-                                <tr>
-                                    <td>
-                                        <img class="rounded-circle mr-2" width="30" height="30"
-                                             src="{{ asset('/storage/'. $socio->foto->img) }}"/>
-                                        <a href="{{'/socios/'.$socio->id}}">{{$socio->nome}}</a></td>
-                                    <td>{{$socio->n_associado}}</td>
-                                </tr>
-                            @endforeach
-                        @else
-                            <tr>
-                                <h3> Não há socios</h3>
-                            </tr>
-                        @endif
 
                         </tbody>
                         <tfoot>
@@ -53,6 +38,7 @@
             </div>
         </div>
         <div class="modal-footer">
+            <button class="btn btn-primary btn-sm shadow" id="refreshSocios">Carregar</button>
             <button class="btn btn-primary btn-sm shadow" id="mostraNovoUsuario">Novo</button>
         </div>
     </div>
@@ -72,134 +58,106 @@
                         <div class="form-group">
                             <a>Informações</a>
                             <div id="socioInfo">
-                                <div>
-                                    <div>
-                                        <p>
-                                        <form id="formNovoSocio" method="post" action="/socios/new"
-                                              enctype="multipart/form-data">
-                                            @csrf
-                                            <div class="input-group mb-4">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text"
-                                                          id="inputGroupFileAddon01">Foto</span>
-                                                </div>
-                                                <div class="custom-file">
-                                                    <input type="file"
-                                                           class="custom-file-input @if ($errors->has('foto')) is-invalid @endif"
-                                                           name="foto" id="foto"
-                                                           accept=".jpg,.jpeg,.png"
-                                                           aria-describedby="inputGroupFileAddon01">
-                                                    <label class="custom-file-label" for="customFile">Selecionar
-                                                        foto</label>
-                                                </div>
-                                                @if($errors->has('foto'))
-                                                    <div class="invalid-feedback">
-                                                        {{$errors->first('foto')}}
-                                                    </div>
-                                                @endif
-                                            </div>
-                                        </p>
-                                        <p>
-                                        <div>
-                                            <input
-                                                class="form-control @if ($errors->has('nome')) is-invalid @endif"
-                                                type="text" placeholder="Nome" name="nome"
-                                                id="nome"/>
-                                            @if($errors->has('nome'))
-                                                <div class="invalid-feedback">
-                                                    {{$errors->first('nome')}}
-                                                </div>
-                                            @endif
-                                        </div>
-                                        </p>
-                                        <p>
-                                        <div>
-                                            <input
-                                                class="form-control @if ($errors->has('n_associado')) is-invalid @endif"
-                                                type="text" placeholder="Nº Associado"
-                                                name="n_associado" id="n_associado"/>
-                                            @if($errors->has('n_associado'))
-                                                <div class="invalid-feedback">
-                                                    {{$errors->first('n_associado')}}
-                                                </div>
-                                            @endif
-                                        </div>
-                                        </p>
-                                        <p>
-                                            @component('components.seletorSexo')
-                                            @endcomponent
-                                        </p>
-                                        <p>
-                                        <div>
-                                            <input class="form-control"
-                                                   type="text" maxlength="10"
-                                                   data-mask="00/00/0000"
-                                                   placeholder="Nascimento" name="nascimento" id="nascimento">
-                                        </div>
-                                        </p>
-                                        <p>
-                                        <div>
-                                            <input class="form-control" type="text" maxlength="10" placeholder="RG"
-                                                   name="rg" id="rg"></div>
-                                        </p>
-                                        <p>
-                                        <div>
-                                            <input class="form-control" type="text" maxlength="14" placeholder="CPF"
-                                                   name="cpf" id="cpf" data-mask="000.000.000-00">
-                                        </p></div>
-                                    <p>
-                                    <div>
-                                        <input class="form-control " type="text" maxlength="11"
-                                               data-mask="00000-0000" placeholder="Numero celular"
-                                               name="n_celular" id="n_celular"></div>
-                                    </p>
 
-                                    <p>
-                                    <div>
-                                        <input class="form-control @if ($errors->has('n_cr')) is-invalid @endif" type="text"
-                                               placeholder="Nº CR" name="n_cr"
-                                               id="n_cr">
-                                        @if($errors->has('n_cr'))
-                                            <div class="invalid-feedback">
-                                                {{$errors->first('n_cr')}}
-                                            </div>
-                                        @endif</div>
-                                    </p>
-                                    <p>
-                                    <div>
-                                        <input class="form-control @if ($errors->has('data_expedicao')) is-invalid @endif" type="text"
-                                               maxlength="10" data-mask="00/00/0000"
-                                               placeholder="Data Expedição" name="data_expedicao"
-                                               id="data_expedicao">
-                                        @if($errors->has('data_expedicao'))
-                                            <div class="invalid-feedback">
-                                                {{$errors->first('data_expedicao')}}
-                                            </div>
-                                        @endif</div>
-                                    </p>
-                                    <p>
-                                    <div>
-                                        <input class="form-control @if ($errors->has('data_validade')) is-invalid @endif" type="text"
-                                               maxlength="10" data-mask="00/00/0000"
-                                               placeholder="Validade" name="data_validade" id="data_validade">
-                                        @if($errors->has('data_validade'))
-                                            <div class="invalid-feedback">
-                                                {{$errors->first('data_validade')}}
-                                            </div>
-                                        @endif</div>
-                                    </p>
-                                </div>
+                                <form class="form-inline" id="formNovoSocio" action="/socios/new" method="post"
+                                      enctype="multipart/form-data">
+
+                                @csrf
+
+                                @component('components.inputFt',[
+                                    'nome' => 'foto',
+                                    'conteudo' => 'Foto',
+                                    ])
+                                @endcomponent
+                                @component('components.inputTx',[
+                                    'nome'=>'nome',
+                                    'conteudo' => 'Nome',
+                                    'class' => 'form-group',
+                                    'tipo' => 'text',
+                                    'tamanho'=>'100',
+                                    'req' => 'required',
+                                    ])
+                                @endcomponent
+                                @component('components.inputTx',[
+                                    'nome'=>'n_associado',
+                                    'conteudo' => 'Nº Associado',
+                                    'class' => 'form-group',
+                                    'tipo' => 'text',
+                                    'tamanho'=>'10',
+                                    'req' => 'required',
+                            ])
+                                @endcomponent
+                                @component('components.inputTx',[
+                                    'nome'=>'nascimento',
+                                    'conteudo' => 'Nascimento',
+                                    'class' => 'form-group',
+                                    'tipo' => 'text',
+                                    'tamanho'=>'10',
+                                    'obs'=>'data-mask="00/00/0000"',
+                                    ])
+                                @endcomponent
+                                @component('components.inputTx', [
+                                    'nome' => 'rg',
+                                    'conteudo'=> 'RG',
+                                    'class' => 'form-group',
+                                    'tipo' => 'text',
+                                    'tamanho'=> '10',
+                                    'obs'=>'0000000000',
+                                    ])
+                                @endcomponent
+                                @component('components.inputTx', [
+                                    'nome' => 'cpf',
+                                    'conteudo'=> 'CPF',
+                                    'class' => 'form-group',
+                                    'tipo' => 'text',
+                                    'tamanho'=> '11',
+                                    'obs'=>'000.000.000-00',
+                                    ])
+                                @endcomponent
+                                @component('components.inputTx', [
+                                    'nome' => 'n_celular',
+                                    'conteudo'=> 'Numero',
+                                    'class' => 'form-group',
+                                    'tipo' => 'text',
+                                    'tamanho'=> '11',
+                                    ])
+                                @endcomponent
+                                @component('components.inputTx', [
+                                    'nome' => 'n_cr',
+                                    'conteudo'=> 'Nº CR',
+                                    'class' => 'form-group',
+                                    'tipo' => 'text',
+                                    'tamanho'=> '10',
+                                    ])
+                                @endcomponent
+                                @component('components.inputTx',[
+                                    'nome'=>'data_expedicao',
+                                    'conteudo' => 'Emissao CR',
+                                    'class' => 'form-group',
+                                    'tipo' => 'text',
+                                    'tamanho'=>'10',
+                                    'obs'=>'data-mask="00/00/0000"',
+                                    ])
+                                @endcomponent
+                                @component('components.inputTx',[
+                                        'nome'=>'data_validade',
+                                        'conteudo' => 'Validade CR',
+                                        'class' => 'form-group',
+                                        'tipo' => 'text',
+                                        'tamanho'=>'10',
+                                        'obs'=>'data-mask="00/00/0000"',
+                                        ])
+                                @endcomponent
                             </div>
+                            <button type="submit" class="btn btn-primary">Salvar</button>
+                            <button type="reset" class="btn btn-secondary">Limpar</button>
+                            </form>
                         </div>
-                        <button type="submit" class="btn btn-primary">Salvar</button>
-                        <button type="reset" class="btn btn-secondary">Limpar</button>
                     </div>
                 </div>
             </div>
+            <div class="modal-footer">
+            </div>
         </div>
-        <div class="modal-footer">
-        </div>
-    </div>
-    </form>
     </div>
 @endsection

@@ -31,9 +31,10 @@ class AnuidadeController extends Controller
         //
     }
 
-    public function show($id)
+    public function show($idSocio)
     {
-        //
+        $anuidade = Anuidade::all()->find('socio_id', $idSocio);
+        return json_encode($anuidade);
     }
 
     public function edit($id)

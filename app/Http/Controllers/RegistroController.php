@@ -24,9 +24,10 @@ class RegistroController extends Controller
         //
     }
 
-    public function show($id)
+    public function show($idSocio)
     {
-        //
+        $registro = Registro::all()->find('socio_id', $idSocio);
+        return json_encode($registro);
     }
 
     public function edit($id)

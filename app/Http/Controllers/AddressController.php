@@ -24,9 +24,10 @@ class AddressController extends Controller
         //
     }
 
-    public function show($id)
+    public function show($idSocio)
     {
-        //
+        $endereco = Endereco::all()->where('socio_id', $idSocio);
+        return json_encode($endereco);
     }
 
     public function edit($id)
