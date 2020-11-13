@@ -6,7 +6,7 @@
 @section('body')
     <div id="content">
         <div class="container-fluid" id="corpoProfile">
-            <h3 class="text-dark mb-4" id="nome_pagina_profile"></h3>
+            <h3 class="text-dark mb-4" id="nome_pagina"></h3>
             <div class="row mb-4">
                 <div class="col-lg-4"> <!-- esquerda -->
                     <div class="card-body mb-4">
@@ -18,7 +18,7 @@
                                     @csrf
 
                                     @component('components.inputFt',[
-                                    'nome' => 'foto_profile',
+                                    'nome' => 'foto',
                                     'conteudo' => 'Foto',
                                     ])
                                     @endcomponent
@@ -35,24 +35,24 @@
                         <div class="col">
                             <div class="card shadow mb-4">
                                 <button type="button" class="btn border-0 py-3" data-toggle="collapse"
-                                        href="#informacoesSocio" aria-expanded="true"
+                                        href="#informacoesSocio" aria-expanded="true" id="btnCollapseInfo"
                                         aria-controls="collapseExample" data-target="#informacoesSocio">
                                     <h6 class="text-primary font-weight-bold m-0">Informações do socio</h6>
                                 </button>
                                 <div class="card-body collapse" id="informacoesSocio">
-                                    <form id="formInformacoes" action="/api/socios/" method="PUT">
+                                    <form id="formInformacoes" method="PUT">
                                         @csrf
                                         <div class="form-row">
                                             <div class="col">
                                                 <div class="form-group"><label><strong>Nome</strong></label><input
                                                         class="form-control" type="text"
-                                                        placeholder="Nome" name="nome" id="nome_profile" required></div>
+                                                        placeholder="Nome" name="nome" id="nome" required></div>
                                             </div>
                                             <div class="col">
                                                 <div class="form-group"><label><strong>Celular</strong></label><input
-                                                        class="form-control" type="text" data-mask="00000-0000"
+                                                        class="form-control" type="text"
                                                         placeholder="Numero celular" name="n_celular"
-                                                        id="n_celular_profile"></div>
+                                                        id="n_celular"></div>
                                             </div>
                                         </div>
                                         <div class="form-row">
@@ -61,38 +61,41 @@
                                                     <input class="form-control" type="text"
                                                            placeholder="Nº Associado"
                                                            name="n_associado"
-                                                           id="n_associado_profile" required>
+                                                           id="n_associado" required>
                                                 </div>
                                             </div>
                                             <div class="col">
                                                 <div class="form-group"><label><strong>Nascimento</strong></label><input
-                                                        class="form-control" type="text" data-mask="00/00/0000"
+                                                        class="form-control" type="text" maxlength="10"
                                                         placeholder="Nascimento" name="nascimento"
-                                                        id="nascimento_profile"></div>
+                                                        id="nascimento"></div>
                                             </div>
                                         </div>
                                         <div class="form-row">
                                             <div class="col">
                                                 <div class="form-group"><label><strong>RG</strong></label><input
-                                                        class="form-control" type="text"
-                                                        placeholder="RG" name="rg" id="rg_profile"></div>
+                                                        class="form-control" type="text" maxlength="10"
+                                                        placeholder="RG" name="rg" id="rg"></div>
                                             </div>
                                         </div>
                                         <div class="form-row">
                                             <div class="col">
                                                 <div class="form-group"><label><strong>CPF</strong></label><input
-                                                        class="form-control" type="text" data-mask="000.000.000-00"
-                                                        placeholder="CPF" name="cpf" id="cpf_profile"></div>
+                                                        class="form-control" type="text" maxlength="11"
+                                                        placeholder="CPF" name="cpf" id="cpf"></div>
                                             </div>
                                             <div class="col">
                                                 <div class="form-group"><label><strong>Sexo</strong></label>
-                                                    @component('components.seletorSexo')
-                                                    @endcomponent
+                                                    <select class="form-control" name="sexo" id="sexo">
+                                                        <option value="Masculino">Masculino</option>
+                                                        <option value="Feminino">Feminino</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <button class="btn btn-primary btn-sm">Salvar</button>
+                                            <button class="btn btn-primary btn-sm" id="btn_informacoes">Salvar
+                                            </button>
                                         </div>
                                     </form>
                                     <div class="card mb-1">
@@ -162,7 +165,7 @@
                                                             </div>
                                                         @endif
                                                     @else
-                                                        <div id="gera_anuidade_profile">
+                                                        <div id="gera_anuidade">
                                                             <div style="text-align: center;">
                                                                 <button class="btn-lg border py-2" id="gera_anuidade">
                                                                     Gerar Anuidade
@@ -174,229 +177,231 @@
                                             </div>
                                         </div>
                                     </div> <!-- anuidade -->
-                                <div class="card mb-1">
-                                    <button type="button" class="btn border-0 py-3" data-toggle="collapse"
-                                            href="#enderecoSocios" aria-expanded="true"
-                                            aria-controls="collapseExample" data-target="#enderecoSocios">
-                                        <h6 class="text-primary font-weight-bold m-0">Endereços</h6>
-                                    </button>
-                                    <div class="card-body collapse" id="enderecoSocios">
-                                        <form id="formEndereco" action="/api/enderecos/" method="PUT">
-                                            @csrf
-                                            <div class="form-group"><label><strong>Rua</strong></label><input
-                                                    class="form-control" type="text"
-                                                    placeholder="Rua" name="rua" id="rua_profile"></div>
-                                            <div class="form-row">
-                                                <div class="col">
-                                                    <div class="form-group">
-                                                        <label><strong>Numero</strong></label><input
-                                                            class="form-control" type="text"
-                                                            placeholder="Numero" name="numero" id="numero_profile">
+                                    <div class="card mb-1">
+                                        <button type="button" class="btn border-0 py-3" data-toggle="collapse"
+                                                href="#enderecoSocios" aria-expanded="true"
+                                                aria-controls="collapseExample" data-target="#enderecoSocios">
+                                            <h6 class="text-primary font-weight-bold m-0">Endereços</h6>
+                                        </button>
+                                        <div class="card-body collapse" id="enderecoSocios">
+                                            <form id="formEndereco" action="#" method="PUT">
+                                                @csrf
+                                                <div class="form-group"><label><strong>Rua</strong></label><input
+                                                        class="form-control" type="text"
+                                                        placeholder="Rua" name="rua" id="rua"></div>
+                                                <div class="form-row">
+                                                    <div class="col">
+                                                        <div class="form-group">
+                                                            <label><strong>Numero</strong></label><input
+                                                                class="form-control" type="text"
+                                                                placeholder="Numero" name="numero" id="numero">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="form-group">
+                                                            <label><strong>Bairro</strong></label><input
+                                                                class="form-control" type="text"
+                                                                placeholder="Bairro" name="bairro" id="bairro">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="form-group">
+                                                            <label><strong>Cidade</strong></label><input
+                                                                class="form-control" type="text"
+                                                                placeholder="Cidade" name="cidade" id="cidade">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="form-group"><label><strong>UF</strong></label><input
+                                                                class="form-control" type="text"
+                                                                placeholder="UF" name="uf" id="uf"></div>
                                                     </div>
                                                 </div>
-                                                <div class="col">
-                                                    <div class="form-group">
-                                                        <label><strong>Bairro</strong></label><input
-                                                            class="form-control" type="text"
-                                                            placeholder="Bairro" name="bairro" id="bairro_profile">
+                                                <div class="form-row">
+                                                    <div class="col">
+                                                        <div class="form-group">
+                                                            <label><strong>CEP</strong></label><input
+                                                                class="form-control" type="text"
+                                                                placeholder="CEP" name="cep" id="cep"></div>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="form-group">
+                                                            <label><strong>E-Mail</strong></label><input
+                                                                class="form-control" type="text"
+                                                                placeholder="E-Mail" name="mail" id="mail">
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="col">
-                                                    <div class="form-group">
-                                                        <label><strong>Cidade</strong></label><input
-                                                            class="form-control" type="text"
-                                                            placeholder="Cidade" name="cidade" id="cidade_profile">
-                                                    </div>
+                                                <div class="form-group">
+                                                    <button class="btn btn-primary btn-sm">Salvar</button>
                                                 </div>
-                                                <div class="col">
-                                                    <div class="form-group"><label><strong>UF</strong></label><input
-                                                            class="form-control" type="text"
-                                                            placeholder="UF" name="uf" id="uf_profile"></div>
-                                                </div>
-                                            </div>
-                                            <div class="form-row">
-                                                <div class="col">
-                                                    <div class="form-group">
-                                                        <label><strong>CEP</strong></label><input
-                                                            class="form-control" type="text" data-mask="00000-000"
-                                                            placeholder="CEP" name="cep" id="cep_profile"></div>
-                                                </div>
-                                                <div class="col">
-                                                    <div class="form-group">
-                                                        <label><strong>E-Mail</strong></label><input
-                                                            class="form-control" type="text"
-                                                            placeholder="E-Mail" name="mail" id="mail_profile">
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            </form>
+                                        </div>
+                                    </div> <!-- endereços -->
+                                    <div class="card mb-1">
+                                        <button type="button" class="btn border-0 py-3" data-toggle="collapse"
+                                                href="#registroSocio" aria-expanded="true"
+                                                aria-controls="collapseExample" data-target="#registroSocio">
+                                            <h6 class="text-primary font-weight-bold m-0">CR</h6>
+                                        </button>
+                                        <div class="card-body collapse" id="registroSocio">
                                             <div class="form-group">
-                                                <button class="btn btn-primary btn-sm">Salvar</button>
+                                                <div class="card-body">
+                                                    <form id="formRegistros" action="#" method="PUT">
+
+                                                        @csrf
+
+                                                        <div class="form-group"><label
+                                                                for="address"><strong>Nº registro</strong></label><input
+                                                                class="form-control"
+                                                                type="text"
+                                                                placeholder="Nº registro" name="n_cr" id="n_cr">
+                                                        </div>
+                                                        <div class="form-group"><label for="address"><strong>Data
+                                                                    expedição</strong></label><input
+                                                                class="form-control"
+                                                                type="text"
+                                                                placeholder="Data de Expedição"
+                                                                name="data_expedicao"
+                                                                id="data_expedicao">
+                                                        </div>
+                                                        <div class="form-group"><label for="address"><strong>Data
+                                                                    Validade</strong></label><input
+                                                                class="form-control"
+                                                                type="text"
+                                                                placeholder="Data de validade"
+                                                                name="data_validade"
+                                                                id="data_validade">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <button class="btn btn-primary btn-sm">Salvar</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
                                             </div>
-                                        </form>
-                                    </div>
-                                </div> <!-- endereços -->
-                                <div class="card mb-1">
-                                    <button type="button" class="btn border-0 py-3" data-toggle="collapse"
-                                            href="#registroSocio" aria-expanded="true"
-                                            aria-controls="collapseExample" data-target="#registroSocio">
-                                        <h6 class="text-primary font-weight-bold m-0">CR</h6>
-                                    </button>
-                                    <div class="card-body collapse" id="registroSocio">
-                                        <div class="form-group">
+                                        </div>
+                                    </div> <!-- registros -->
+                                    <div class="card mb-1">
+                                        <button type="button" class="btn border-0 py-3" data-toggle="collapse"
+                                                href="#presencaSocio" aria-expanded="true"
+                                                aria-controls="collapseExample" data-target="#presencaSocio">
+                                            <h6 class="text-primary font-weight-bold m-0">Presenças</h6>
+                                        </button>
+                                        <div class="card-body collapse" id="presencaSocio">
+                                            <table class="table my-0" id="table_presencas">
+                                                <thead>
+                                                <tr>
+                                                    <th>Data</th>
+                                                    <th>Calibre</th>
+                                                    <th>Disparos</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                </tbody>
+                                                <tfoot>
+                                                <tr>
+                                                    <th>Data</th>
+                                                    <th>Calibre</th>
+                                                    <th>Disparos</th>
+                                                </tr>
+                                                </tfoot>
+                                            </table>
                                             <div class="card-body">
-                                                <form id="formRegistros" action="#" method="PUT">
+                                                <div class="card mb-1">
+                                                    <button type="button" class="btn border-0 py-3"
+                                                            data-toggle="collapse"
+                                                            href="#insumoTable" aria-expanded="true"
+                                                            aria-controls="collapseExample" data-target="#insumoTable">
+                                                        <h6 class="text-primary font-weight-bold m-0">Insumos</h6>
+                                                    </button>
+                                                    <div class="card-body collapse" id="insumoTable">
+                                                        <table class="table my-0" id="tInsumos">
+                                                            <thead>
+                                                            <tr>
+                                                                <th>Data</th>
+                                                                <th>Valor</th>
+                                                                <th>Descrção</th>
+                                                                <th>Pago</th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            </tbody>
+                                                            <tfoot>
+                                                            <tr>
+                                                                <th>Data</th>
+                                                                <th>Valor</th>
+                                                                <th>Descrção</th>
+                                                                <th>Pago</th>
+                                                            </tr>
+                                                            </tfoot>
+                                                        </table>
+                                                    </div>
+                                                </div><!-- insumos -->
+                                                <div class="card mb-1">
+                                                    <button type="button" class="btn border-0 py-3"
+                                                            data-toggle="collapse"
+                                                            href="#copaTable" aria-expanded="true"
+                                                            aria-controls="collapseExample" data-target="#copaTable">
+                                                        <h6 class="text-primary font-weight-bold m-0">Copa</h6>
+                                                    </button>
+                                                    <div class="card-body collapse" id="copaTable">
+                                                        <table class="table my-0" id="tCopa">
+                                                            <thead>
+                                                            <tr>
+                                                                <th>Data</th>
+                                                                <th>Valor</th>
+                                                                <th>Descrção</th>
+                                                                <th>Pago</th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
 
-                                                    @csrf
-
-                                                    <div class="form-group"><label
-                                                            for="address"><strong>Nº registro</strong></label><input
-                                                            class="form-control"
-                                                            type="text"
-                                                            placeholder="Nº registro" name="n_cr" id="n_cr_profle">
+                                                            </tbody>
+                                                            <tfoot>
+                                                            <tr>
+                                                                <th>Data</th>
+                                                                <th>Valor</th>
+                                                                <th>Descrção</th>
+                                                                <th>Pago</th>
+                                                            </tr>
+                                                            </tfoot>
+                                                        </table>
                                                     </div>
-                                                    <div class="form-group"><label for="address"><strong>Data
-                                                                expedição</strong></label><input
-                                                            class="form-control"
-                                                            type="text" data-mask="00/00/0000"
-                                                            placeholder="Data de Expedição"
-                                                            name="data_expedicao"
-                                                            id="data_expedicao_profile">
-                                                    </div>
-                                                    <div class="form-group"><label for="address"><strong>Data
-                                                                Validade</strong></label><input
-                                                            class="form-control"
-                                                            type="text" data-mask="00/00/0000"
-                                                            placeholder="Data de validade"
-                                                            name="data_validade"
-                                                            id="data_validade_profile">
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <button class="btn btn-primary btn-sm">Salvar</button>
-                                                    </div>
-                                                </form>
+                                                </div><!-- copa -->
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button class="btn btn-primary btn-sm shadow" id="mostraNovaPresenca">
+                                                    <a>Novo</a></button>
                                             </div>
                                         </div>
-                                    </div>
-                                </div> <!-- registros -->
-                            </div>
-                        </div> <!-- informaçoes -->
-                        <div class="card shadow mb-4">
-                            <button type="button" class="btn border-0 py-3" data-toggle="collapse"
-                                    href="#presencaSocio" aria-expanded="true"
-                                    aria-controls="collapseExample" data-target="#presencaSocio">
-                                <h6 class="text-primary font-weight-bold m-0">Presenças</h6>
-                            </button>
-                            <div class="card-body collapse" id="presencaSocio">
-                                <table class="table my-0" id="table_presencas_profile">
-                                    <thead>
-                                    <tr>
-                                        <th>Data</th>
-                                        <th>Calibre</th>
-                                        <th>Disparos</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-
-                                    </tbody>
-                                    <tfoot>
-                                    <tr>
-                                        <th>Data</th>
-                                        <th>Calibre</th>
-                                        <th>Disparos</th>
-                                    </tr>
-                                    </tfoot>
-                                </table>
-                                <div class="card-body">
-                                    <div class="card mb-1">
-                                        <button type="button" class="btn border-0 py-3" data-toggle="collapse"
-                                                href="#insumoTable" aria-expanded="true"
-                                                aria-controls="collapseExample" data-target="#insumoTable">
-                                            <h6 class="text-primary font-weight-bold m-0">Insumos</h6>
-                                        </button>
-                                        <div class="card-body collapse" id="insumoTable">
-                                            <table class="table my-0" id="tInsumos">
-                                                <thead>
-                                                <tr>
-                                                    <th>Data</th>
-                                                    <th>Valor</th>
-                                                    <th>Descrção</th>
-                                                    <th>Pago</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                </tbody>
-                                                <tfoot>
-                                                <tr>
-                                                    <th>Data</th>
-                                                    <th>Valor</th>
-                                                    <th>Descrção</th>
-                                                    <th>Pago</th>
-                                                </tr>
-                                                </tfoot>
-                                            </table>
-                                        </div>
-                                    </div><!-- insumos -->
-                                    <div class="card mb-1">
-                                        <button type="button" class="btn border-0 py-3" data-toggle="collapse"
-                                                href="#copaTable" aria-expanded="true"
-                                                aria-controls="collapseExample" data-target="#copaTable">
-                                            <h6 class="text-primary font-weight-bold m-0">Copa</h6>
-                                        </button>
-                                        <div class="card-body collapse" id="copaTable">
-                                            <table class="table my-0" id="tCopa">
-                                                <thead>
-                                                <tr>
-                                                    <th>Data</th>
-                                                    <th>Valor</th>
-                                                    <th>Descrção</th>
-                                                    <th>Pago</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-
-                                                </tbody>
-                                                <tfoot>
-                                                <tr>
-                                                    <th>Data</th>
-                                                    <th>Valor</th>
-                                                    <th>Descrção</th>
-                                                    <th>Pago</th>
-                                                </tr>
-                                                </tfoot>
-                                            </table>
-                                        </div>
-                                    </div><!-- copa -->
+                                    </div> <!-- presenças -->
                                 </div>
-                                <div class="modal-footer">
-                                    <button class="btn btn-primary btn-sm shadow" id="mostraNovaPresenca">
-                                        <a>Novo</a></button>
-                                </div>
-                            </div>
-                        </div> <!-- presenças -->
-                        <div class="card shadow mb-4">
-                            <button type="button" class="btn border-0 py-3" data-toggle="collapse"
-                                    href="#dialogEx" aria-expanded="true" id="btnExcluir"
-                                    aria-controls="collapseExample" data-target="#dialogEx">
-                                <h6 class="text-danger font-weight-bold m-0">APAGAR SOCIO</h6>
-                            </button>
-                            <div class="card-body collapse" id="dialogEx">
-                                <div class="form-group">
-                                    <div class="card-body">
-                                        <button type="button" class="btn border-0" id="dialogCn"><h6
-                                                class="text-center font-weight-bold m-0">CANCELAR</h6>
-                                        </button>
-                                        <a type="button" class="btn border-0" href="#">
-                                            <h6 class="text-danger font-weight-bold m-0">APAGAR</h6>
-                                        </a>
+                            </div> <!-- informaçoes -->
+                            <div class="card shadow mb-1">
+                                <button type="button" class="btn border-0 py-3" data-toggle="collapse"
+                                        href="#dialogEx" aria-expanded="true" id="btnExcluir"
+                                        aria-controls="collapseExample" data-target="#dialogEx">
+                                    <h6 class="text-danger font-weight-bold m-0">APAGAR SOCIO</h6>
+                                </button>
+                                <div class="card-body collapse" id="dialogEx">
+                                    <div class="form-group">
+                                        <div class="card-body">
+                                            <button type="button" class="btn border-0" id="dialogCn"><h6
+                                                    class="text-center font-weight-bold m-0">CANCELAR</h6>
+                                            </button>
+                                            <a type="button" class="btn border-0" href="#">
+                                                <h6 class="text-danger font-weight-bold m-0">APAGAR</h6>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div> <!-- apagar -->
+                            </div> <!-- apagar -->
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
     </div>
     <div class="modal" tabindex="-1" id="novaPresenca">
         <div class="modal-dialog modal-lg">
@@ -412,7 +417,7 @@
                 <div class="modal-body">
                     <div class="col">
                         <div class="form-group">
-                            <form action="/presencas/new" method="POST">
+                            <form id="formPresencas" method="POST">
                                 @csrf
                                 <div id="presencaInfo">
                                     <div>
@@ -431,7 +436,7 @@
                                             <label for="data">Data</label>
                                             <input class="form-control"
                                                    type="text" name="data" id="data"
-                                                   placeholder="Data Passada" data-mask="00/00/0000">
+                                                   placeholder="Data Passada">
                                         </div>
                                         </p>
                                         <div class="row">

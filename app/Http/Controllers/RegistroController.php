@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Registro;
+use App\Socio;
 use Illuminate\Http\Request;
 
 class RegistroController extends Controller
@@ -26,7 +27,7 @@ class RegistroController extends Controller
 
     public function show($idSocio)
     {
-        $registro = Registro::all()->find('socio_id', $idSocio);
+        $registro = Registro::all()->where('socio_id', $idSocio);
         return json_encode($registro);
     }
 
@@ -37,17 +38,11 @@ class RegistroController extends Controller
 
     public function update(Request $request, $id)
     {
-
-        $atualizaRegistro = Registro::all()->find($id);
-
-        $atualizaRegistro->n_cr = $request->n_cr;
-        $atualizaRegistro->data_expedicao = $request->data_expedicao;
-        $atualizaRegistro->data_validade = $request->data_validade;
-
-        $atualizaRegistro->save();
-
-        return redirect('/socios/' . $atualizaRegistro->socio_id);
-
+        Socio::all()->find($id)->registro()
+            ->update([
+                'n_cr' => $request->n_cr,
+                'data_expedicao' => $request->data_expedicao,
+                'data_validade' => $request->data_validade,]);
     }
 
     public function destroy($id)

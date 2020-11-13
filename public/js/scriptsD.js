@@ -1,6 +1,17 @@
 $(document).ready(function () {
 
-    const socio_id_profile = $('#idSocio').val();
+    const socio_id = $('#idSocio').val();
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'POST, GET, OPTIONS,PUT,DELETE',
+            'Access-Control-Allow-Credentials': 'true',
+            'Access-Control-Max-Age': '86400',
+            'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        }
+    });
 
     $('#corpo').ready(function () {
         carregaSocios();
@@ -8,10 +19,7 @@ $(document).ready(function () {
 
     $('#corpoProfile').ready(function () {
         carregaInfos();
-        carregaEndr();
-        carregaCr();
     })
-
 
     $('#tppresencas').DataTable();
     $('#sociosTable').DataTable();
@@ -54,68 +62,55 @@ $(document).ready(function () {
     $('#refreshSocios').click(function () {
         $('#sociosTable>tbody').empty();
         carregaSocios();
-    })
+    });
+
 
     $("#gera_anuidade").click(function () {
 
-        $("#gera_anuidade_profile").html("")
+        $("#gera_anuidade").html("")
 
         console.log("Anuidade gerada")
 
     })
 
+
     function carregaInfos() {
 
-        var url = '/api/socios/' + socio_id_profile
+        var url = '/api/socios/' + socio_id
 
         $.getJSON(url, function (infos) {
 
-            $('#titulo_profile').append(infos.nome);
-            $('#nome_pagina_profile').append(infos.nome);
-            $('#nome_profile').val(infos.nome);
-            $('#n_associado_profile').val(infos.n_associado);
-            $('#n_celular_profile').val(infos.n_celular);
-            $('#sexo_profile').append(infos.sexo);
-            $('#nascimento_profile').val(infos.nascimento);
-            $('#rg_profile').val(infos.rg);
-            $('cpf_profile').val(infos.cpf);
+            $('#titulo').text(infos.nome);
+            $('#nome_pagina').text(infos.nome);
+            $('#nome').attr('value', infos.nome);
+            $('#n_associado').attr('value', infos.n_associado);
+            $('#n_celular').attr('value', infos.n_celular);
+            $('#sexo option:contains("' + infos.sexo + '")').attr('selected', 'selected')
+            $('#nascimento').attr('value', infos.nascimento);
+            $('#rg').attr('value', infos.rg);
+            $('#cpf').attr('value', infos.cpf);
 
             console.log('Informações carregadas');
 
-        })
-
-    }
-
-    function carregaEndr() {
-
-        var url = '/api/socios/' + socio_id_profile
-
-        $.getJSON(url, function (endr) {
-
-            $('#rua_profile').val(endr.rua);
-            $('#numero_profile').val(endr.numero);
-            $('#bairro_profile').val(endr.bairro);
-            $('#cidade_profile').val(endr.cidade);
-            $('#uf_profile').val(endr.uf);
-            $('#cep_profile').val(endr.cep);
-            $('#mail_profile').val(endr.mail);
+            $('#rua').attr('value', infos.endereco.rua);
+            $('#numero').attr('value', infos.endereco.numero);
+            $('#bairro').attr('value', infos.endereco.bairro);
+            $('#cidade').attr('value', infos.endereco.cidade);
+            $('#uf').attr('value', infos.endereco.uf);
+            $('#cep').attr('value', infos.endereco.cep);
+            $('#mail').attr('value', infos.endereco.mail);
 
             console.log('Endereço carregado');
 
-        })
-    }
+            $('#n_cr').attr('value', infos.registro.n_cr);
+            $('#data_expedicao').attr('value', infos.registro.data_expedicao);
+            $('#data_validade').attr('value', infos.registro.data_validade);
 
-    function carregaCr() {
+            console.log('CR carregado');
 
-        var url = '/api/registros/' + socio_id_profile
-
-        $.getJSON(url, function (cr) {
-
-            $('#n_cr_profle').val(cr.n_cr);
-            $('#data_expedicao_profile').val(cr.data_expedicao);
-            $('#data_validade_profile').val(cr.data_validade);
-
-            console.log('CR carregado')
+            $('#cpf').mask("000.000.000-00");
+            $('#nascimento').mask("00/00/0000");
+            $('#cep').mask("00000-000")
 
         })
 
@@ -129,22 +124,105 @@ $(document).ready(function () {
 
                 $('#sociosTable>tbody').append(linhaSocioInicio(resultados[i]));
 
+                function linhaSocioInicio(socio) {
+
+                    var html = document.createElement("tr");
+
+                    linha = "<td><img class='rounded-circle mr-2' width='30' height='30' src='/storage/" + socio.foto.img + "'/>" +
+                        "<a href='/socios/" + socio.id + "'>" + socio.nome + "</a></td><td>" + socio.n_associado + "</td>";
+
+                    html.innerHTML = linha;
+
+                    return html;
+
+                }
+
             }
         })
     }
 
-    function linhaSocioInicio(socio) {
+    $('#formInformacoes').submit(function (event) {
 
-        var html = document.createElement("tr");
+        event.preventDefault();
 
-        linha = "<td><img class='rounded-circle mr-2' width='30' height='30' src='/storage/" + socio.foto.img + "'/>" +
-            "<a href='/socios/" + socio.id + "'>" + socio.nome + "</a></td><td>" + socio.n_associado + "</td>";
+        $.ajax('/api/socios/' + $('#idSocio').val(), {
+            type: "PUT",
+            data: {
+                nome: $('#nome').val(),
+                n_associado: $('#n_associado').val(),
+                nascimento: $('#nascimento').val(),
+                rg: $('#rg').val(),
+                cpf: $('#cpf').val(),
+                sexo: $('#sexo').val(),
+                n_celular: $('#n_celular').val(),
+            },
+            success: function () {
+                console.log("Informações atualizadas");
+                alert("Informações atualizadas");
+            },
+            error: function () {
+                console.log(this.error);
+            }
+        })
+        carregaInfos();
+    });
 
-        html.innerHTML = linha;
+    $('#formRegistros').submit(function (event) {
 
-        return html;
+        event.preventDefault();
+        var url = '/api/registros/' + $('#idSocio').val();
+        $.ajax(url, {
+            type: "PUT",
+            data: {
+                n_cr: $('#n_cr').val(),
+                data_expedicao: $('#data_expedicao').val(),
+                data_validade: $('#data_validade').val(),
+            },
+            success: function () {
+                console.log("CR atualizado");
+                alert("CR atualizado");
+            },
+            error: function () {
+                console.log(this.error);
+            }
+        })
 
-    }
+        carregaInfos();
+
+    });
+
+    $('#formEndereco').submit(function (event) {
+        event.preventDefault();
+        var url = '/api/enderecos/' + $('#idSocio').val();
+        $.ajax(url, {
+            type: "PUT",
+            data: {
+                rua: $('#rua').val(),
+                numero: $('#numero').val(),
+                bairro: $('#bairro').val(),
+                cidade: $('#cidade').val(),
+                uf: $('#uf').val(),
+                cep: $('#cep').val(),
+                mail: $('#mail').val(),
+            },
+            success: function () {
+                console.log("Endereço atualizado");
+                alert("Endereço atualizado");
+            },
+            error: function () {
+                console.log(this.error);
+            }
+        })
+
+        carregaInfos();
+
+    });
+
+    $('#formPresencas').submit(function (event) {
+        event.preventDefault();
+
+
+    });
 
 })
 

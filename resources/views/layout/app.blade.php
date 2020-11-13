@@ -75,6 +75,7 @@
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script src="{{ asset('bootstrap/js/bootstrap.min.js')  }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
+<script src="{{ asset('js/dropzone/dist/dropzone.js') }}"></script>
 <script src="{{ asset('js/theme.js') }}"></script>
 <script src="{{ asset('js/app.js') }}"></script>
 <script src="{{ asset('js/locastyle.js') }}"></script>

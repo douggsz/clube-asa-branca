@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Contato;
 use App\Copa;
 use App\Endereco;
 use App\Foto;
 use App\Insumo;
 use App\Pagamento;
-use App\Passada;
 use App\Presenca;
 use App\Registro;
 use App\Socio;
@@ -62,7 +60,7 @@ class SocioController extends Controller
     public function show($id)
     {
 
-        $lista = Socio::with('foto')->find($id);
+        $lista = Socio::with('foto','endereco', 'registro')->find($id);
         return json_encode($lista);
 
     }
@@ -86,7 +84,7 @@ class SocioController extends Controller
         $atualizaSocio->n_celular = $request->n_celular;
         $atualizaSocio->save();
 
-        return redirect('/socios/' . $id);
+
     }
 
     public function destroy($id)

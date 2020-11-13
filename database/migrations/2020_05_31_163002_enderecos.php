@@ -15,7 +15,7 @@ class Enderecos extends Migration
                 ->constrained()
                 ->onDelete('cascade');
             $table->string('rua', 50)->nullable();
-            $table->string('numero', 10)->nullable();
+            $table->longText('numero')->nullable();
             $table->string('cidade', 50)->nullable();
             $table->string('bairro', 50)->nullable();
             $table->string('uf', 20)->nullable();
