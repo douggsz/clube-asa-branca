@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateInsumosTable extends Migration
+class CreateStandsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateInsumosTable extends Migration
      */
     public function up()
     {
-        Schema::create('insumos', function (Blueprint $table) {
+        Schema::create('stands', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->foreignId('presenca_id')->nullable()->onDelete("cascade");
-            $table->string('descricao')->nullable();;
-            $table->string('valor')->nullable();
-            $table->boolean('pagamento')->default(false);
+            $table->foreignId('investimento_id')
+                ->constrained()
+                ->onDelete('cascade');
+            $table->string('valor');
             $table->softDeletes();
             $table->timestamps();
         });
@@ -31,6 +31,6 @@ class CreateInsumosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('insumos');
+        Schema::dropIfExists('stands');
     }
 }

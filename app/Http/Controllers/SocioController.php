@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Copa;
+use App\Anuidade;
 use App\Endereco;
 use App\Foto;
-use App\Insumo;
 use App\Pagamento;
 use App\Presenca;
 use App\Registro;
@@ -50,19 +49,24 @@ class SocioController extends Controller
         $novoSocio->endereco()->save($novoSocioEndereco);
 
         $novoSocioFoto = new Foto();
-        $foto = $request->file('foto')->store('img', 'public');
+
+        if (null !== ($request->file('foto'))) {
+            $foto = $request->file('foto')->store('img', 'public');
+        } else {
+            $foto = 'img/sem-foto.jpg';
+        }
+
         $novoSocioFoto->img = $foto;
         $novoSocio->foto()->save($novoSocioFoto);
 
         return redirect()->route('inicio');
+
     }
 
     public function show($id)
     {
-
-        $lista = Socio::with('foto','endereco', 'registro')->find($id);
+        $lista = Socio::with('foto', 'endereco', 'registro', 'anuidade')->find($id);
         return json_encode($lista);
-
     }
 
     public function edit($id)
@@ -95,9 +99,8 @@ class SocioController extends Controller
         Pagamento::where('socio_id', $id)->delete();
         Presenca::where('socio_id', $id)->delete();
         Registro::where('socio_id', $id)->delete();
+        Anuidade::where('socio_id', $id)->delete();
         Socio::all()->find($id)->delete();
-
-        return redirect()->action('PagesController@paginainicial');
 
     }
 }

@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Anuidade;
 use App\Copa;
 use App\Insumo;
+use App\Investimento;
 use App\Passada;
 use App\Presenca;
 use App\Registro;
+use App\Sede;
 use App\Socio;
-use Illuminate\Http\Request;
+use App\Stand;
+use App\Trap;
 
 class PagesController extends Controller
 {
@@ -24,9 +26,9 @@ class PagesController extends Controller
 
     public function profile($idSocio){
 
-        $anuidade = Anuidade::all()->find('socio_id', $idSocio);
+        $socio = Socio::all()->find($idSocio);
 
-        return view('profile', compact('idSocio', 'anuidade'));
+        return view('profile', compact('socio'));
 
     }
 
@@ -44,6 +46,19 @@ class PagesController extends Controller
         $insumos = Insumo::all();
 
         return view('presencas', compact('socios', 'presencas', 'copas' ,'insumos','presencaUnica'));
+
+    }
+
+    public function investimentos(){
+
+        $investimentos = Investimento::all();
+
+        $investimentos = Investimento::with('trap','stand','sede')->get();
+        $traps = Trap::all();
+        $stands = Stand::all();
+        $sedes = Sede::all();
+
+        return view('investinentos', compact('investimentos','traps', 'sedes', 'stands'));
 
     }
 

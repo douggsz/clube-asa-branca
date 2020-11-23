@@ -1,13 +1,7 @@
 <?php
 
-use App\Http\Middleware\PassadaMiddleware;
-use App\Http\Middleware\PresencaMiddleware;
-use App\Pagamento;
 use App\Passada;
-use App\Presenca;
-use App\Socio;
 use Illuminate\Support\Facades\Route;
-use App\Http\Middleware\PayMiddleware;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +17,7 @@ use App\Http\Middleware\PayMiddleware;
 Route::get('/', 'PagesController@paginainicial');
 Route::get('/socios', 'PagesController@paginaInicial')->name('inicio');
 Route::get('/socios/presencas', 'PagesController@presencas')->name('presenca');
+Route::get('/investimento', 'PagesController@investimentos')->name('investimentos');
 Route::get('/socios/{id}', 'PagesController@profile');
 Route::get('/socios/presencas/excluir/{id}/{idS}', 'PresencasController@destroy');
 Route::get('/socios/apagar/{id}', 'SocioController@destroy');

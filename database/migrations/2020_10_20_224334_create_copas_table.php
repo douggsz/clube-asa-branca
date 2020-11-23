@@ -15,7 +15,7 @@ class CreateCopasTable extends Migration
     {
         Schema::create('copas', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->foreignId('presenca_id')->nullable();
+            $table->foreignId('presenca_id')->nullable()->onDelete("cascade");
             $table->string('descricao')->nullable();
             $table->string('valor')->nullable();
             $table->boolean('pagamento')->default(false);

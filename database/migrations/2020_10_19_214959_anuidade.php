@@ -14,7 +14,7 @@ class Anuidade extends Migration
             $table->foreignId('socio_id')
                 ->constrained()
                 ->onDelete('cascade');
-            $table->string('valor')->default('300');
+            $table->string('valor')->default('300,00');
             $table->string('pago')->default('0');
             $table->softDeletes();
             $table->timestamps();

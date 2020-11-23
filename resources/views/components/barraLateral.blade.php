@@ -15,6 +15,8 @@
                     <a class="nav-link" href="{{ route('inicio') }}">Lista de socios</a></li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('presenca') }}">Presenças</a></li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('investimentos') }}">Investimentos</a></li>
             </ul>
         </div>
     </div>

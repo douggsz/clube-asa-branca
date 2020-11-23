@@ -17,11 +17,17 @@
                         <tr>
                             <th>Nome</th>
                             <th>Nº Associado</th>
-
                         </tr>
                         </thead>
                         <tbody>
-
+                        @foreach($listaSocios as $socio)
+                            <tr>
+                                <td><img class='rounded-circle mr-2' width='30' height='30'
+                                         src='/storage/"{{$socio->foto->img}}"'/>
+                                    <a href='/socios/{{$socio->id}}'> {{$socio->nome}} </a></td>
+                                <td>{{$socio->n_associado}}</td>
+                            </tr>
+                        @endforeach
                         </tbody>
                         <tfoot>
                         <tr>
@@ -38,7 +44,6 @@
             </div>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-primary btn-sm shadow" id="refreshSocios">Carregar</button>
             <button class="btn btn-primary btn-sm shadow" id="mostraNovoUsuario">Novo</button>
         </div>
     </div>
@@ -93,7 +98,7 @@
                                     'class' => 'form-group',
                                     'tipo' => 'text',
                                     'tamanho'=>'10',
-                                    'obs'=>'data-mask="00/00/0000"',
+                                    'obs'=>'data-mask=00/00/0000',
                                     ])
                                 @endcomponent
                                 @component('components.inputTx', [
@@ -102,7 +107,7 @@
                                     'class' => 'form-group',
                                     'tipo' => 'text',
                                     'tamanho'=> '10',
-                                    'obs'=>'0000000000',
+                                    'obs'=>'data-mask=0000000000 number-only',
                                     ])
                                 @endcomponent
                                 @component('components.inputTx', [
@@ -111,7 +116,7 @@
                                     'class' => 'form-group',
                                     'tipo' => 'text',
                                     'tamanho'=> '11',
-                                    'obs'=>'000.000.000-00',
+                                    'obs'=>'data-mask=000.000.000-00',
                                     ])
                                 @endcomponent
                                 @component('components.inputTx', [
@@ -136,7 +141,7 @@
                                     'class' => 'form-group',
                                     'tipo' => 'text',
                                     'tamanho'=>'10',
-                                    'obs'=>'data-mask="00/00/0000"',
+                                    'obs'=>'data-mask=00/00/0000',
                                     ])
                                 @endcomponent
                                 @component('components.inputTx',[
@@ -145,7 +150,7 @@
                                         'class' => 'form-group',
                                         'tipo' => 'text',
                                         'tamanho'=>'10',
-                                        'obs'=>'data-mask="00/00/0000"',
+                                        'obs'=>'data-mask=00/00/0000',
                                         ])
                                 @endcomponent
                             </div>

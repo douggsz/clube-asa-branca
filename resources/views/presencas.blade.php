@@ -53,9 +53,6 @@
                                                                         @isset($c->valor)
                                                                             {{number_format($c->valor, 2)}}
                                                                         @endif
-                                                                            @if($c->pagamento == false)
-                                                                                *
-                                                                            @endif
                                                                     @endif
                                                                 @endforeach
                                                             </td>
@@ -65,18 +62,12 @@
                                                                     @if($i->presenca_id == $dia->id)
                                                                         @isset($i->valor)
                                                                             {{number_format($i->valor, 2)}}
-                                                                            @if($i->pagamento == false)
-                                                                                *
-                                                                            @endif
                                                                         @endif
                                                                     @endif
                                                                 @endforeach
                                                             </td>
-
                                                             <td>
-
                                                             </td>
-
                                                             <td>
                                                                 <a class="close"
                                                                    href="/socios/presencas/excluir/{{$dia->id}}/{{$dia->socio->id}}">

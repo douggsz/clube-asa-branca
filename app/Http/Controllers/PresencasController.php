@@ -6,32 +6,14 @@ use App\Copa;
 use App\Insumo;
 use App\Pagamento;
 use App\Presenca;
-use App\Registro;
-use App\Socio;
 use Illuminate\Http\Request;
-use App\Http\Middleware\PresencaMiddleware;
-use Illuminate\Support\Facades\App;
 
 class PresencasController extends Controller
 {
 
-    private function Rules()
-    {
-        return [
-            'data' => 'required'
-        ];
-    }
-
-    private function Messages()
-    {
-        return [
-            'data.required' => 'Informar a data'
-        ];
-    }
-
     public function index()
     {
-        $lista = Presenca::all();
+        $lista = Presenca::with('copa', 'insumo')->get()->all();
         return json_encode($lista);
     }
 
@@ -40,15 +22,12 @@ class PresencasController extends Controller
     }
 
     public function create()
-        //
     {
-        //
+
     }
 
     public function store(Request $request)
     {
-
-        $request->validate($this->Rules(), $this->Messages());
 
         $novaPresenca = new Presenca();
         $novaPresenca->socio_id = $request->idsocio;
@@ -61,34 +40,33 @@ class PresencasController extends Controller
             $novoGastoCopa = new Copa();
             $novoGastoCopa->valor = $request->copa;
 
-            if ($request->pagamentoCopa == true) {
-
+            if ($request->pagamentoCopa) {
                 $novoGastoCopa->pagamento = true;
-
                 $pagamento = new Pagamento();
                 $pagamento->socio_id = $request->idsocio;
                 $pagamento->descricao = "Copa";
-                $pagamento->data = date('d/m/Y');
+                $pagamento->data = $request->data;
                 $pagamento->valor = $request->copa;
                 $pagamento->save();
-
             }
+
             $novoGastoCopa->descricao = $request->descricaoCopa;
             $novaPresenca->copa()->save($novoGastoCopa);
         }
 
         if (isset($request->insumo)) {
+
             $novoGastoInsumo = new Insumo();
             $novoGastoInsumo->valor = $request->insumo;
 
-            if ($request->pagamentoInsumo == true) {
+            if ($request->pagamentoInsumo) {
 
                 $novoGastoInsumo->pagamento = true;
 
                 $pagamento = new Pagamento();
                 $pagamento->socio_id = $request->idsocio;
                 $pagamento->descricao = "Insumo";
-                $pagamento->data = date('d/m/Y');
+                $pagamento->data = $request->data;
                 $pagamento->valor = $request->insumo;
                 $pagamento->save();
 
@@ -97,13 +75,15 @@ class PresencasController extends Controller
             $novoGastoInsumo->descricao = $request->descricaoInsumos;
             $novaPresenca->insumo()->save($novoGastoInsumo);
         }
-        return redirect('/socios/' . $request->idsocio);
 
     }
 
-    public function show($id)
+    public function show($idSocio)
     {
-
+        $presencas = Presenca::with('copa', 'insumo')
+            ->where('socio_id', $idSocio)
+            ->get();
+        return json_encode($presencas);
     }
 
     public function edit($id)
@@ -113,16 +93,14 @@ class PresencasController extends Controller
 
     public function update(Request $request, $id)
     {
-        //
+       //
     }
 
-    public function destroy($id, $idS)
+    public function destroy($id, $idSocio)
     {
-
         Presenca::all()->find($id)->delete();
         Insumo::where('presenca_id', $id)->delete();
         Copa::where('presenca_id', $id)->delete();
-        return redirect('/socios/' . $idS);
-
+        return redirect('/socios/' . $idSocio);
     }
 }

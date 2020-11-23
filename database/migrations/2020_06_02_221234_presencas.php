@@ -11,14 +11,10 @@ class Presencas extends Migration
     {
         Schema::create('presencas', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->foreignId('socio_id')
-                ->constrained()
-                ->onDelete('cascade');
+            $table->foreignId('socio_id')->constrained()->onDelete('cascade');
             $table->string('calibre', 50)->nullable();
             $table->string('tiros', 50)->nullable();
             $table->string('data', 20)->nullable();
-            $table->string('copa', 50)->nullable();
-            $table->string('insumos', 50)->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

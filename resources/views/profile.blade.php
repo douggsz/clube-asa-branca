@@ -14,21 +14,22 @@
                             <img class="rounded-circle mb-4 mt-4" src="storage/" . socio.foto.img width="160"
                                  height="160">
                             <div class="custom-file">
-                                <form action="/api/fotos" method="PUT" enctype="multipart/form-data">
+                                <form action="/fotos/edit/{{$socio->id}}" method="POST" enctype="multipart/form-data">
                                     @csrf
-
                                     @component('components.inputFt',[
                                     'nome' => 'foto',
                                     'conteudo' => 'Foto',
                                     ])
                                     @endcomponent
-
                                     <button class="btn btn-primary">Salvar</button>
                                 </form>
                             </div>
                         </div>
                     </div>
-                    <input type="hidden" value="{{$idSocio}}" id="idSocio" name="idsocio">
+                    <input type="hidden" value="{{$socio->id}}" id="idSocio" name="idsocio">
+                    @isset($socio->anuidade)
+                        <input type="hidden" value="{{$socio->anuidade->id}}" id="idAnuidade" name="idsocio">
+                    @endif
                 </div>
                 <div class="col-lg-8">
                     <div class="row">
@@ -39,7 +40,7 @@
                                         aria-controls="collapseExample" data-target="#informacoesSocio">
                                     <h6 class="text-primary font-weight-bold m-0">Informações do socio</h6>
                                 </button>
-                                <div class="card-body collapse" id="informacoesSocio">
+                                <div class="card-body collapsed" id="informacoesSocio">
                                     <form id="formInformacoes" method="PUT">
                                         @csrf
                                         <div class="form-row">
@@ -104,11 +105,11 @@
                                                 aria-controls="collapseExample" data-target="#anuidadeSocio">
                                             <h6 class="text-primary font-weight-bold m-0">Anuidade</h6>
                                         </button>
-                                        <div class="card-body collapse" id="anuidadeSocio">
+                                        <div class="card-body collapsed" id="anuidadeSocio">
                                             <div class="form-group">
                                                 <div class="card-body">
-                                                    @if(isset($anuidade->socio_id))
-                                                        @if($anuidade->pago >= 300)
+                                                    @if(isset($socio->anuidade->socio_id))
+                                                        @if($socio->anuidade->pago >= 300)
                                                             <div class="card" style="text-align: center">
                                                                 <div class="card" style="text-align: center">
                                                                     <h2>Anuidade paga</h2>
@@ -117,13 +118,8 @@
                                                         @else
                                                             <div class="card" style="text-align: center">
                                                                 <div class="card-body">
-                                                                    <h2>Valor:
-                                                                        R$</h2>
-                                                                    <h4>Pago:
-                                                                        R$</h4>
-                                                                    <h4>Restante:
-                                                                        R$
-                                                                    </h4>
+                                                                    <h3>Valor: R$<h2 id="valor"></h2></h3>
+                                                                    <h4>Pago: R$<h3 id="pago"></h3></h4>
                                                                 </div>
                                                                 <button type="button" class="btn shadow py-3"
                                                                         data-toggle="collapse"
@@ -145,14 +141,13 @@
                                                                                     </label>
                                                                                     <input
                                                                                         class="form-control"
-                                                                                        type="number"
+                                                                                        type="text"
                                                                                         placeholder="Valor"
                                                                                         name="valorPago"
-                                                                                        id="valorPago"
-                                                                                        min="0"
-                                                                                        max="300"/>
+                                                                                        id="valorPago"/>
                                                                                     <div class="card-footer">
-                                                                                        <button type="submit"
+                                                                                        <button type="button"
+                                                                                                id="btn_registra_pagamento"
                                                                                                 class="btn btn-primary">
                                                                                             Registrar
                                                                                         </button>
@@ -288,7 +283,7 @@
                                             <h6 class="text-primary font-weight-bold m-0">Presenças</h6>
                                         </button>
                                         <div class="card-body collapse" id="presencaSocio">
-                                            <table class="table my-0" id="table_presencas">
+                                            <table class="table my-0 hover" id="table_presencas">
                                                 <thead>
                                                 <tr>
                                                     <th>Data</th>
@@ -297,7 +292,6 @@
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-
                                                 </tbody>
                                                 <tfoot>
                                                 <tr>
@@ -371,8 +365,12 @@
                                                 </div><!-- copa -->
                                             </div>
                                             <div class="modal-footer">
+                                                <button class="btn btn-primary btn-sm shadow" id="carregarPresenca"><a>Carregar</a>
+                                                </button>
                                                 <button class="btn btn-primary btn-sm shadow" id="mostraNovaPresenca">
                                                     <a>Novo</a></button>
+                                            </div>
+                                            <div class="modal-footer">
                                             </div>
                                         </div>
                                     </div> <!-- presenças -->
@@ -390,7 +388,7 @@
                                             <button type="button" class="btn border-0" id="dialogCn"><h6
                                                     class="text-center font-weight-bold m-0">CANCELAR</h6>
                                             </button>
-                                            <a type="button" class="btn border-0" href="#">
+                                            <a type="button" class="btn border-0" id="btn_apaga_socio">
                                                 <h6 class="text-danger font-weight-bold m-0">APAGAR</h6>
                                             </a>
                                         </div>
@@ -417,39 +415,27 @@
                 <div class="modal-body">
                     <div class="col">
                         <div class="form-group">
-                            <form id="formPresencas" method="POST">
+                            <form id="formPresenca">
                                 @csrf
                                 <div id="presencaInfo">
                                     <div>
-                                        <p>
-                                            <select class="form-control" name="n_cr" id="sociosRegistro">
-                                                <option value="#####"></option>
-                                            </select>
-                                        </p>
-                                        <p><input class="form-control text" type="text" name="registro"
-                                                  id="crSelecionado"
-                                                  value="Registro: ###" disabled>
-                                            <input type="hidden" value="#####" name="n_cr"
-                                                   id="idSelecionado"></p>
-                                        <p>
                                         <div>
                                             <label for="data">Data</label>
                                             <input class="form-control"
                                                    type="text" name="data" id="data"
-                                                   placeholder="Data Passada">
+                                                   placeholder="Data da presença">
                                         </div>
                                         </p>
                                         <div class="row">
-                                            <div class="form-group col">
-                                                <label for="disparos">Disparos</label>
+                                            <div class="form-group col" id="tiros_div">
+                                                <label for="tiros">Disparos</label>
                                                 <input
                                                     class="form-control"
                                                     type="text" name="tiros"
                                                     id="tiros"
-                                                    placeholder="Disparos"
-                                                >
+                                                    placeholder="Disparos">
                                             </div>
-                                            <div class="form-group col">
+                                            <div class="form-group col" id="calibre_div">
                                                 <label for="calibre">Calibre</label>
                                                 <input
                                                     class="form-control"
@@ -459,35 +445,34 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="form-group border">
+                                            <div class="form-group border" style="padding:2em" id="insumo_div">
                                                 <p>
                                                     <label for="insumo">Insumos</label>
                                                     <input
                                                         class="form-control"
                                                         type="text" name="insumo"
                                                         id="insumo"
-                                                        placeholder="Quantidade"
-
+                                                        placeholder="Quantidade">
                                                 </p>
                                                 <div>
                                                     <textarea name="descricaoInsumos" id="descricaoInsumos"
                                                               placeholder="Descrição dos gastos em insumos"></textarea>
                                                 </div>
-                                                <p>
+                                                <p style="padding:1em">
                                                     <label for="pagamentoInsumo">Pago ?</label>
                                                     <select class="form-control" name="pagamentoInsumo"
                                                             id="pagamentoInsumo">
-                                                        <option value="true">Sim</option>
-                                                        <option value="false" selected>Não</option>
+                                                        <option value="1">Sim</option>
+                                                        <option value="0" selected>Não</option>
                                                     </select>
                                                 </p>
                                             </div>
-                                            <div class="form-group col border">
+                                            <div class="form-group col border" style="padding:2em" id="copa_div">
                                                 <p>
                                                     <label for="copa">Copa</label>
                                                     <input
                                                         class="form-control"
-                                                        type="text" name="copa"
+                                                        type="numeric" name="copa"
                                                         id="copa"
                                                         placeholder="Copa">
                                                 </p>
@@ -495,12 +480,12 @@
                                                     <textarea name="descricaoCopa" id="descricaoCopa"
                                                               placeholder="Descrição dos gastos na copa"></textarea>
                                                 </div>
-                                                <p>
+                                                <p style="padding:1em">
                                                     <label for="pagamentoCopa">Pago ?</label>
                                                     <select class="form-control" name="pagamentoCopa"
                                                             id="pagamentoCopa">
-                                                        <option value="true">Sim</option>
-                                                        <option value="false" selected>Não</option>
+                                                        <option value="1">Sim</option>
+                                                        <option value="0" selected>Não</option>
                                                     </select>
                                                 </p>
                                             </div>
@@ -508,6 +493,7 @@
                                     </div>
                                 </div>
                                 <button type="submit" class="btn btn-primary">Salvar</button>
+                                <button type="reset" class="btn btn-danger" id="btn_limpa_presenca">Limpar</button>
                             </form>
                         </div>
                     </div>
