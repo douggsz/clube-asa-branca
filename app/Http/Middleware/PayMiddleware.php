@@ -2,10 +2,7 @@
 
 namespace App\Http\Middleware;
 
-use App\Pagamento;
 use Closure;
-use mysql_xdevapi\Exception;
-use mysqli_sql_exception;
 
 class PayMiddleware
 {

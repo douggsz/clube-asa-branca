@@ -3,29 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Registro;
+use App\Socio;
 use Illuminate\Http\Request;
 
 class RegistroController extends Controller
 {
-
-    private function Rules()
-    {
-        return [
-            'n_cr' => 'required|unique:registros',
-            'data_expedicao' => 'required',
-            'data_validade' => 'required'
-        ];
-    }
-
-    private function Messages()
-    {
-        return [
-            'data_expedicao.required' => 'Data de expedição é obrigatória',
-            'data_validade.required' => 'Data de validade é obrigatória',
-            'n_cr.required' => 'Informar CR',
-            'n_cr.unique' => 'CR já cadastrado',
-        ];
-    }
 
     public function index()
     {
@@ -43,9 +25,10 @@ class RegistroController extends Controller
         //
     }
 
-    public function show($id)
+    public function show($idSocio)
     {
-        //
+        $registro = Registro::all()->where('socio_id', $idSocio);
+        return json_encode($registro);
     }
 
     public function edit($id)
@@ -55,19 +38,11 @@ class RegistroController extends Controller
 
     public function update(Request $request, $id)
     {
-
-        $request->validate($this->Rules(), $this->Messages());
-
-        $atualizaRegistro = Registro::all()->find($id);
-
-        $atualizaRegistro->n_cr = $request->n_cr;
-        $atualizaRegistro->data_expedicao = $request->data_expedicao;
-        $atualizaRegistro->data_validade = $request->data_validade;
-
-        $atualizaRegistro->save();
-
-        return redirect('/socios/' . $atualizaRegistro->socio_id);
-
+        Socio::all()->find($id)->registro()
+            ->update([
+                'n_cr' => $request->n_cr,
+                'data_expedicao' => $request->data_expedicao,
+                'data_validade' => $request->data_validade,]);
     }
 
     public function destroy($id)

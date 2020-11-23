@@ -2,11 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Copa;
+use App\Insumo;
+use App\Investimento;
 use App\Passada;
 use App\Presenca;
 use App\Registro;
+use App\Sede;
 use App\Socio;
-use Illuminate\Http\Request;
+use App\Stand;
+use App\Trap;
 
 class PagesController extends Controller
 {
@@ -19,26 +24,42 @@ class PagesController extends Controller
 
     }
 
+    public function profile($idSocio){
+
+        $socio = Socio::all()->find($idSocio);
+
+        return view('profile', compact('socio'));
+
+    }
+
     public function presencas()
     {
 
         $presencas = Presenca::all();
 
+        $presencaUnica = $presencas->unique('socio_id');
+
         $socios = Registro::all()
             ->whereNotNull('n_cr');
 
-        return view('presencas', compact('socios', 'presencas'));
+        $copas = Copa::all();
+        $insumos = Insumo::all();
+
+        return view('presencas', compact('socios', 'presencas', 'copas' ,'insumos','presencaUnica'));
 
     }
 
-    public function passadas()
-    {
-        $passadas = Passada::all();
+    public function investimentos(){
 
-        $socios = Registro::all()
-            ->whereNotNull('n_cr');
+        $investimentos = Investimento::all();
 
-        return view('passadas', compact('socios', 'passadas'));
+        $investimentos = Investimento::with('trap','stand','sede')->get();
+        $traps = Trap::all();
+        $stands = Stand::all();
+        $sedes = Sede::all();
+
+        return view('investinentos', compact('investimentos','traps', 'sedes', 'stands'));
+
     }
 
 }

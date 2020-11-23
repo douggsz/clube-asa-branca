@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\Endereco;
+use App\Socio;
 use Illuminate\Http\Request;
 
 class AddressController extends Controller
@@ -24,9 +25,10 @@ class AddressController extends Controller
         //
     }
 
-    public function show($id)
+    public function show($idSocio)
     {
-        //
+        $endereco = Endereco::all()->where('socio_id', $idSocio);
+        return json_encode($endereco);
     }
 
     public function edit($id)
@@ -36,16 +38,15 @@ class AddressController extends Controller
 
     public function update(Request $request, $id)
     {
-        $atualizarEndereco = Endereco::all()->find($id);
-        $atualizarEndereco->rua = strtoupper($request->rua);
-        $atualizarEndereco->numero = strtoupper($request->numero);
-        $atualizarEndereco->bairro = strtoupper($request->bairro);
-        $atualizarEndereco->cidade = strtoupper($request->cidade);
-        $atualizarEndereco->uf = strtoupper($request->uf);
-        $atualizarEndereco->cep = strtoupper($request->cep);
-        $atualizarEndereco->mail = strtoupper($request->mail);
-        $atualizarEndereco->save();
-        return redirect('/socios/' . $atualizarEndereco->socio_id);
+        Socio::all()->find($id)->endereco()
+            ->update([
+                'rua' => strtoupper($request->rua),
+                'numero' => strtoupper($request->numero),
+                'bairro' => strtoupper($request->bairro),
+                'cidade' => strtoupper($request->cidade),
+                'uf' => strtoupper($request->uf),
+                'cep' => strtoupper($request->cep),
+                'mail' => strtoupper($request->mail),]);
     }
 
     public function destroy($id)
