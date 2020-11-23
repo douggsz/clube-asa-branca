@@ -11,9 +11,8 @@ class Socios extends Migration
     {
         Schema::create('socios', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('n_associado')->unique();
+            $table->unsignedBigInteger('n_associado');
             $table->string('nome', 100);
-            $table->string('apelido', 20)->nullable();
             $table->string('nascimento', 20)->nullable();
             $table->string('cpf', 20)->nullable();
             $table->string('rg', 20)->nullable();

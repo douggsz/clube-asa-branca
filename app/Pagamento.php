@@ -9,9 +9,12 @@ class Pagamento extends Model
 {
     use SoftDeletes;
 
-    function passada()
+    function anuidade()
     {
-        return $this->belongsTo('App\Passada');
+        return $this->belongsTo('App\Anuidade');
     }
-
+    function socio()
+    {
+        return $this->belongsTo('App\Socio');
+    }
 }

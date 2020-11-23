@@ -1,23 +1,23 @@
-<nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0"
-     id="barraLateral">
-    <div class="container-fluid d-flex flex-column p-0">
-        <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0">
-            <div class="sidebar-brand-icon rotate-n-15"><i class="fas fa-laugh-wink"></i></div>
-            <div class="sidebar-brand-text mx-3">
+<nav class="navbar navbar-expand-lg navbar-dark  bg-dark fixed-top" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand d-flex justify-content-center align-items-center m-0">
+            <div class="navbar-brand logo">
                 <img src="{{asset('img/icons/favicon-32x32.png')}}"/>
                 <span>ASA BRANCA</span></div>
         </a>
-        <hr class="sidebar-divider my-0">
-        <ul class="nav navbar-nav text-light">
-            <li class="nav-item">
-                <a class="nav-link active" href="{{ route('inicio') }}">
-                    <i class="fas fa-tachometer-alt"></i><span>Lista de socios</span></a></li>
-            <li class="nav-item">
-                <a class="nav-link active" href="{{ route('presenca') }}">
-                    <i class="fas fa-tachometer-alt"></i><span>Presenças</span></a></li>
-            <li class="nav-item">
-                <a class="nav-link active" href="{{ route('passadas') }}">
-                    <i class="fas fa-tachometer-alt"></i><span>Passadas</span></a></li>
-        </ul>
+        <button data-toggle="collapse" data-target="#navbarResponsive" class="navbar-toggler"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><i
+                class="fa fa-bars"></i></button>
+        <div
+            class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="nav navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('inicio') }}">Lista de socios</a></li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('presenca') }}">Presenças</a></li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('investimentos') }}">Investimentos</a></li>
+            </ul>
+        </div>
     </div>
 </nav>

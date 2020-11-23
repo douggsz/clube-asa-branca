@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Contato;
+use App\Anuidade;
 use App\Endereco;
 use App\Foto;
 use App\Pagamento;
-use App\Passada;
 use App\Presenca;
 use App\Registro;
 use App\Socio;
@@ -14,37 +13,10 @@ use Illuminate\Http\Request;
 
 class SocioController extends Controller
 {
-    private function Rules()
-    {
-        return [
-            'n_cr' => 'required|unique:registros',
-            'data_expedicao' => 'required',
-            'data_validade' => 'required',
-            'nome' => 'required|min:2|max:100',
-            'n_associado' => 'required|unique:socios',
-            'foto' => 'required'
-        ];
-    }
-
-    private function Messages()
-    {
-        return [
-            'n_cr.required' => 'Informar CR',
-            'n_cr.unique' => 'CR já cadastrado',
-            'nome.required' => 'Nome é obrigatório',
-            'nome.min' => 'Nome deve conter 2 caracteres',
-            'nome.max' => 'Nome não pode ter mais de 100 caracteres',
-            'n_associado.required' => 'Numero do associado é obrigatório',
-            'n_associado.unique' => 'Numero de associado já cadastrado',
-            'data_expedicao.required' => 'Data de expedição é obrigatória',
-            'data_validade.required' => 'Data de validade é obrigatória',
-            'foto.required' => 'Foto não escolhida'
-        ];
-    }
 
     public function index()
     {
-        $lista = Socio::all();
+        $lista = Socio::with('foto')->get()->all();
         return json_encode($lista);
     }
 
@@ -56,12 +28,9 @@ class SocioController extends Controller
     public function store(Request $request)
     {
 
-        $request->validate($this->Rules(),$this->Messages());
-
         $novoSocio = new Socio();
 
         $novoSocio->nome = strtoupper($request->nome);
-        $novoSocio->apelido = strtoupper($request->apelido);
         $novoSocio->n_associado = strtoupper($request->n_associado);
         $novoSocio->nascimento = $request->nascimento;
         $novoSocio->sexo = strtoupper($request->sexo);
@@ -80,36 +49,24 @@ class SocioController extends Controller
         $novoSocio->endereco()->save($novoSocioEndereco);
 
         $novoSocioFoto = new Foto();
-        $foto = $request->file('foto')->store('img', 'public');
+
+        if (null !== ($request->file('foto'))) {
+            $foto = $request->file('foto')->store('img', 'public');
+        } else {
+            $foto = 'img/sem-foto.jpg';
+        }
+
         $novoSocioFoto->img = $foto;
         $novoSocio->foto()->save($novoSocioFoto);
 
-        $novoPagamento = new Pagamento();
-        $novoPagamento->descricao = "Anuidade";
-        $novoPagamento->valor = "300";
-        $novoSocio->pagamento()->save($novoPagamento);
-
         return redirect()->route('inicio');
+
     }
 
     public function show($id)
     {
-
-        $listaSocio = Socio::all();
-        $socio = $listaSocio->find($id);
-        $listaPassada = Passada::all();
-        $passadas = $listaPassada->where('socio_id', $id);
-        $listaPresenca = Presenca::all();
-        $presenca = $listaPresenca->where('socio_id', $id);
-        $listaPagamento = Pagamento::all()->where('socio_id', $id);
-        $pagamentos = $listaPagamento->where('pago', false);
-        $quitados = $listaPagamento->where('pago', true);
-        if (isset($socio)) {
-            return view('profile', compact('socio', 'passadas', 'presenca', 'pagamentos', 'quitados'));
-        } else {
-            return view('inicio');
-        }
-
+        $lista = Socio::with('foto', 'endereco', 'registro', 'anuidade')->find($id);
+        return json_encode($lista);
     }
 
     public function edit($id)
@@ -123,7 +80,6 @@ class SocioController extends Controller
         $atualizaSocio = Socio::all()->find($id);
 
         $atualizaSocio->nome = strtoupper($request->nome);
-        $atualizaSocio->apelido = strtoupper($request->apelido);
         $atualizaSocio->n_associado = $request->n_associado;
         $atualizaSocio->nascimento = strtoupper($request->nascimento);
         $atualizaSocio->rg = $request->rg;
@@ -132,7 +88,7 @@ class SocioController extends Controller
         $atualizaSocio->n_celular = $request->n_celular;
         $atualizaSocio->save();
 
-        return redirect('/socios/' . $id);
+
     }
 
     public function destroy($id)
@@ -143,10 +99,8 @@ class SocioController extends Controller
         Pagamento::where('socio_id', $id)->delete();
         Presenca::where('socio_id', $id)->delete();
         Registro::where('socio_id', $id)->delete();
-        Passada::where('socio_id', $id)->delete();
+        Anuidade::where('socio_id', $id)->delete();
         Socio::all()->find($id)->delete();
-
-        return redirect()->action('PagesController@paginainicial');
 
     }
 }
