@@ -34,8 +34,9 @@
                                                     <th>Data</th>
                                                     <th>Calibre</th>
                                                     <th>Disparos</th>
-                                                    <th>Insumos</th>
                                                     <th>Copa</th>
+                                                    <th>Insumos</th>
+                                                    <th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
@@ -51,7 +52,7 @@
                                                                 @foreach($copas  as $c)
                                                                     @if($c->presenca_id == $dia->id)
                                                                         @isset($c->valor)
-                                                                            {{number_format($c->valor, 2)}}
+                                                                            {{$c->valor}}
                                                                         @endif
                                                                     @endif
                                                                 @endforeach
@@ -61,12 +62,10 @@
                                                                 @foreach($insumos  as $i)
                                                                     @if($i->presenca_id == $dia->id)
                                                                         @isset($i->valor)
-                                                                            {{number_format($i->valor, 2)}}
+                                                                            {{$i->valor}}
                                                                         @endif
                                                                     @endif
                                                                 @endforeach
-                                                            </td>
-                                                            <td>
                                                             </td>
                                                             <td>
                                                                 <a class="close"
@@ -86,6 +85,7 @@
                                                     <th>Disparos</th>
                                                     <th>Insumos</th>
                                                     <th>Copa</th>
+                                                    <th></th>
                                                 </tr>
                                                 </tfoot>
                                             </table>

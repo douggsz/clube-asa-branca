@@ -283,12 +283,14 @@
                                             <h6 class="text-primary font-weight-bold m-0">Presenças</h6>
                                         </button>
                                         <div class="card-body collapse" id="presencaSocio">
+
                                             <table class="table my-0 hover" id="table_presencas">
                                                 <thead>
                                                 <tr>
                                                     <th>Data</th>
                                                     <th>Calibre</th>
                                                     <th>Disparos</th>
+                                                    <th></th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
@@ -298,6 +300,7 @@
                                                     <th>Data</th>
                                                     <th>Calibre</th>
                                                     <th>Disparos</th>
+                                                    <th></th>
                                                 </tr>
                                                 </tfoot>
                                             </table>
@@ -306,7 +309,8 @@
                                                     <button type="button" class="btn border-0 py-3"
                                                             data-toggle="collapse"
                                                             href="#insumoTable" aria-expanded="true"
-                                                            aria-controls="collapseExample" data-target="#insumoTable">
+                                                            aria-controls="collapseExample"
+                                                            data-target="#insumoTable">
                                                         <h6 class="text-primary font-weight-bold m-0">Insumos</h6>
                                                     </button>
                                                     <div class="card-body collapse" id="insumoTable">
@@ -317,6 +321,7 @@
                                                                 <th>Valor</th>
                                                                 <th>Descrção</th>
                                                                 <th>Pago</th>
+                                                                <th></th>
                                                             </tr>
                                                             </thead>
                                                             <tbody>
@@ -327,6 +332,7 @@
                                                                 <th>Valor</th>
                                                                 <th>Descrção</th>
                                                                 <th>Pago</th>
+                                                                <th></th>
                                                             </tr>
                                                             </tfoot>
                                                         </table>
@@ -336,7 +342,8 @@
                                                     <button type="button" class="btn border-0 py-3"
                                                             data-toggle="collapse"
                                                             href="#copaTable" aria-expanded="true"
-                                                            aria-controls="collapseExample" data-target="#copaTable">
+                                                            aria-controls="collapseExample"
+                                                            data-target="#copaTable">
                                                         <h6 class="text-primary font-weight-bold m-0">Copa</h6>
                                                     </button>
                                                     <div class="card-body collapse" id="copaTable">
@@ -347,6 +354,7 @@
                                                                 <th>Valor</th>
                                                                 <th>Descrção</th>
                                                                 <th>Pago</th>
+                                                                <th></th>
                                                             </tr>
                                                             </thead>
                                                             <tbody>
@@ -358,6 +366,7 @@
                                                                 <th>Valor</th>
                                                                 <th>Descrção</th>
                                                                 <th>Pago</th>
+                                                                <th></th>
                                                             </tr>
                                                             </tfoot>
                                                         </table>

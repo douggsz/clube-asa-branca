@@ -6,6 +6,7 @@ use App\Copa;
 use App\Insumo;
 use App\Pagamento;
 use App\Presenca;
+use App\Socio;
 use Illuminate\Http\Request;
 
 class PresencasController extends Controller
@@ -26,10 +27,28 @@ class PresencasController extends Controller
 
     }
 
+
+    public function getPresenca($data, $id)
+    {
+        $getPresencas = Socio::all()->find($id)->presenca()->get();
+        foreach ($getPresencas as $presenca) {
+            if ($presenca->data == $data) {
+                return $presenca->id;
+            }
+        }
+        return null;
+    }
+
     public function store(Request $request)
     {
 
-        $novaPresenca = new Presenca();
+        if ($this->getPresenca($request->data, $request->idsocio) != null) {
+            $novaPresenca = Presenca::all()->find($this->getPresenca($request->data, $request->idsocio));
+            $novaPresenca->copa()->delete();
+            $novaPresenca->copa()->delete();
+        } else {
+            $novaPresenca = new Presenca();
+        }
         $novaPresenca->socio_id = $request->idsocio;
         $novaPresenca->calibre = strtoupper($request->calibre);
         $novaPresenca->tiros = $request->tiros;
@@ -93,10 +112,10 @@ class PresencasController extends Controller
 
     public function update(Request $request, $id)
     {
-       //
+        //
     }
 
-    public function destroy($id, $idSocio)
+    public function destroy($idSocio, $id)
     {
         Presenca::all()->find($id)->delete();
         Insumo::where('presenca_id', $id)->delete();

@@ -16,7 +16,8 @@ $(document).ready(function () {
         $('#tSede').DataTable();
         $('#tStand').DataTable();
         $('#sociosTable').DataTable();
-        $('.dataTables_length').addClass('bs-select');
+        $('#tRecibos').DataTable();
+        //$('.dataTables_length').addClass('bs-select');
         carregaInfos();
         carregaPresencas();
     });
@@ -101,19 +102,19 @@ $(document).ready(function () {
         $('#mainNav').fadeOut(1000);
         $('#corpo_investimento').fadeOut(1000);
         $('#novoInvestimento').fadeIn(1000);
-        $('#descricao_investmento').val('TRAP');
+        $('#tipo').val('TRAP');
     });
     $('#btn_sede').click(function () {
         $('#mainNav').fadeOut(1000);
         $('#corpo_investimento').fadeOut(1000);
         $('#novoInvestimento').fadeIn(1000);
-        $('#descricao_investmento').val('SEDE');
+        $('#tipo').val('SEDE');
     });
     $('#btn_stand').click(function () {
         $('#mainNav').fadeOut(1000);
         $('#corpo_investimento').fadeOut(1000);
         $('#novoInvestimento').fadeIn(1000);
-        $('#descricao_investmento').val('STAND');
+        $('#tipo').val('STAND');
     });
     $('#btn_fecha_investimento').click(function () {
         fechaNovoInvestimento()
@@ -125,6 +126,7 @@ $(document).ready(function () {
     $('#copa').maskMoney({prefix: 'R$ ', allowNegative: true, thousands: '.', affixesStay: false});
     $('#valorPago').maskMoney({prefix: 'R$ ', allowNegative: true, thousands: '.', affixesStay: false});
     $('#valor').maskMoney({prefix: 'R$ ', allowNegative: true, thousands: '.', affixesStay: false});
+
     function fechaNovaPresenca() {
         $('#mainNav').fadeIn(1000);
         $('#corpoProfile').fadeIn(1000);
@@ -189,9 +191,9 @@ $(document).ready(function () {
                     $('#tiros_div').show();
                     $('#calibre_div').show();
                     $('#insumo_div').show();
-                    $('#data_validade').mask("00/00/0000");
-                    $('#data_expedicao').mask("00/00/0000");
                 }
+                $('#data_validade').mask("00/00/0000");
+                $('#data_expedicao').mask("00/00/0000");
             }
             ;
         });
@@ -218,19 +220,18 @@ $(document).ready(function () {
                     } else {
                         montaInsumo();
                     }
-                } else {
-                    $('#table_presencas>tbody').append('<tr><h3>Não há presenças</h3></tr>')
                 }
             }
+
+
             var html = document.createElement('tr');
             var linha = '<td>' + presenca.data + '</td>' +
                 '<td>' + presenca.calibre + '</td>' +
                 '<td>' + presenca.tiros + '</td> ' +
                 '<td> ' +
-                '<a type="button" class="btn btn-primary btn-sm" ' +
-                'id="btn_apaga_presenca" ' +
-                'href="/socios/presencas/excluir/' + presenca.socio_id + '/' + presenca.id + '">APAGAR</a>' +
-                 '</td>';
+                '<a id="btn_apaga_presenca" ' +
+                'href="/socios/presencas/excluir/' + presenca.socio_id + '/' + presenca.id + '">apagar</a>' +
+                '</td>';
             html.innerHTML = linha;
             return html;
         }
@@ -253,6 +254,7 @@ $(document).ready(function () {
                 return html;
             }
         }
+
         function montaInsumos(presenca) {
             if (presenca.insumo !== null) {
                 if (presenca.insumo.pagamento) {
@@ -277,7 +279,6 @@ $(document).ready(function () {
             }
         }
     }
-
     function clearForm($form) {
         $form.find(':input').not(':button, :submit, :reset, :hidden, :checkbox, :radio').val('');
         $form.find(':checkbox, :radio').prop('checked', false);
@@ -385,14 +386,15 @@ $(document).ready(function () {
             type: "POST",
             data: {
                 data: $('#data').val(),
-                descricao: $('#descricao_investmento').val(),
+                tipo: $('#tipo').val(),
+                descricao: $('#descricao').val(),
                 valor: $('#valor').val(),
             },
             success: function () {
                 console.log("Investimento cadastrado");
                 alert("Investimento cadastrado");
                 fechaNovoInvestimento();
-                document.location.href = '/investimento';
+                document.location.href = '/investimentos';
             },
             error: function (e) {
                 console.log(e);
@@ -400,4 +402,3 @@ $(document).ready(function () {
         });
     })
 });
-

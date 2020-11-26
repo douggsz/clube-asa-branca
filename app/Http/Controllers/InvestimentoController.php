@@ -27,10 +27,11 @@ class InvestimentoController extends Controller
 
         $investimento = new Investimento();
         $investimento->data = $request->data;
+        $investimento->tipo = $request->tipo;
         $investimento->descricao = $request->descricao;
         $investimento->save();
 
-        switch ($request->descricao){
+        switch ($request->tipo){
             case "TRAP":
                 $trap = new Trap();
                 $trap->valor = $request->valor;
@@ -66,6 +67,10 @@ class InvestimentoController extends Controller
 
     public function destroy($id)
     {
-        //
+        Trap::where('investimento_id',$id)->delete();
+        Sede::where('investimento_id',$id)->delete();
+        Stand::where('investimento_id',$id)->delete();
+        Investimento::all()->find($id)->delete();
+        return redirect()->route('investimentos');
     }
 }

@@ -12,7 +12,8 @@ class CreateInvestimentosTable extends Migration
         Schema::create('investimentos', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('data');
-            $table->string('descricao');
+            $table->string('tipo');
+            $table->longText('descricao')->default('Sem descrição');
             $table->softDeletes();
             $table->timestamps();
 

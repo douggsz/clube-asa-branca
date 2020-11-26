@@ -17,6 +17,8 @@
                     <a class="nav-link" href="{{ route('presenca') }}">Presenças</a></li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('investimentos') }}">Investimentos</a></li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('recebidos') }}">Recebidos</a></li>
             </ul>
         </div>
     </div>
