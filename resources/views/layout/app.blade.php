@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title id="titulo_profile">@yield('titulo')</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
     <link rel="stylesheet" href="{{ asset('css/locastyle.css') }}">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.min.css') }}">
@@ -30,33 +31,11 @@
     <meta name="theme-color" content="#ffffff">
 </head>
 <body>
-@hasSection('barraLateral')
-    @yield('barraLateral')
-@endif
 <div id="content">
-    <nav class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
-        <div class="container-fluid">
-            <button class="btn btn-link d-md-none rounded-circle mr-3" id="sidebarToggleTop" type="button"><i
-                    class="fas fa-bars"></i></button>
-            <ul class="nav navbar-nav flex-nowrap ml-auto">
-                <li class="nav-item dropdown d-sm-none no-arrow"><a class="dropdown-toggle nav-link"
-                                                                    data-toggle="dropdown" aria-expanded="false"
-                                                                    href="#"><i class="fas fa-search"></i></a>
-                    <div class="dropdown-menu dropdown-menu-right p-3 animated--grow-in" role="menu"
-                         aria-labelledby="searchDropdown">
-                        <form class="form-inline mr-auto navbar-search w-100">
-                            <div class="input-group"><input class="bg-light form-control border-0 small"
-                                                            type="text" placeholder="Search for ...">
-                                <div class="input-group-append">
-                                    <button class="btn btn-primary py-0" type="button"><i
-                                            class="fas fa-search"></i></button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </li>
-            </ul>
-        </div>
+    <nav class="navbar navbar-light navbar-expand bg-white mb-4 topbar static-top">
+        @hasSection('barraLateral')
+            @yield('barraLateral')
+        @endif
     </nav>
 
     @hasSection('body')

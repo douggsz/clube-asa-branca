@@ -63,7 +63,7 @@
                         <div class="form-group">
                             <a>Informações</a>
                             <div id="socioInfo">
-                                <form class="form-inline" id="formNovoSocio" action="/socios/new" method="post"
+                                <form class="form-inline" id="formNovoSocio" action="{{route('socios.store')}}" method="post"
                                       enctype="multipart/form-data">
 
                                 @csrf

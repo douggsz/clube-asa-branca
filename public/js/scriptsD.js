@@ -192,6 +192,9 @@ $(document).ready(function () {
                     $('#calibre_div').show();
                     $('#insumo_div').show();
                 }
+                $('#rg').mask('0000000000')
+                $('#cpf').mask('0000000000')
+                $('#nascimento').mask('00/00/0000')
                 $('#data_validade').mask("00/00/0000");
                 $('#data_expedicao').mask("00/00/0000");
             }

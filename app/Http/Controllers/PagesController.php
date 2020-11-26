@@ -81,4 +81,8 @@ class PagesController extends Controller
 
         return view('recebidos', compact('recebidos', 'total'));
     }
+
+    public function login(){
+        return view('login');
+    }
 }
