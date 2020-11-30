@@ -151,7 +151,7 @@ $(document).ready(function () {
                 $('#nome').attr('value', infos.nome);
                 $('#n_associado').attr('value', infos.n_associado);
                 $('#n_celular').attr('value', infos.n_celular);
-                $('#sexo option:contains("' + infos.sexo + '")').attr('selected', 'selected')
+                $('#sexo').attr('value', infos.sexo);
                 $('#nascimento').attr('value', infos.nascimento);
                 $('#rg').attr('value', infos.rg);
                 $('#cpf').attr('value', infos.cpf);

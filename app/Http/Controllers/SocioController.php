@@ -9,11 +9,13 @@ use App\Pagamento;
 use App\Presenca;
 use App\Registro;
 use App\Socio;
+use http\Env\Response;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use PhpParser\Node\Stmt\If_;
 
 class SocioController extends Controller
 {
-
     public function index()
     {
         $lista = Socio::with('foto')->get()->all();

@@ -12,6 +12,8 @@
             class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="nav navbar-nav ml-auto">
                 <li class="nav-item">
+                    <a class="nav-link" href="{{ route('site') }}">Site</a>
+                </li><li class="nav-item">
                     <a class="nav-link" href="{{ route('inicio') }}">Lista de socios</a></li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('presenca') }}">Presenças</a></li>
@@ -19,6 +21,11 @@
                     <a class="nav-link" href="{{ route('investimentos') }}">Investimentos</a></li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('recebidos') }}">Recebidos</a></li>
+                @auth()
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('usuario.logout') }}">Sair</a></li>
+                @endauth
+
             </ul>
         </div>
     </div>

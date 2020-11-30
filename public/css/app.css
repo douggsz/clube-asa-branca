@@ -11,8 +11,83 @@ table.dataTable thead .sorting_desc_disabled:before {
     bottom: .5em;
 }
 
+@media (min-width: 576px) {
+    .clean-block {
+        padding-bottom: 100px;
+    }
+}
+
+.clean-block {
+    padding-bottom: 50px;
+}
+
+.clean-block.clean-hero:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+}
+
+.clean-navbar.fixed-bottom, .clean-navbar.fixed-top {
+    box-shadow: 0 0 15px rgba(0, 0, 0, .1);
+}
+
+.fixed-bottom, .fixed-top {
+    position: fixed;
+    right: 0;
+    left: 0;
+    z-index: 1030;
+}
+
+@media (min-width: 576px) {
+    .clean-block.clean-hero {
+        min-height: 680px;
+    }
+}
+
+.clean-block.clean-hero {
+    position: relative;
+    text-align: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    padding-bottom: 0;
+}
+
+@media (min-width: 576px) {
+    .navbar {
+        padding-top: 1.2rem;
+        padding-bottom: 1.2rem;
+    }
+}
+
+@media (min-width: 576px) {
+    .clean-navbar.fixed-top + .page {
+        padding-top: 5rem;
+    }
+}
+
+.clean-navbar.fixed-top + .page {
+    padding-top: 62px;
+}
+
 body {
-    background: url("public/img/jpg/man-wearing-jacket-carrying-a-gun-3536235.jpg");
+    margin: 0;
+    font-family: Montserrat, sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    text-align: left;
+    background-color: #fff;
 }
 
 a:link {
@@ -22,34 +97,44 @@ a:link {
 a:visited {
     color: gray;
 }
+
 .navbar.navbar-1 .navbar-toggler-icon {
     background-image: url('https://mdbootstrap.com/img/svg/hamburger6.svg?color=000');
 }
+
 .navbar.navbar-2 .navbar-toggler-icon {
     background-image: url('https://mdbootstrap.com/img/svg/hamburger2.svg?color=fff');
 }
+
 .navbar.navbar-3 .navbar-toggler-icon {
     background-image: url('https://mdbootstrap.com/img/svg/hamburger1.svg?color=6a1b9a');
 }
+
 .navbar.navbar-4 .navbar-toggler-icon {
     background-image: url('https://mdbootstrap.com/img/svg/hamburger7.svg?color=BFE100');
 }
+
 .navbar.navbar-5 .navbar-toggler-icon {
     background-image: url('https://mdbootstrap.com/img/svg/hamburger5.svg?color=f3e5f5');
 }
+
 .navbar.navbar-6 .navbar-toggler-icon {
     background-image: url('https://mdbootstrap.com/img/svg/hamburger8.svg?color=E3005C');
 }
+
 .navbar.navbar-7 .navbar-toggler-icon {
     background-image: url('https://mdbootstrap.com/img/svg/hamburger9.svg?color=FF2C00');
 }
+
 .navbar.navbar-8 .navbar-toggler-icon {
     background-image: url('https://mdbootstrap.com/img/svg/hamburger4.svg?color=1729B0');
 }
+
 .navbar.navbar-9 .navbar-toggler-icon {
     background-image: url('https://mdbootstrap.com/img/svg/hamburger3.svg?color=00FBD8');
 }
-header.masthead {
+
+masthead {
     margin-bottom: 50px;
     background: no-repeat 50%;
     background-color: #6c757d;

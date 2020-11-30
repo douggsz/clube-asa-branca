@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 
 class AnuidadeController extends Controller
 {
+
     public function index()
     {
         //

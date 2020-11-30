@@ -5,6 +5,7 @@
     @endcomponent
 @endsection
 @section('body')
+    @auth()
     <header style="padding: 2rem;text-align: center;">
         <h1>investimentos</h1>
     </header>
@@ -220,4 +221,12 @@
         </div>
     </div>
     </div> <!-- modAL -->
+    @endauth
+    @guest()
+        <div style="text-align: center;">
+            <a href="/controle/acesso">
+                <button class="btn btn-lg btn-primary">Login</button>
+            </a>
+        </div>
+    @endguest
 @endsection

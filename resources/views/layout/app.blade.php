@@ -32,18 +32,16 @@
 </head>
 <body>
 <div id="content">
-    <nav class="navbar navbar-light navbar-expand bg-white mb-4 topbar static-top">
-        @hasSection('barraLateral')
-            @yield('barraLateral')
-        @endif
-    </nav>
-
+    @auth()
+        <nav class="navbar navbar-light navbar-expand bg-white mb-4 topbar static-top">
+            @hasSection('barraLateral')
+                @yield('barraLateral')
+            @endif
+        </nav>
+    @endauth
     @hasSection('body')
-
         @yield('body')
-
     @endif
-
     <footer class="bg-white sticky-footer">
         <div class="container my-auto">
             <div class="text-center my-auto copyright"><span>Asa Branca {{ date('Y') }}</span></div>

@@ -13,76 +13,94 @@ use App\Sede;
 use App\Socio;
 use App\Stand;
 use App\Trap;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class PagesController extends Controller
 {
     public function paginaInicial()
     {
-
-        $listaSocios = Socio::all();
-
-        return view('inicio', compact('listaSocios'));
-
+        if (Auth::user()) {
+            $listaSocios = Socio::all();
+            return view('inicio', compact('listaSocios'));
+        } else {
+            return view('login');
+        }
     }
 
-    public function profile($idSocio){
-
-        $socio = Socio::all()->find($idSocio);
-
-        return view('profile', compact('socio'));
-
+    public function profile($idSocio)
+    {
+        if (Auth::user()) {
+            $socio = Socio::all()->find($idSocio);
+            return view('profile', compact('socio'));
+        } else {
+            return view('login');
+        }
     }
 
     public function presencas()
     {
-
-        $presencas = Presenca::all();
-
-        $presencaUnica = $presencas->unique('socio_id');
-
-        $socios = Registro::all()
-            ->whereNotNull('n_cr');
-
-        $copas = Copa::all();
-        $insumos = Insumo::all();
-
-        return view('presencas', compact('socios', 'presencas', 'copas', 'insumos', 'presencaUnica'));
-
+        if (Auth::user()) {
+            $presencas = Presenca::all();
+            $presencaUnica = $presencas->unique('socio_id');
+            $socios = Registro::all()
+                ->whereNotNull('n_cr');
+            $copas = Copa::all();
+            $insumos = Insumo::all();
+            return view('presencas', compact('socios', 'presencas', 'copas', 'insumos', 'presencaUnica'));
+        } else {
+            return view('login');
+        }
     }
 
     public function investimentos()
     {
-        $investimentos = Investimento::all();
-
-        $traps = Trap::all();
-        $stands = Stand::all();
-        $sedes = Sede::all();
-
-        //$totalSede = 0;
-        //$totalStand = 0;
-        //$totalTrap = 0;
-
-        //foreach ($traps as $investimento){$totalTrap += $investimento->valor;}
-        //foreach ($sedes as $investimento){$totalSede += $investimento->valor;}
-        //foreach ($stands as $investimento){$totalStand += $investimento->valor;}
-
-        return view('investinentos', compact('investimentos', 'traps', 'sedes', 'stands'));
-
+        if (Auth::user()) {
+            $investimentos = Investimento::all();
+            $traps = Trap::all();
+            $stands = Stand::all();
+            $sedes = Sede::all();
+            return view('investinentos', compact('investimentos', 'traps', 'sedes', 'stands'));
+        } else {
+            return view('login');
+        }
     }
 
-    public function recebidos(){
-        $recebidos = Pagamento::all();
-        $total = 0;
-
-        foreach ($recebidos as $recebido){
-            $total += $recebido->valor;
+    public function recebidos()
+    {
+        if (Auth::user()) {
+            $recebidos = Pagamento::all();
+            $total = 0;
+            foreach ($recebidos as $recebido) {
+                $total += $recebido->valor;
+            }
+            return view('recebidos', compact('recebidos', 'total'));
+        } else {
+            return view('login');
         }
 
-        return view('recebidos', compact('recebidos', 'total'));
     }
 
-    public function login(){
-        return view('login');
+    public function login()
+    {
+        if (Auth::user()) {
+            return redirect()->route('inicio');
+        } else {
+            return view('login');
+        }
+
+    }
+
+    public function logout()
+    {
+        Session::flush();
+        return redirect()->route('usuario.login');
+    }
+
+    public function site()
+    {
+        return view('principal');
+
     }
 }

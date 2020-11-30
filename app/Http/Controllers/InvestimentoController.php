@@ -10,10 +10,9 @@ use Illuminate\Http\Request;
 
 class InvestimentoController extends Controller
 {
-
     public function index()
     {
-        $investimentos = Investimento::with('trap','stand','sede')->get();
+        $investimentos = Investimento::with('trap', 'stand', 'sede')->get();
         return json_encode(compact('investimentos'));
     }
 
@@ -31,7 +30,7 @@ class InvestimentoController extends Controller
         $investimento->descricao = $request->descricao;
         $investimento->save();
 
-        switch ($request->tipo){
+        switch ($request->tipo) {
             case "TRAP":
                 $trap = new Trap();
                 $trap->valor = $request->valor;
@@ -67,9 +66,9 @@ class InvestimentoController extends Controller
 
     public function destroy($id)
     {
-        Trap::where('investimento_id',$id)->delete();
-        Sede::where('investimento_id',$id)->delete();
-        Stand::where('investimento_id',$id)->delete();
+        Trap::where('investimento_id', $id)->delete();
+        Sede::where('investimento_id', $id)->delete();
+        Stand::where('investimento_id', $id)->delete();
         Investimento::all()->find($id)->delete();
         return redirect()->route('investimentos');
     }
