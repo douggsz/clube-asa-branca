@@ -26,7 +26,7 @@
                                 <tr>
                                     <td><img class='rounded-circle mr-2' width='30' height='30'
                                              src='/storage/"{{$socio->foto->img}}"'/>
-                                        <a href='/socios/{{$socio->id}}'> {{$socio->nome}} </a></td>
+                                        <a href='/controle/socios/{{$socio->id}}'> {{$socio->nome}} </a></td>
                                     <td>{{$socio->n_associado}}</td>
                                 </tr>
                             @endforeach

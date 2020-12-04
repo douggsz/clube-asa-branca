@@ -15,7 +15,7 @@
                                 <img class="rounded-circle mb-4 mt-4" src="storage/" . socio.foto.img width="160"
                                      height="160">
                                 <div class="custom-file">
-                                    <form action="/fotos/edit/{{$socio->id}}" method="POST"
+                                    <form action="/controle/fotos/edit/{{$socio->id}}" method="POST"
                                           enctype="multipart/form-data">
                                         @csrf
                                         @component('components.inputFt',[

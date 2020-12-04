@@ -38,7 +38,7 @@
                                                     <td>{{ $invs->data }}</td>
                                                     <td>{{ $trap->valor }}</td>
                                                     <td>{{ $invs->descricao }}</td>
-                                                    <td><a href="/investimentos/apagar/{{$invs->id}}">apagar</a></td>
+                                                    <td><a href="/controle/investimentos/apagar/{{$invs->id}}">apagar</a></td>
                                                 </tr>
                                             @endif
                                         @endforeach

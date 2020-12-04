@@ -60,7 +60,7 @@ $(document).ready(function () {
             },
             success: function () {
                 console.log("Anuidade gerada");
-                window.location.href = "/socios/" + $('#idSocio').val();
+                window.location.href = "/controle/socios/" + $('#idSocio').val();
             }
         });
     });
@@ -73,7 +73,7 @@ $(document).ready(function () {
             success: function () {
                 console.log("Socio removido");
                 alert("Socio removido");
-                window.location.href = "/socios";
+                window.location.href = "/controle/socios";
             },
             error: function () {
                 console.log(this.error);
@@ -233,7 +233,7 @@ $(document).ready(function () {
                 '<td>' + presenca.tiros + '</td> ' +
                 '<td> ' +
                 '<a id="btn_apaga_presenca" ' +
-                'href="/socios/presencas/excluir/' + presenca.socio_id + '/' + presenca.id + '">apagar</a>' +
+                'href="/controle/socios/presencas/excluir/' + presenca.socio_id + '/' + presenca.id + '">apagar</a>' +
                 '</td>';
             html.innerHTML = linha;
             return html;
@@ -397,7 +397,7 @@ $(document).ready(function () {
                 console.log("Investimento cadastrado");
                 alert("Investimento cadastrado");
                 fechaNovoInvestimento();
-                document.location.href = '/investimentos';
+                document.location.href = '/controle/investimentos';
             },
             error: function (e) {
                 console.log(e);

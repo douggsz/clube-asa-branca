@@ -25,7 +25,7 @@ class PagesController extends Controller
             $listaSocios = Socio::all();
             return view('inicio', compact('listaSocios'));
         } else {
-            return view('login');
+            return redirect()->route('usuario.login');
         }
     }
 
@@ -33,9 +33,13 @@ class PagesController extends Controller
     {
         if (Auth::user()) {
             $socio = Socio::all()->find($idSocio);
-            return view('profile', compact('socio'));
+            if (isset($socio)){
+                return view('profile', compact('socio'));
+            } else {
+                return redirect()->route('inicio');
+            }
         } else {
-            return view('login');
+            return redirect()->route('usuario.login');
         }
     }
 
@@ -50,7 +54,7 @@ class PagesController extends Controller
             $insumos = Insumo::all();
             return view('presencas', compact('socios', 'presencas', 'copas', 'insumos', 'presencaUnica'));
         } else {
-            return view('login');
+            return redirect()->route('usuario.login');
         }
     }
 
@@ -63,7 +67,7 @@ class PagesController extends Controller
             $sedes = Sede::all();
             return view('investinentos', compact('investimentos', 'traps', 'sedes', 'stands'));
         } else {
-            return view('login');
+            return redirect()->route('usuario.login');
         }
     }
 
@@ -77,7 +81,7 @@ class PagesController extends Controller
             }
             return view('recebidos', compact('recebidos', 'total'));
         } else {
-            return view('login');
+            return redirect()->route('usuario.login');
         }
 
     }
@@ -87,7 +91,7 @@ class PagesController extends Controller
         if (Auth::user()) {
             return redirect()->route('inicio');
         } else {
-            return view('login');
+           return redirect()->route('usuario.login');
         }
 
     }
