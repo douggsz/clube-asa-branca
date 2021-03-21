@@ -11,7 +11,11 @@ class Pagamento extends Model
 
     function anuidade()
     {
-        return $this->belongsTo('App\Anuidade');
+        return $this->belongsTo('App\Anuidade2021');
+    }
+    function anuidade2()
+    {
+        return $this->belongsTo('App\Anuidade2020');
     }
     function socio()
     {

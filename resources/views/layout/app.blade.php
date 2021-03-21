@@ -8,9 +8,10 @@
     <title id="titulo_profile">@yield('titulo')</title>
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
-    <link rel="stylesheet" href="{{ asset('css/locastyle.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{asset('css/locastyle.css') }}">
+    <link rel="stylesheet" href="{{asset('css/app.css') }}">
+    <link rel="stylesheet" href="{{asset('bootstrap/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
     <link rel="apple-touch-icon" sizes="57x57" href="{{asset('img/icons/apple-icon-57x57.png')}}">
     <link rel="apple-touch-icon" sizes="60x60" href="{{asset('img/icons/apple-icon-60x60.png')}}">
     <link rel="apple-touch-icon" sizes="72x72" href="{{asset('img/icons/apple-icon-72x72.png')}}">
@@ -24,8 +25,8 @@
     <link rel="icon" type="image/png" sizes="32x32" href="{{asset('img/icons/favicon-32x32.png')}}">
     <link rel="icon" type="image/png" sizes="96x96" href="{{asset('img/icons/favicon-96x96.png')}}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{asset('img/icons/favicon-16x16.png')}}">
-    <link href="http://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css" rel="stylesheet">
-    <link rel="manifest" href="{{asset('img/icons/manifest.json')}}">
+    <link rel="stylesheet" href="{{ asset('css/jquery.dataTables.min.css') }}" >
+    <link rel="manifest" href="{{ asset('img/icons/manifest.json') }}">
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
@@ -48,12 +49,13 @@
         </div>
     </footer>
 </div>
-<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="{{ asset('js/jquery.js') }}"></script>
 <script src="{{ asset('bootstrap/js/bootstrap.min.js')  }}"></script>
 <script src="{{ asset('js/theme.js') }}"></script>
 <script src="{{ asset('js/app.js') }}"></script>
 <script src="{{ asset('js/locastyle.js') }}"></script>
 <script type="text/javascript" src="{{asset('js/scriptsD.js')}}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 <script type="text/javascript" src="{{asset('js/addons/datatables.min.js')}}"></script>
 </body>
 </html>

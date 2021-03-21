@@ -6,7 +6,7 @@
 @endsection
 @section('body')
     @auth()
-        <div class="container-fluid" id="corpo">
+        <div class="container-fluid" id="corpo" >
             <div class="card shadow">
                 <div class="card-header py-3">
                     <p class="text-primary m-0 font-weight-bold">Socios</p>
@@ -14,7 +14,7 @@
                 <div class="card-body">
                     <div class="table-responsive table mt-2" id="dataTable" role="grid"
                          aria-describedby="dataTable_info">
-                        <table class="table my-0 table-hover" id="sociosTable">
+                        <table class="table my-0 table-hover" id="table_socios">
                             <thead>
                             <tr>
                                 <th>Nome</th>
@@ -25,7 +25,7 @@
                             @foreach($listaSocios as $socio)
                                 <tr>
                                     <td><img class='rounded-circle mr-2' width='30' height='30'
-                                             src='/storage/"{{$socio->foto->img}}"'/>
+                                             src='/storage/{{$socio->foto->img}}'/>
                                         <a href='/controle/socios/{{$socio->id}}'> {{$socio->nome}} </a></td>
                                     <td>{{$socio->n_associado}}</td>
                                 </tr>
@@ -65,7 +65,7 @@
                             <div class="form-group">
                                 <a>Informações</a>
                                 <div id="socioInfo">
-                                    <form class="form-inline" id="formNovoSocio" action="{{route('socios.store')}}"
+                                    <form class="form-inline" id="form_novo_socio" action="{{route('socios.store')}}"
                                           method="POST" enctype="multipart/form-data">
 
                                     @csrf

@@ -41,31 +41,30 @@
     </div>
 </nav>
 <main class="page landing-page ">
-    <section class="clean-block clean-hero"
-             style="background-image:url('{{asset('/img/jpg/hunting-bird-sun-dusk-weapon-shotgun-1455857-pxhere.com.jpg')}}');color:rgba(0, 0, 0, 0.5);">
-        <div class="text">
-            <h2>Lorem ipsum dolor sit amet.</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in, mattis
-                vitae leo.</p>
-            <button class="btn btn-outline-light btn-lg" type="button">Learn More</button>
+    <header class="clean-hero shadow"
+            style=" background-image: url('{{asset('/img/jpg/quail-bird-hunting-silhouette-free-vector.jpg')}}');
+                background-repeat: no-repeat; background-size: cover">
+        <div class="masthead-content" style="padding: 15%">
         </div>
-    </section>
-    <section class="clean-block clean-info dark" id="sobre">
+    </header>
+    <section class="clean-block clean-info dark container-fluid" id="sobre">
         <div class="container">
             <div class="block-heading">
-                <h2 class="text-info">Sobre</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in,
-                    mattis vitae leo.</p>
+                <h2 class="text-info">um pouco sobre nós</h2>
             </div>
-            <div class="row align-items-center">
-                <div class="col-md-6"><img class="img-thumbnail" src="assets/img/scenery/image5.jpg"></div>
-                <div class="col-md-6">
-                    <h3>Lorem impsum dolor sit amet</h3>
-                    <div class="getting-started-info">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum dolor sit amet,
-                            consectetur adipisicing elit. Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+            <div class="row container-fluid">
+                <div class="col-lg-6">
+                    <img class="img-fluid" width="450rem" height="350rem" src="{{asset('img/jpg/foto-sede.jpg')}}"
+                         alt="Sede do clube">
+                </div>
+                <div class="col">
+                    <h2>O que é o Asa Branca</h2>
+                    <div class="text">
+                        <h4>Clube para lazer com eventos de tiro, sendo ele direcionado a duas modalidades: <b>Tiro Trap
+                                Americano</b> e <b>Tiro Desportivo de Armas Raiadas Curtas e Longas</b>. O clube dispõem
+                            de uma sede própria pedãnas de tiro ao prato e um estande coberto para os sócios praticarem
+                            seus treinos.</h4>
                     </div>
-                    <button class="btn btn-outline-primary btn-lg" type="button">Join Now</button>
                 </div>
             </div>
         </div>
@@ -73,30 +72,24 @@
     <section class="clean-block features" id="atividades">
         <div class="container">
             <div class="block-heading">
-                <h2 class="text-info">Atividades</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in,
-                    mattis vitae leo.</p>
+                <h2 class="text-info">atividades realizadas dentro do clube</h2>
             </div>
             <div class="row justify-content-center">
-                <div class="col-md-5 feature-box"><i class="icon-star icon"></i>
-                    <h4>Bootstrap 4</h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in,
-                        mattis vitae leo.</p>
+                <div class="col-md-5">
+                    <h3>
+                        <img src="{{asset('/img/icons/alvo.png')}}" alt="Icone alvo">
+                        Tiro Trap Americano
+                    </h3>
+                    <p>Divide-se em 5 posições onde o atirador efetua 5 disparos em cada posição, perfazendo 25 disparos
+                        em 25 pratos lançados.</p>
                 </div>
-                <div class="col-md-5 feature-box"><i class="icon-pencil icon"></i>
-                    <h4>Customizable</h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in,
-                        mattis vitae leo.</p>
-                </div>
-                <div class="col-md-5 feature-box"><i class="icon-screen-smartphone icon"></i>
-                    <h4>Responsive</h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in,
-                        mattis vitae leo.</p>
-                </div>
-                <div class="col-md-5 feature-box"><i class="icon-refresh icon"></i>
-                    <h4>All Browser Compatibility</h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in,
-                        mattis vitae leo.</p>
+                <div class="col-md-5">
+                    <h3>
+                        <img src="{{asset('/img/icons/bala.png')}}" alt="Icone alvo">
+                        Tiro Desportivo
+                    </h3>
+                    <p>Esporte que exige muita disciplina e treinamento por parte do atleta, que deve trabalhar
+                        principalmente a concentração e o domínio de seus movimentos.</p>
                 </div>
             </div>
         </div>
@@ -104,72 +97,70 @@
     <section class="clean-block slider dark" id="fotos">
         <div class="container">
             <div class="block-heading">
-                <h2 class="text-info">Fotos</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in,
-                    mattis vitae leo.</p>
+                <h2 class="text-info">algumas fotos de nossos apoiadores</h2>
+                <p></p>
             </div>
             <div class="carousel slide" data-ride="carousel" id="carousel-1">
                 <div class="carousel-inner">
-                    <div class="carousel-item active"><img class="w-100 d-block" src="assets/img/scenery/image1.jpg"
-                                                           alt="Slide Image"></div>
-                    <div class="carousel-item"><img class="w-100 d-block" src="assets/img/scenery/image4.jpg"
-                                                    alt="Slide Image"></div>
-                    <div class="carousel-item"><img class="w-100 d-block" src="assets/img/scenery/image6.jpg"
-                                                    alt="Slide Image"></div>
+                    <div class="carousel-item active"><img class="w-100 d-block"
+                                                           src="{{asset('/img/jpg/59635441_2396610343901347_8677215315366510592_o.jpg')}}"
+                                                           alt="Visita a Brasilia"></div>
+                    <div class="carousel-item"><img class="w-100 d-block"
+                                                    src="{{asset('/img/jpg/59477703_2396610163901365_2070311692805341184_o.jpg')}}"
+                                                    alt="Visita a Brasilia"></div>
+                    <div class="carousel-item"><img class="w-100 d-block"
+                                                    src="{{asset('/img/jpg/58926203_2396610147234700_5807821658605486080_o.jpg')}}"
+                                                    alt="Visita a Brasilia"></div>
                 </div>
                 <div><a class="carousel-control-prev" href="#carousel-1" role="button" data-slide="prev"><span
                             class="carousel-control-prev-icon"></span><span class="sr-only">Previous</span></a><a
                         class="carousel-control-next" href="#carousel-1" role="button"
                         data-slide="next"><span class="carousel-control-next-icon"></span><span
                             class="sr-only">Next</span></a></div>
-                <ol class="carousel-indicators">
-                    <li data-target="#carousel-1" data-slide-to="0" class="active"></li>
-                    <li data-target="#carousel-1" data-slide-to="1"></li>
-                    <li data-target="#carousel-1" data-slide-to="2"></li>
-                </ol>
             </div>
         </div>
     </section>
+    <!--
     <section class="clean-block about-us" id="quemsomos">
         <div class="container">
             <div class="block-heading">
-                <h2 class="text-info">Quem somos</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in,
-                    mattis vitae leo.</p>
+                <h2 class="text-info">quem somos</h2>
+                <p>confira os membros principais de nossa diretoria</p>
             </div>
             <div class="row justify-content-center">
                 <div class="col-sm-6 col-lg-4">
                     <div class="card clean-card text-center">
-                        <img class="card-img-top w-100 d-block" src="{{asset('/img/avatars/avatar1.jpeg')}}">
+                        <img class="card-img-top w-100 d-block" src="{{asset('/img/avatars/avatar1.jpeg')}}" alt="Foto Presidente">
                         <div class="card-body info">
-                            <h4 class="card-title">John Smith</h4>
+                            <h4 class="card-title">MARCIO PEREZ DROZDOWSKI</h4>
                             <p class="card-text">Presidente</p>
                         </div>
                     </div>
                 </div>
                 <div class="col-sm-6 col-lg-4">
                     <div class="card clean-card text-center">
-                        <img class="card-img-top w-100 d-block" src="{{asset('/img/avatars/avatar1.jpeg')}}">
+                        <img class="card-img-top w-100 d-block" src="#" alt="Foto Vice-Presidente" height=413rem>
                         <div class="card-body info">
-                            <h4 class="card-title">Robert Downturn</h4>
+                            <h4 class="card-title">
+                                LUIZ ANTONIO SOARES DA SILVA</h4>
                             <p class="card-text">Vice-Presidente</p>
                         </div>
                     </div>
                 </div>
                 <div class="col-sm-6 col-lg-4">
                     <div class="card clean-card text-center">
-                        <img class="card-img-top w-100 d-block" src="{{asset('/img/avatars/avatar1.jpeg')}}">
+                        <img class="card-img-top w-100 d-block" src="{{asset('/img/jpg/tiago.png')}}" alt="Foto Secretario">
                         <div class="card-body info">
-                            <h4 class="card-title">Ally Sanders</h4>
+                            <h4 class="card-title">TIAGO DE FREITAS DA SILVA</h4>
                             <p class="card-text">Secretário</p>
                         </div>
                     </div>
                 </div>
                 <div class="col-sm-6 col-lg-4">
                     <div class="card clean-card text-center">
-                        <img class="card-img-top w-100 d-block" src="{{asset('/img/avatars/avatar1.jpeg')}}">
+                        <img class="card-img-top w-100 d-block" src="{{asset('/img/avatars/avatar1.jpeg')}}" alt="Foto Tesoureiro">
                         <div class="card-body info">
-                            <h4 class="card-title">Ally Sanders</h4>
+                            <h4 class="card-title">RENAN CORREA RUSZKOWSKI</h4>
                             <p class="card-text">Tesoureiro</p>
                         </div>
                     </div>
@@ -177,29 +168,50 @@
             </div>
         </div>
     </section>
+    -->
     <section class="clean-block clean-info" id="contato">
         <div class="container">
             <div class="block-heading">
-                <h2 class="text-info">Fale conosco</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in,
-                    mattis vitae leo.</p>
+                <h2 class="text-info">fale conosco</h2>
             </div>
             <div class="row justify-content-center">
                 <div class="col-sm-6 col-lg-4">
-                    <div class="card clean-card text-center"><img class="card-img-top w-100 d-block"
-                                                                  src="assets/img/avatars/avatar1.jpg">
+                    <div class="card clean-card text-center">
                         <div class="card-body info">
-                            <h4 class="card-title">Luiz Antonio</h4>
-                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                            <img width="60rem" height="60rem" src="{{asset('/img/icons/email.png')}}" class="img-fluid"
+                                 style="padding: .5rem" alt="Icone email">
+                            <h4 class="card-title">E-Mail</h4>
+                            <p class="card-text">
+                                diretoria@clubeasabranca.com.br
+                            </p>
                         </div>
                     </div>
                 </div>
                 <div class="col-sm-6 col-lg-4">
-                    <div class="card clean-card text-center"><img class="card-img-top w-100 d-block"
-                                                                  src="assets/img/avatars/avatar3.jpg">
+                    <div class="card clean-card text-center">
                         <div class="card-body info">
-                            <h4 class="card-title">Luiz Antonio</h4>
-                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                            <img width="60rem" height="60rem" src="{{asset('/img/icons/phone.png')}}" class="img-fluid"
+                            alt="Icone telefone">
+                            <h4 class="card-title">Telefone</h4>
+                            <p class="card-text">051999854984</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="card clean-card text-center">
+                        <div class="card-body info">
+                            <img width="60rem" height="60rem" src="{{asset('/img/icons/addr.png')}}" class="img-fluid"
+                            alt="Icone mapa">
+                            <h4 class="card-title">Endereço</h4>
+                            <p class="card-text">
+                                <iframe
+                                    src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d13703.9081428973!2d-51.8523946!3d-30.8313096!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x16d45a581cc8e75!2sAsa%20Branca%20Clube%20de%20Tiro%20e%20Ca%C3%A7a!5e0!3m2!1spt-BR!2sbr!4v1607798790836!5m2!1spt-BR!2sbr"
+                                    width="80%" height="100%" frameborder="0" style="border:0;" allowfullscreen=""
+                                    aria-hidden="false" tabindex="0">
+                                </iframe>
+                            </p>
                         </div>
                     </div>
                 </div>

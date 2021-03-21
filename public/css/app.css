@@ -23,7 +23,6 @@ table.dataTable thead .sorting_desc_disabled:before {
 
 .clean-block.clean-hero:before {
     content: "";
-    position: absolute;
     top: 0;
     left: 0;
     right: 0;
@@ -51,14 +50,15 @@ table.dataTable thead .sorting_desc_disabled:before {
 .clean-block.clean-hero {
     position: relative;
     text-align: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-align: center;
     align-items: center;
+    -ms-flex-align: center;
     -ms-flex-pack: center;
     justify-content: center;
+    height:100%;
+      background-repeat: no-repeat;
+  background-size: contain;
+    background-position: center; 
+    
     padding-bottom: 0;
 }
 
@@ -139,7 +139,7 @@ masthead {
     background: no-repeat 50%;
     background-color: #6c757d;
     background-attachment: scroll;
+    
     position: relative;
-    background-size: cover;
 }
 

@@ -20,7 +20,7 @@
                     </button>
                     <div class="collapse show" id="invs_traps">
                         <div class="card-body">
-                            <table id="tTrap" class="table hover">
+                            <table  class="table hover"id="table_trap">
                                 <thead>
                                 <tr>
                                     <th>Data</th>
@@ -33,6 +33,7 @@
                                 @isset($traps)
                                     @foreach($traps as $trap)
                                         @foreach($investimentos as $invs)
+                                        @if($trap->investimento_id === $invs->id)
                                             @if($invs->tipo === "TRAP")
                                                 <tr>
                                                     <td>{{ $invs->data }}</td>
@@ -40,6 +41,7 @@
                                                     <td>{{ $invs->descricao }}</td>
                                                     <td><a href="/controle/investimentos/apagar/{{$invs->id}}">apagar</a></td>
                                                 </tr>
+                                            @endif
                                             @endif
                                         @endforeach
                                     @endforeach
@@ -73,7 +75,7 @@
                     </button>
                     <div class="collapse show" id="invs_stands">
                         <div class="card-body">
-                            <table id="tStand" class="table hover">
+                            <table class="table hover"id="table_stand" >
                                 <thead>
                                 <tr>
                                     <th>Data</th>
@@ -86,14 +88,15 @@
                                 @isset($stands)
                                     @foreach($stands as $stand)
                                         @foreach($investimentos as $invs)
-
+                                        @if($stand->investimento_id === $invs->id)
                                             @if($invs->tipo === "STAND")
                                                 <tr>
                                                     <td>{{ $invs->data }}</td>
                                                     <td>{{ $stand->valor }}</td>
                                                     <td>{{ $invs->descricao }}</td>
-                                                    <td><a href="/investimentos/apagar/{{$invs->id}}">apagar</a></td>
+                                                    <td><a href="/controle/investimentos/apagar/{{$invs->id}}">apagar</a></td>
                                                 </tr>
+                                                @endif
                                             @endif
                                         @endforeach
                                     @endforeach
@@ -127,7 +130,7 @@
                     </button>
                     <div class="collapse show" id="invs_sede">
                         <div class="card-body">
-                            <table id="tSede" class="table hover">
+                            <table class="table hover"id="table_sede" >
                                 <thead>
                                 <tr>
                                     <th>Data</th>
@@ -140,13 +143,15 @@
                                 @isset($sedes)
                                     @foreach($sedes as $sede)
                                         @foreach($investimentos as $invs)
+                                        @if($sede->investimento_id === $invs->id)
                                             @if($invs->tipo === "SEDE")
                                                 <tr>
                                                     <td>{{ $invs->data }}</td>
                                                     <td>{{ $sede->valor }}</td>
                                                     <td>{{ $invs->descricao }}</td>
-                                                    <td><a href="/investimentos/apagar/{{$invs->id}}">apagar</a></td>
+                                                    <td><a href="/controle/investimentos/apagar/{{$invs->id}}">apagar</a></td>
                                                 </tr>
+                                            @endif
                                             @endif
                                         @endforeach
                                     @endforeach
@@ -173,7 +178,7 @@
     </div>
     <div class="modal" tabindex="-1" id="novoInvestimento">
         <div class="modal-dialog modal-lg">
-            <form class="form-inline" id="formInvestimento">
+            <form class="form-inline" id="form_investimento">
                 <div class="modal-content">
                     <div class="modal-header">
                         <div>

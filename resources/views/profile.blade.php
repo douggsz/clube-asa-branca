@@ -12,7 +12,7 @@
                     <div class="col-lg-4"> <!-- esquerda -->
                         <div class="card-body mb-4">
                             <div class="card-body text-center shadow">
-                                <img class="rounded-circle mb-4 mt-4" src="storage/" . socio.foto.img width="160"
+                                <img class="rounded-circle mb-4 mt-4" src="/storage/{{$socio->foto->img}}" width="160"
                                      height="160">
                                 <div class="custom-file">
                                     <form action="/controle/fotos/edit/{{$socio->id}}" method="POST"
@@ -29,21 +29,26 @@
                             </div>
                         </div>
                         <input type="hidden" value="{{$socio->id}}" id="idSocio" name="idsocio">
-                        @isset($socio->anuidade)
-                            <input type="hidden" value="{{$socio->anuidade->id}}" id="idAnuidade" name="idsocio">
+                        @isset($socio->anuidade2020)
+                            <input type="hidden" value="{{$socio->anuidade2020->id}}" id="idAnuidade2020"
+                                   name="idAnuidade2020">
+                        @endif
+                        @isset($socio->anuidade2021)
+                            <input type="hidden" value="{{$socio->anuidade2021->id}}" id="idAnuidade2021"
+                                   name="idAnuidade2021">
                         @endif
                     </div>
                     <div class="col-lg-8">
                         <div class="row">
                             <div class="col">
                                 <div class="card shadow mb-4">
-                                    <button type="button" class="btn border-0 py-3" data-toggle="collapse"
+                                    <button type="button" class="btn border-0 py-3 collapsed" data-toggle="collapse"
                                             href="#informacoesSocio" aria-expanded="true" id="btnCollapseInfo"
                                             aria-controls="collapseExample" data-target="#informacoesSocio">
                                         <h6 class="text-primary font-weight-bold m-0">Informações do socio</h6>
                                     </button>
-                                    <div class="card-body collapsed" id="informacoesSocio">
-                                        <form id="formInformacoes" method="PUT">
+                                    <div class="card-body collapse show" id="informacoesSocio">
+                                        <form id="form_informacoes" method="PUT">
                                             @csrf
                                             <div class="form-row">
                                                 <div class="col">
@@ -102,36 +107,37 @@
                                             </div>
                                         </form>
                                         <div class="card mb-1">
-                                            <button type="button" class="btn border-0 py-3" data-toggle="collapse"
+                                            <button type="button" class="btn border-0 py-3 collapsed"
+                                                    data-toggle="collapse"
                                                     href="#anuidadeSocio" aria-expanded="true"
                                                     aria-controls="collapseExample" data-target="#anuidadeSocio">
-                                                <h6 class="text-primary font-weight-bold m-0">Anuidade</h6>
+                                                <h6 class="text-primary font-weight-bold m-0">Anuidade 2020</h6>
                                             </button>
-                                            <div class="card-body collapsed" id="anuidadeSocio">
+                                            <div class="card-body collapse show" id="anuidadeSocio">
                                                 <div class="form-group">
                                                     <div class="card-body">
-                                                        @if(isset($socio->anuidade->socio_id))
-                                                            @if($socio->anuidade->pago >= 300)
+                                                        @if(isset($socio->anuidade2020->socio_id))
+                                                            @if($socio->anuidade2020->pago >= 300)
                                                                 <div class="card" style="text-align: center">
                                                                     <div class="card" style="text-align: center">
-                                                                        <h2>Anuidade paga</h2>
+                                                                        <h2>Anuidade 2020 paga</h2>
                                                                     </div>
                                                                 </div>
                                                             @else
                                                                 <div class="card" style="text-align: center">
                                                                     <div class="card-body">
-                                                                        <h3>Valor: R$<h2 id="valor"></h2></h3>
-                                                                        <h4>Pago: R$<h3 id="pago"></h3></h4>
+                                                                        <h3>Valor: R$<h2 id="valor2020"></h2></h3>
+                                                                        <h4>Pago: R$<h3 id="pago2020"></h3></h4>
                                                                     </div>
                                                                     <button type="button" class="btn shadow py-3"
                                                                             data-toggle="collapse"
-                                                                            href="#pgAnuidade" aria-expanded="true"
+                                                                            href="#pgAnuidade2020" aria-expanded="true"
                                                                             aria-controls="collapseExample"
-                                                                            data-target="#pgAnuidade">
+                                                                            data-target="#pgAnuidade2020">
                                                                         <h6 class="text font-weight-bold m-0">
-                                                                            Resgistrar pagamento</h6>
+                                                                            Resgistrar pagamento 2020</h6>
                                                                     </button>
-                                                                    <div class="card-body collapse" id="pgAnuidade">
+                                                                    <div class="card-body collapse" id="pgAnuidade2020">
                                                                         <div class="form-group">
                                                                             <div class="card-body">
                                                                                 <form>
@@ -139,17 +145,18 @@
                                                                                         <label>
                                                                                             <strong>
                                                                                                 Pagamento da anuidade
+                                                                                                2020
                                                                                             </strong>
                                                                                         </label>
                                                                                         <input
                                                                                             class="form-control"
                                                                                             type="text"
                                                                                             placeholder="Valor"
-                                                                                            name="valorPago"
-                                                                                            id="valorPago"/>
+                                                                                            name="valor_pago_2020"
+                                                                                            id="valor_pago_2020"/>
                                                                                         <div class="card-footer">
                                                                                             <button type="button"
-                                                                                                    id="btn_registra_pagamento"
+                                                                                                    id="btn_registra_pagamento2020"
                                                                                                     class="btn btn-primary">
                                                                                                 Registrar
                                                                                             </button>
@@ -162,19 +169,108 @@
                                                                 </div>
                                                             @endif
                                                         @else
-                                                            <div id="gera_anuidade">
+                                                            <div id="gera_anuidade2020">
                                                                 <div style="text-align: center;">
-                                                                    <button class="btn-lg border py-2"
-                                                                            id="gera_anuidade">
-                                                                        Gerar Anuidade
-                                                                    </button>
+                                                                    <form method="post" action="/api/anuidade2020"
+                                                                          name="form_anuidade_2020"
+                                                                          id="form_anuidade_2020">
+                                                                        <input type="hidden" value="{{$socio->id}}"
+                                                                               name="socio_id" id="socio_id"/>
+                                                                        <button type="submit" class="btn-lg border py-2"
+                                                                                id="gera_anuidade2020">
+                                                                            Gerar Anuidade 2020
+                                                                        </button>
+                                                                    </form>
                                                                 </div>
                                                             </div>
                                                         @endif
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div> <!-- anuidade -->
+                                        </div> <!-- anuidade 2020-->
+                                        <div class="card mb-1">
+                                            <button type="button" class="btn border-0 py-3 collapsed"
+                                                    data-toggle="collapse"
+                                                    href="#anuidadeSocio2" aria-expanded="true"
+                                                    aria-controls="collapseExample" data-target="#anuidadeSocio2">
+                                                <h6 class="text-primary font-weight-bold m-0">Anuidade 2021</h6>
+                                            </button>
+                                            </button>
+                                            <div class="card-body collapse show" id="anuidadeSocio2021">
+                                                <div class="form-group">
+                                                    <div class="card-body">
+                                                        @if(isset($socio->anuidade2021->socio_id))
+                                                            @if($socio->anuidade2021->pago >= 300)
+                                                                <div class="card" style="text-align: center">
+                                                                    <div class="card" style="text-align: center">
+                                                                        <h2>Anuidade 2021 paga</h2>
+                                                                    </div>
+                                                                </div>
+                                                            @else
+                                                                <div class="card" style="text-align: center">
+                                                                    <div class="card-body">
+                                                                        <h3>Valor: R$<h2 id="valor2021"></h2></h3>
+                                                                        <h4>Pago: R$<h3 id="pago2021"></h3></h4>
+                                                                    </div>
+                                                                    <button type="button" class="btn shadow py-3"
+                                                                            data-toggle="collapse"
+                                                                            href="#pgAnuidade2021" aria-expanded="true"
+                                                                            aria-controls="collapseExample"
+                                                                            data-target="#pgAnuidade2021">
+                                                                        <h6 class="text font-weight-bold m-0">
+                                                                            Resgistrar pagamento 2021</h6>
+                                                                    </button>
+                                                                    <div class="card-body collapse" id="pgAnuidade2021">
+                                                                        <div class="form-group">
+                                                                            <div class="card-body">
+                                                                                <form>
+                                                                                    <div class="form-group">
+                                                                                        <label>
+                                                                                            <strong>
+                                                                                                Pagamento da anuidade
+                                                                                                2021
+                                                                                            </strong>
+                                                                                        </label>
+                                                                                        <input
+                                                                                            class="form-control"
+                                                                                            type="text"
+                                                                                            placeholder="Valor"
+                                                                                            name="valor_pago_2021"
+                                                                                            id="valor_pago_2021"/>
+                                                                                        <div class="card-footer">
+                                                                                            <button type="button"
+                                                                                                    id="btn_registra_pagamento2021"
+                                                                                                    class="btn btn-primary">
+                                                                                                Registrar
+                                                                                            </button>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </form>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            @endif
+                                                        @else
+                                                            <div id="gera_anuidade2020">
+                                                                <div style="text-align: center;">
+                                                                    <form method="post" action="/api/anuidade2021"
+                                                                          name="form_anuidade_2021"
+                                                                          id="form_anuidade_2021">
+                                                                        <input type="hidden" value="{{$socio->id}}"
+                                                                               name="socio_id" id="socio_id"/>
+                                                                        <button type="submit" class="btn-lg border py-2"
+                                                                                id="gera_anuidade2021">
+                                                                            Gerar Anuidade 2021
+                                                                        </button>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div> <!-- anuidade 2021-->
                                         <div class="card mb-1">
                                             <button type="button" class="btn border-0 py-3" data-toggle="collapse"
                                                     href="#enderecoSocios" aria-expanded="true"
@@ -182,7 +278,7 @@
                                                 <h6 class="text-primary font-weight-bold m-0">Endereços</h6>
                                             </button>
                                             <div class="card-body collapse" id="enderecoSocios">
-                                                <form id="formEndereco" action="#" method="PUT">
+                                                <form id="form_endereco" action="#" method="PUT">
                                                     @csrf
                                                     <div class="form-group"><label><strong>Rua</strong></label><input
                                                             class="form-control" type="text"
@@ -246,7 +342,7 @@
                                             <div class="card-body collapse" id="registroSocio">
                                                 <div class="form-group">
                                                     <div class="card-body">
-                                                        <form id="formRegistros" action="#" method="PUT">
+                                                        <form id="form_registros" action="#" method="PUT">
 
                                                             @csrf
 
@@ -282,14 +378,17 @@
                                             </div>
                                         </div> <!-- registros -->
                                         <div class="card mb-1">
-                                            <button type="button" class="btn border-0 py-3" data-toggle="collapse"
+                                            <button type="button"
+                                                    class="btn border-0 py-3  @isset($_GET['o']) collapsed @endif"
+                                                    data-toggle="collapse"
                                                     href="#presencaSocio" aria-expanded="true"
                                                     aria-controls="collapseExample" data-target="#presencaSocio">
                                                 <h6 class="text-primary font-weight-bold m-0">Presenças</h6>
                                             </button>
-                                            <div class="card-body collapse" id="presencaSocio">
+                                            <div class="card-body collapse  @isset($_GET['o']) show @endif"
+                                                 id="presencaSocio">
 
-                                                <table class="table my-0 hover" id="table_presencas">
+                                                <table class="table my-0 hover" id="table_usuario_presencas">
                                                     <thead>
                                                     <tr>
                                                         <th>Data</th>
@@ -319,7 +418,7 @@
                                                             <h6 class="text-primary font-weight-bold m-0">Insumos</h6>
                                                         </button>
                                                         <div class="card-body collapse" id="insumoTable">
-                                                            <table class="table my-0" id="tInsumos">
+                                                            <table class="table my-0" id="table_insumos">
                                                                 <thead>
                                                                 <tr>
                                                                     <th>Data</th>
@@ -352,7 +451,7 @@
                                                             <h6 class="text-primary font-weight-bold m-0">Copa</h6>
                                                         </button>
                                                         <div class="card-body collapse" id="copaTable">
-                                                            <table class="table my-0" id="tCopa">
+                                                            <table class="table my-0" id="table_copa">
                                                                 <thead>
                                                                 <tr>
                                                                     <th>Data</th>
@@ -393,23 +492,9 @@
                                     </div>
                                 </div> <!-- informaçoes -->
                                 <div class="card shadow mb-1">
-                                    <button type="button" class="btn border-0 py-3" data-toggle="collapse"
-                                            href="#dialogEx" aria-expanded="true" id="btnExcluir"
-                                            aria-controls="collapseExample" data-target="#dialogEx">
+                                    <button type="button" class="btn border-0 py-3" id="btn_apaga_socio">
                                         <h6 class="text-danger font-weight-bold m-0">APAGAR SOCIO</h6>
                                     </button>
-                                    <div class="card-body collapse" id="dialogEx">
-                                        <div class="form-group">
-                                            <div class="card-body">
-                                                <button type="button" class="btn border-0" id="dialogCn"><h6
-                                                        class="text-center font-weight-bold m-0">CANCELAR</h6>
-                                                </button>
-                                                <a type="button" class="btn border-0" id="btn_apaga_socio">
-                                                    <h6 class="text-danger font-weight-bold m-0">APAGAR</h6>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div> <!-- apagar -->
                             </div>
                         </div>
@@ -431,8 +516,10 @@
                     <div class="modal-body">
                         <div class="col">
                             <div class="form-group">
-                                <form id="formPresenca">
+                                <form method="post" action="{{route('presenca.store')}}" id="form_presenca"
+                                      name="form_presenca">
                                     @csrf
+                                    <input type="hidden" value="{{$socio->id}}" id="idSocio" name="idsocio">
                                     <div id="presencaInfo">
                                         <div>
                                             <div>

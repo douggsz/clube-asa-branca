@@ -21,6 +21,8 @@
                     <a class="nav-link" href="{{ route('investimentos') }}">Investimentos</a></li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('recebidos') }}">Recebidos</a></li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('debitos') }}">Debitos</a></li>
                 @auth()
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('usuario.logout') }}">Sair</a></li>

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Anuidade;
+use App\Anuidade2021;
 use App\Endereco;
 use App\Foto;
 use App\Pagamento;
@@ -67,7 +67,7 @@ class SocioController extends Controller
 
     public function show($id)
     {
-        $lista = Socio::with('foto', 'endereco', 'registro', 'anuidade')->find($id);
+        $lista = Socio::with('foto', 'endereco', 'registro', 'anuidade2020', 'anuidade2021')->find($id);
         return json_encode($lista);
     }
 
@@ -101,7 +101,7 @@ class SocioController extends Controller
         Pagamento::where('socio_id', $id)->delete();
         Presenca::where('socio_id', $id)->delete();
         Registro::where('socio_id', $id)->delete();
-        Anuidade::where('socio_id', $id)->delete();
+        Anuidade2021::where('socio_id', $id)->delete();
         Socio::all()->find($id)->delete();
 
     }

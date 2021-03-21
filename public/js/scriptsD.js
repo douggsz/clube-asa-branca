@@ -3,21 +3,16 @@ $(document).ready(function () {
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Methods': 'POST, GET, OPTIONS,PUT,DELETE',
-            'Access-Control-Allow-Credentials': 'true',
-            'Access-Control-Max-Age': '86400',
-            'Access-Control-Allow-Headers': 'Content-Type, Authorization',
         }
     });
+
     $(function () {
-        $('#tppresencas').DataTable();
-        $('#tTrap').DataTable();
-        $('#tSede').DataTable();
-        $('#tStand').DataTable();
-        $('#sociosTable').DataTable();
-        $('#tRecibos').DataTable();
-        //$('.dataTables_length').addClass('bs-select');
+        $('#table_presencas').DataTable();
+        $('#table_trap').DataTable();
+        $('#table_sede').DataTable();
+        $('#table_stand').DataTable();
+        $('#table_socios').DataTable();
+        $('#table_recibos').DataTable();
         carregaInfos();
         carregaPresencas();
     });
@@ -51,47 +46,63 @@ $(document).ready(function () {
     $('#fechaNovaPresença').click(function () {
         fechaNovaPresenca();
     });
-    $("#gera_anuidade").click(function () {
-        $("#gera_anuidade").fadeOut(1000);
-        $.ajax('/api/anuidades/', {
-            type: "POST",
-            data: {
-                socio_id: $('#idSocio').val(),
-            },
-            success: function () {
-                console.log("Anuidade gerada");
-                window.location.href = "/controle/socios/" + $('#idSocio').val();
+    $('#btn_apaga_socio').click(function () {
+        var url = '/api/socios/' + $('#idSocio').val();
+
+        $.confirm({
+            title: 'Remover socio',
+            content: 'Deseja remover o socio selecionado ?',
+            buttons: {
+                Confirmar: function () {
+                    $.ajax(url, {
+                        type: "DELETE",
+                        success: function () {
+                            console.log("Socio removido");
+                            $.alert('Socio removido!');
+
+                            window.location.href = "/controle/socios";
+                        },
+                        error: function () {
+                            console.log(this.error);
+                        },
+                    })
+                },
+                Cancelar: function () {
+                    $.alert('Operação cancelada');
+                },
             }
         });
     });
-    $('#btn_apaga_socio').click(function () {
-
-        var url = '/api/socios/' + $('#idSocio').val();
-
-        $.ajax(url, {
-            type: "DELETE",
-            success: function () {
-                console.log("Socio removido");
-                alert("Socio removido");
-                window.location.href = "/controle/socios";
-            },
-            error: function () {
-                console.log(this.error);
-            },
-        })
-
-    });
-    $('#btn_registra_pagamento').click(function () {
-        var url = '/api/anuidades/' + $('#idAnuidade').val();
+    $('#btn_registra_pagamento2020').click(function () {
+        var url = '/api/anuidade2020/' + $('#idAnuidade2020').val();
         $.ajax(url, {
             type: "PUT",
             data: {
-                "valorPago": $('#valorPago').val(),
+                "valor_pago_2020": $('#valor_pago_2020').val(),
             },
             success: function () {
-                console.log('Pagamento de R$' + $('#valorPago').val() + ' registrado');
-                alert('Pagamento de R$' + $('#valorPago').val() + ' registrado');
+                console.log('Pagamento de R$' + $('#valor_pago_2020').val() + ' registrado (2020)');
+                $.alert('Pagamento de R$' + $('#valor_pago_2020').val() + ' registrado (2020)');
                 carregaInfos();
+                $('#valor_pago_2020').clear;
+            },
+            error: function (e) {
+                console.log(e)
+            }
+        })
+    });
+    $('#btn_registra_pagamento2021').click(function () {
+        var url = '/api/anuidade2021/' + $('#idAnuidade2021').val();
+        $.ajax(url, {
+            type: "PUT",
+            data: {
+                "valor_pago_2021": $('#valor_pago_2021').val(),
+            },
+            success: function () {
+                console.log('Pagamento de R$' + $('#valor_Pago_2021').val() + ' registrado (2021)');
+                $.alert('Pagamento de R$' + $('#valor_pago_2021').val() + ' registrado (2021)');
+                carregaInfos();
+                $('#valor_pago_2021').clear;
             },
             error: function (e) {
                 console.log(e)
@@ -124,9 +135,9 @@ $(document).ready(function () {
     });
     $('#insumo').maskMoney({prefix: 'R$ ', allowNegative: true, thousands: '.', affixesStay: false});
     $('#copa').maskMoney({prefix: 'R$ ', allowNegative: true, thousands: '.', affixesStay: false});
-    $('#valorPago').maskMoney({prefix: 'R$ ', allowNegative: true, thousands: '.', affixesStay: false});
-    $('#valor').maskMoney({prefix: 'R$ ', allowNegative: true, thousands: '.', affixesStay: false});
-
+    $('#valor_pago_2020').maskMoney({prefix: 'R$ ', allowNegative: true, thousands: '.', affixesStay: false});
+    $('#valor_pago_2021').maskMoney({prefix: 'R$ ', allowNegative: true, thousands: '.', affixesStay: false});
+    $('#valor').maskMoney({prefix: 'R$ ', allowNegative: true, thousands: ',', affixesStay: false});
     function fechaNovaPresenca() {
         $('#mainNav').fadeIn(1000);
         $('#corpoProfile').fadeIn(1000);
@@ -137,9 +148,9 @@ $(document).ready(function () {
         $('#mainNav').fadeIn(1000);
         $('#corpo_investimento').fadeIn(1000);
         $('#novoInvestimento').fadeOut(1000);
-        clearForm($('#tTrap'));
-        clearForm($('#tSede'));
-        clearForm($('#tStand'));
+        clearForm($('#table_trap'));
+        clearForm($('#table_sede'));
+        clearForm($('#table_stand'));
     }
     function carregaInfos() {
         var url = '/api/socios/' + socio_id
@@ -174,13 +185,16 @@ $(document).ready(function () {
 
                 console.log('CR carregado');
 
-                if (infos.anuidade != null) {
-                    $('#valor').text(infos.anuidade.valor);
-                    $('#pago').text(infos.anuidade.pago);
-                    $('#restante').text(infos.anuidade.valor - infos.anuidade.pago);
-                    console.log('Anuidade carregada');
+                if (infos.anuidade2020 != null) {
+                    $('#valor2020').text(infos.anuidade2020.valor);
+                    $('#pago2020').text(infos.anuidade2020.pago);
+                    console.log('Anuidade2021 2020 carregada');
                 }
-
+                if (infos.anuidade2021 != null) {
+                    $('#valor2021').text(infos.anuidade2021.valor);
+                    $('#pago2021').text(infos.anuidade2021.pago);
+                    console.log('Anuidade2021 2021 carregada');
+                }
                 if (infos.registro.n_cr === null) {
                     $('#crSelecionado').hide();
                     $('#tiros_div').hide();
@@ -192,8 +206,8 @@ $(document).ready(function () {
                     $('#calibre_div').show();
                     $('#insumo_div').show();
                 }
-                $('#rg').mask('0000000000')
-                $('#cpf').mask('0000000000')
+                $('#rg').mask('0000000000');
+                $('#cpf').mask('000.000.000-00');
                 $('#nascimento').mask('00/00/0000')
                 $('#data_validade').mask("00/00/0000");
                 $('#data_expedicao').mask("00/00/0000");
@@ -203,17 +217,18 @@ $(document).ready(function () {
     }
     function carregaPresencas() {
         var url = '/api/presencas/' + $('#idSocio').val();
-        $('#table_presencas>tbody').empty();
-        $('#tInsumos>tbody').empty();
-        $('#tCopa>tbody').empty();
+        $('#table_usuario_presencas>tbody').empty();
+        $('#table_insumos>tbody').empty();
+        $('#table_copa>tbody').empty();
         $.getJSON(url, function (presencas) {
             for (var i = 0; i < presencas.length; i++) {
-                $('#table_presencas>tbody').append(montaLinha(presencas[i]));
-                $('#tCopa>tbody').append(montaCopa(presencas[i]));
-                $('#tInsumos>tbody').append(montaInsumos(presencas[i]));
+                $('#table_usuario_presencas>tbody').append(montaLinha(presencas[i]));
+                $('#table_copa>tbody').append(montaCopa(presencas[i]));
+                $('#table_insumos>tbody').append(montaInsumos(presencas[i]));
             }
             console.log('Presenças carregadas');
         });
+
         function montaLinha(presenca) {
             if (presenca != null) {
                 if (presenca.tiros === null) {
@@ -221,7 +236,7 @@ $(document).ready(function () {
                     if (presenca.insumo === null) {
                         presenca.calibre = "Somente assinatura";
                     } else {
-                        montaInsumo();
+                        montaInsumos();
                     }
                 }
             }
@@ -238,6 +253,7 @@ $(document).ready(function () {
             html.innerHTML = linha;
             return html;
         }
+
         function montaCopa(presenca) {
             if (presenca.copa !== null) {
                 if (presenca.copa.pagamento) {
@@ -286,7 +302,7 @@ $(document).ready(function () {
         $form.find(':input').not(':button, :submit, :reset, :hidden, :checkbox, :radio').val('');
         $form.find(':checkbox, :radio').prop('checked', false);
     }
-    $('#formInformacoes').submit(function (event) {
+    $('#form_informacoes').submit(function (event) {
         event.preventDefault();
         $.ajax('/api/socios/' + $('#idSocio').val(), {
             type: "PUT",
@@ -301,7 +317,7 @@ $(document).ready(function () {
             },
             success: function () {
                 console.log("Informações atualizadas");
-                alert("Informações atualizadas");
+                $.alert("Informações atualizadas");
                 carregaInfos();
             },
             error: function () {
@@ -309,7 +325,7 @@ $(document).ready(function () {
             }
         })
     });
-    $('#formRegistros').submit(function (event) {
+    $('#form_registros').submit(function (event) {
         event.preventDefault();
         var url = '/api/registros/' + $('#idSocio').val();
         $.ajax(url, {
@@ -321,7 +337,7 @@ $(document).ready(function () {
             },
             success: function () {
                 console.log("CR atualizado");
-                alert("CR atualizado");
+                $.alert("CR atualizado");
                 carregaInfos();
             },
             error: function () {
@@ -329,7 +345,7 @@ $(document).ready(function () {
             }
         })
     });
-    $('#formEndereco').submit(function (event) {
+    $('#form_endereco').submit(function (event) {
         event.preventDefault();
         var url = '/api/enderecos/' + $('#idSocio').val();
         $.ajax(url, {
@@ -345,7 +361,7 @@ $(document).ready(function () {
             },
             success: function () {
                 console.log("Endereço atualizado");
-                alert("Endereço atualizado");
+                $.alert("Endereço atualizado");
                 carregaInfos();
             },
             error: function () {
@@ -353,36 +369,7 @@ $(document).ready(function () {
             },
         })
     });
-    $('#formPresenca').submit(function (event) {
-        event.preventDefault();
-        var url = '/api/presencas/';
-        $.ajax(url, {
-            type: "POST",
-            data: {
-                idsocio: $('#idSocio').val(),
-                calibre: $('#calibre').val(),
-                tiros: $('#tiros').val(),
-                data: $('#data').val(),
-                copa: $('#copa').val(),
-                insumo: $('#insumo').val(),
-                descricaoCopa: $('#descricaoCopa').val(),
-                descricaoInsumos: $('#descricaoInsumos').val(),
-                pagamentoInsumo: $('#pagamentoInsumo').val(),
-                pagamentoCopa: $('#pagamentoCopa').val(),
-            },
-            success: function () {
-                console.log("Presença salva");
-                alert("Presença salva");
-                fechaNovaPresenca();
-                carregaPresencas();
-                clearForm($('#formPresenca'))
-            },
-            error: function () {
-                console.log(this.error);
-            },
-        });
-    });
-    $("#formInvestimento").submit(function (event) {
+    $("#form_investimento").submit(function (event) {
         event.preventDefault();
         var url = '/api/investimentos';
         $.ajax(url, {
@@ -395,7 +382,7 @@ $(document).ready(function () {
             },
             success: function () {
                 console.log("Investimento cadastrado");
-                alert("Investimento cadastrado");
+                $.alert("Investimento cadastrado");
                 fechaNovoInvestimento();
                 document.location.href = '/controle/investimentos';
             },

@@ -32,8 +32,8 @@ class PagesController extends Controller
     public function profile($idSocio)
     {
         if (Auth::user()) {
-            $socio = Socio::all()->find($idSocio);
-            if (isset($socio)){
+            $socio = Socio::with('foto', 'endereco', 'registro', 'anuidade2020', 'anuidade2021')->find($idSocio);
+            if (isset($socio)) {
                 return view('profile', compact('socio'));
             } else {
                 return redirect()->route('inicio');
@@ -65,6 +65,7 @@ class PagesController extends Controller
             $traps = Trap::all();
             $stands = Stand::all();
             $sedes = Sede::all();
+
             return view('investinentos', compact('investimentos', 'traps', 'sedes', 'stands'));
         } else {
             return redirect()->route('usuario.login');
@@ -83,7 +84,24 @@ class PagesController extends Controller
         } else {
             return redirect()->route('usuario.login');
         }
+    }
 
+    public function debitos()
+    {
+        if (Auth::user()) {
+            $copas = Copa::all()->where('pagamento', '=', '0');
+            $insumos = Insumo::all()->where('pagamento', '=', '0');
+            $total = 0;
+            foreach ($copas as $copa) {
+                $total += $copa->valor;
+            }
+            foreach ($insumos as $insumo) {
+                $total += $insumo->valor;
+            }
+            return view('debitos', compact('insumos', 'copas', 'total'));
+        } else {
+            return redirect()->route('usuario.login');
+        }
     }
 
     public function login()
@@ -91,7 +109,7 @@ class PagesController extends Controller
         if (Auth::user()) {
             return redirect()->route('inicio');
         } else {
-           return redirect()->route('usuario.login');
+            return redirect()->route('usuario.login');
         }
 
     }

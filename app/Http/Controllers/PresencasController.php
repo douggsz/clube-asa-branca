@@ -46,6 +46,9 @@ class PresencasController extends Controller
             $novaPresenca = Presenca::all()->find($this->getPresenca($request->data, $request->idsocio));
             $novaPresenca->copa()->delete();
             $novaPresenca->copa()->delete();
+            Pagamento::where('data', $request->data)
+                ->where('socio_id', $request->idsocio)
+                ->delete();
         } else {
             $novaPresenca = new Presenca();
         }
@@ -95,6 +98,8 @@ class PresencasController extends Controller
             $novaPresenca->insumo()->save($novoGastoInsumo);
         }
 
+        return redirect('/controle/socios/' . $request->idsocio . '?o=presenca');
+
     }
 
     public function show($idSocio)
@@ -115,11 +120,29 @@ class PresencasController extends Controller
         //
     }
 
+    public function pagamento_id($id)
+    {
+        $presenca = Presenca::all()->find($id);
+        $pagamento = Pagamento::where('socio_id', $presenca->socio_id)
+            ->where('data', $presenca->data)
+            ->first();
+        $idd = $pagamento->id;
+        if (isset($idd)) {
+            return $idd;
+        } else {
+            return false;
+        }
+    }
+
     public function destroy($idSocio, $id)
     {
+        if ($this->pagamento_id($id)){
+        Pagamento::all()->find($this->pagamento_id($id))
+            ->delete();
+        }
         Presenca::all()->find($id)->delete();
         Insumo::where('presenca_id', $id)->delete();
         Copa::where('presenca_id', $id)->delete();
-        return redirect('/socios/' . $idSocio);
+        return redirect('/controle/socios/' . $idSocio . '?o=presenca');
     }
 }

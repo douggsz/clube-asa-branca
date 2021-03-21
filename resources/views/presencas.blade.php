@@ -29,7 +29,7 @@
                                     <div class="card-body collapse" id="usuario{{$comparecimento->socio_id}}">
                                         <div class="form-group">
                                             <div class="card-body">
-                                                <table class="table my-0" id="tppresencas">
+                                                <table class="table my-0" id="table_presencas">
                                                     <thead>
                                                     <tr>
                                                         <th>Data</th>

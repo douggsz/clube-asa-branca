@@ -13,7 +13,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col">
-                <table class="table hover" id="tRecibos">
+                <table class="table hover" id="table_recibos">
                     <thead>
                     <tr>
                         <th>Nome</th>
